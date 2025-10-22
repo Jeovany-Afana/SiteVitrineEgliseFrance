@@ -1,0 +1,1404 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Église Missionnaire Propulsion - Une Foi Qui Transforme</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/missions.css' %}">
+    <!-- CSS avec animations avancées -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+     <link rel="stylesheet" href="{% static 'css/services.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/activites.css' %}">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+    </div>
+
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">PROPULSION</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">À Propos</a></li>
+                <li><a href="#galerie">Galerie</a></li>
+                <li><a href="#ministeres">Ministères</a></li>
+                <li><a href="#equipe">Équipe</a></li>
+                <li><a href="#evenements">Événements</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#don" class="nav-cta">
+                <i class="fas fa-heart"></i> Faire un Don
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> Bienvenue au Cœur de la Propulsion
+            </div>
+            <h1 class="hero-title">
+                Une Foi Qui<br>Transforme
+            </h1>
+            <p class="hero-subtitle">
+                Découvrez une communauté passionnée qui vit l'Évangile et impacte sa génération. Rejoignez l'aventure !
+            </p>
+            <div class="hero-actions">
+                <a href="#visite" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i> Découvrir
+                </a>
+                <a href="#direct" class="btn btn-secondary">
+                    <i class="fas fa-video"></i> Regarder le Direct
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Mot du Dr. Richard ONDOA -->
+<section class="pastor-word" id="mot-pasteur">
+    <div class="pastor-container">
+        <div class="pastor-image fade-in-left">
+            <img src="{% static 'images/pasteur.jpg' %}" alt="Dr. Richard ONDOA">
+        </div>
+
+        <div class="pastor-content fade-in-right">
+            <div class="pastor-badge">
+                <i class="fas fa-cross"></i> MOT DU FONDATEUR
+            </div>
+
+            <h2 class="pastor-title">
+                Un Message<br>d'Espérance
+            </h2>
+
+            <div class="pastor-quote">
+                <p class="pastor-message">
+                    "Bien-aimés en Christ, c'est avec une joie profonde que je vous accueille dans cette grande famille qu'est l'Église Missionnaire Propulsion. Notre vision est claire : être une communauté où la foi rencontre l'action, où la Parole de Dieu devient vie tangible, et où chaque personne découvre son potentiel divin.
+                    <br><br>
+                    Dans un monde en perpétuelle mutation, notre mission reste inchangée : propulser chaque croyant vers son destin en Christ. Nous croyons en une foi qui transforme non seulement les cœurs mais aussi les communautés. Ici, vous trouverez plus qu'une église ; vous trouverez une famille, un lieu de croissance et un tremplin pour votre destinée.
+                    <br><br>
+                    Que Dieu vous bénisse richement alors que vous explorez les différentes facettes de notre ministère. Nous prions que votre vie soit transformée par la puissance de l'Esprit Saint."
+                </p>
+            </div>
+
+            <div class="pastor-signature">
+                <div class="pastor-name">Dr. Richard ONDOA</div>
+                <div class="pastor-role">Pasteur Principal & Fondateur de l'Église Missionnaire Propulsion</div>
+
+                <div class="pastor-credentials">
+                    <div class="credential-badge">
+                        <i class="fas fa-graduation-cap"></i> Doctorat en Théologie
+                    </div>
+                    <div class="credential-badge">
+                        <i class="fas fa-book"></i> Auteur & Conférencier
+                    </div>
+                    <div class="credential-badge">
+                        <i class="fas fa-hands-helping"></i> Leader Visionnaire
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section - Version Modernisée -->
+<section class="services-modern" id="services">
+    <!-- Background avec image floutée -->
+    <div class="services-bg">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+        <div class="floating-elements">
+            <div class="floating-element el-1"></div>
+            <div class="floating-element el-2"></div>
+            <div class="floating-element el-3"></div>
+            <div class="floating-element el-4"></div>
+        </div>
+    </div>
+
+    <div class="services-container">
+        <!-- Header avec animation -->
+        <div class="services-header">
+            <div class="header-content">
+                <span class="section-label fade-in">Commencez Ici</span>
+                <h2 class="section-title fade-in">
+                    <span class="title-word">Votre</span>
+                    <span class="title-word accent">Prochain Pas</span>
+                    <span class="title-word">de Foi</span>
+                </h2>
+                <p class="section-subtitle fade-in">
+                    Découvrez le parcours parfait pour votre croissance spirituelle
+                </p>
+            </div>
+        </div>
+
+        <!-- Cards Grid Modern -->
+        <div class="services-grid">
+            <!-- Card 1 - Cultes -->
+            <div class="service-card card-1">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon-wrapper">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-church"></i>
+                        </div>
+                        <h3>Cultes Dynamiques</h3>
+                        <p>Expérimentez la présence de Dieu dans des moments d'adoration puissants</p>
+                        <div class="card-cta">
+                            <span>Découvrir</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-content">
+                            <h4>Ce qui vous attend :</h4>
+                            <ul>
+                                <li>Adoration passionnée</li>
+                                <li>Enseignements pratiques</li>
+                                <li>Communion fraternelle</li>
+                                <li>Prières puissantes</li>
+                            </ul>
+                            <a href="#cultes" class="btn-card">
+                                <span>Voir les horaires</span>
+                                <i class="fas fa-calendar-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 - Groupes -->
+            <div class="service-card card-2">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon-wrapper">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Groupes de Maison</h3>
+                        <p>Rejoignez une famille spirituelle pour grandir ensemble dans la foi</p>
+                        <div class="card-cta">
+                            <span>Explorer</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-content">
+                            <h4>Bénéfices :</h4>
+                            <ul>
+                                <li>Relations authentiques</li>
+                                <li>Partage en petit groupe</li>
+                                <li>Soutien mutuel</li>
+                                <li>Croissance personnelle</li>
+                            </ul>
+                            <a href="#groupes" class="btn-card">
+                                <span>Trouver un groupe</span>
+                                <i class="fas fa-map-marker-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 - Formation -->
+            <div class="service-card card-3">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon-wrapper">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Formation</h3>
+                        <p>Parcours de discipleship pour développer votre leadership</p>
+                        <div class="card-cta">
+                            <span>Apprendre</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-content">
+                            <h4>Programmes :</h4>
+                            <ul>
+                                <li>École de disciples</li>
+                                <li>Formation leaders</li>
+                                <li>Études bibliques</li>
+                                <li>Ateliers pratiques</li>
+                            </ul>
+                            <a href="#formation" class="btn-card">
+                                <span>Voir les programmes</span>
+                                <i class="fas fa-book-open"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 - Nouveau Service -->
+            <div class="service-card card-4">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon-wrapper">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3>Implication</h3>
+                        <p>Découvrez vos talents et servez dans la communauté</p>
+                        <div class="card-cta">
+                            <span>Servir</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-content">
+                            <h4>Opportunités :</h4>
+                            <ul>
+                                <li>Ministères divers</li>
+                                <li>Bénévolat</li>
+                                <li>Mentorat</li>
+                                <li>Actions sociales</li>
+                            </ul>
+                            <a href="#implication" class="btn-card">
+                                <span>S'impliquer</span>
+                                <i class="fas fa-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Bottom -->
+        <div class="services-cta fade-in">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h3>Pas sûr par où commencer ?</h3>
+                    <p>Laissez-nous vous guider vers le service qui correspond le mieux à votre situation</p>
+                </div>
+                <a href="#guide" class="btn-cta">
+                    <i class="fas fa-compass"></i>
+                    Guide Personnalisé
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- À Propos Section - Version Modernisée -->
+<section class="about-modern" id="apropos">
+    <div class="modern-container">
+        <!-- Background Elements -->
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+
+        <div class="modern-header">
+            <div class="title-wrapper">
+                <span class="section-subtitle fade-in">Notre Histoire</span>
+                <h2 class="section-title-main fade-in">
+                    <span class="title-line">Propulser</span>
+                    <span class="title-line accent">des Vies</span>
+                    <span class="title-line">vers leur destiné</span>
+                </h2>
+            </div>
+        </div>
+
+        <div class="modern-content">
+            <!-- Image avec effet parallax -->
+            <div class="image-parallax">
+                <div class="parallax-container">
+                    <img src="{% static 'images/prierePasteur.jpg' %}"
+                         alt="Notre communauté"
+                         class="parallax-image">
+                    <div class="image-overlay"></div>
+                    <div class="floating-card card-1">
+                        <i class="fas fa-heart"></i>
+                        <span>Amour</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Service</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="fas fa-cross"></i>
+                        <span>Foi</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="content-main">
+                <!-- Timeline animée -->
+                <div class="timeline">
+                    <div class="timeline-item fade-in-right">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-line"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Notre Fondation</h3>
+                            <div class="timeline-year">2010</div>
+                            <p>Création de l'Église Missionnaire Propulsion avec une vision claire : transformer des vies par la puissance de l'Évangile.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item fade-in-right">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-line"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Expansion</h3>
+                            <div class="timeline-year">2015</div>
+                            <p>Ouverture de 3 nouveaux centres et lancement des programmes de formation des leaders.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item fade-in-right">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-line"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Impact Communautaire</h3>
+                            <div class="timeline-year">2020</div>
+                            <p>Lancement de projets sociaux impactant plus de 5,000 personnes dans notre région.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission et Vision -->
+                <div class="mission-vision">
+                    <div class="mission-card fade-in-left">
+                        <div class="card-icon-wrapper">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Notre Mission</h3>
+                        <p>Créer un environnement où chacun découvre son potentiel en Christ et est équipé pour impacter sa génération.</p>
+                        <div class="mission-stats">
+                            <div class="stat">
+                                <div class="stat-number" data-count="5000">0</div>
+                                <div class="stat-label">Vies Touchées</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number" data-count="12">0</div>
+                                <div class="stat-label">Années de Service</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vision-card fade-in-left">
+                        <div class="card-icon-wrapper">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Notre Vision</h3>
+                        <p>Voir des vies transformées, des familles restaurées et des communautés renouvelées par l'amour de Dieu.</p>
+                        <ul class="vision-list">
+                            <li><i class="fas fa-check"></i> Transformation personnelle</li>
+                            <li><i class="fas fa-check"></i> Impact communautaire</li>
+                            <li><i class="fas fa-check"></i> Leadership développé</li>
+                            <li><i class="fas fa-check"></i> Générations connectées</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="modern-cta fade-in">
+            <div class="cta-content">
+                <h3>Prêt à Rejoindre l'Aventure ?</h3>
+                <p>Découvrez comment vous pouvez faire partie de cette communauté transformatrice</p>
+                <div class="cta-buttons">
+                    <a href="#visite" class="btn btn-primary">
+                        <i class="fas fa-calendar-alt"></i>
+                        Planifier une Visite
+                    </a>
+                    <a href="#histoire" class="btn btn-secondary">
+                        <i class="fas fa-book-open"></i>
+                        Notre Histoire Complète
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Œuvres & Missions Section -->
+<section class="works-section" id="oeuvres">
+    <div class="works-container">
+        <!-- Header Section -->
+        <div class="works-header">
+            <span class="section-tag">Nos Engagements</span>
+            <h2 class="section-title">
+                <span class="title-line">Œuvres &</span>
+                <span class="title-line accent">Missions</span>
+                <span class="title-line">Communautaires</span>
+            </h2>
+            <p class="section-description">
+                Découvrez nos différentes actions sur le terrain et comment nous impactons positivement notre communauté
+            </p>
+        </div>
+
+        <!-- Navigation par Catégories -->
+        <div class="works-categories">
+            <button class="category-btn active" data-category="all">
+                <i class="fas fa-th"></i>
+                Toutes les Œuvres
+            </button>
+            <button class="category-btn" data-category="jeunesse">
+                <i class="fas fa-users"></i>
+                Jeunesse
+            </button>
+            <button class="category-btn" data-category="social">
+                <i class="fas fa-hands-helping"></i>
+                Actions Sociales
+            </button>
+            <button class="category-btn" data-category="spirituel">
+                <i class="fas fa-pray"></i>
+                Spirituel
+            </button>
+            <button class="category-btn" data-category="communautaire">
+                <i class="fas fa-heart"></i>
+                Communautaire
+            </button>
+        </div>
+
+        <!-- Grid des Œuvres -->
+        <div class="works-grid">
+            <!-- Œuvre 1 - Jeunesse Explosion -->
+            <div class="work-card" data-category="jeunesse" data-work="jeunesse-explosion">
+                <div class="work-image">
+                    <img src="{% static "images/photoAccueil.jpg" %}" alt="Jeunesse Explosion">
+                    <div class="work-overlay">
+                        <div class="photo-count">
+                            <i class="fas fa-images"></i>
+                            <span>12 photos</span>
+                        </div>
+                        <div class="work-actions">
+                            <button class="btn-view" data-work="jeunesse-explosion">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <span class="work-category">Jeunesse</span>
+                    <h3>Jeunesse Explosion</h3>
+                    <p>Espace dynamique pour les 13-25 ans pour grandir dans la foi et développer leurs talents.</p>
+                    <div class="work-stats">
+                        <div class="stat">
+                            <i class="fas fa-user-friends"></i>
+                            <span>150+ jeunes</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Hebdomadaire</span>
+                        </div>
+                    </div>
+                    <button class="btn-gallery" data-work="jeunesse-explosion">
+                        <i class="fas fa-images"></i>
+                        Voir la Galerie
+                    </button>
+                </div>
+            </div>
+
+            <!-- Œuvre 2 - Kids Propulsion -->
+            <div class="work-card" data-category="jeunesse" data-work="kids-propulsion">
+                <div class="work-image">
+                    <img src="{% static "images/photoAccueil.jpg" %}" alt="Kids Propulsion">
+                    <div class="work-overlay">
+                        <div class="photo-count">
+                            <i class="fas fa-images"></i>
+                            <span>8 photos</span>
+                        </div>
+                        <div class="work-actions">
+                            <button class="btn-view" data-work="kids-propulsion">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <span class="work-category">Enfance</span>
+                    <h3>Kids Propulsion</h3>
+                    <p>Programme créatif pour les 3-12 ans pour découvrir Dieu à travers des activités adaptées.</p>
+                    <div class="work-stats">
+                        <div class="stat">
+                            <i class="fas fa-child"></i>
+                            <span>80+ enfants</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Dimanches</span>
+                        </div>
+                    </div>
+                    <button class="btn-gallery" data-work="kids-propulsion">
+                        <i class="fas fa-images"></i>
+                        Voir la Galerie
+                    </button>
+                </div>
+            </div>
+
+            <!-- Œuvre 3 - Soutien Alimentaire -->
+            <div class="work-card" data-category="social" data-work="soutien-alimentaire">
+                <div class="work-image">
+                    <img src="{% static "images/photoAccueil.jpg" %}" alt="Soutien Alimentaire">
+                    <div class="work-overlay">
+                        <div class="photo-count">
+                            <i class="fas fa-images"></i>
+                            <span>15 photos</span>
+                        </div>
+                        <div class="work-actions">
+                            <button class="btn-view" data-work="soutien-alimentaire">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <span class="work-category">Action Sociale</span>
+                    <h3>Soutien Alimentaire</h3>
+                    <p>Distribution de paniers repas et accompagnement des familles dans le besoin.</p>
+                    <div class="work-stats">
+                        <div class="stat">
+                            <i class="fas fa-utensils"></i>
+                            <span>200+ familles</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-heart"></i>
+                            <span>Mensuel</span>
+                        </div>
+                    </div>
+                    <button class="btn-gallery" data-work="soutien-alimentaire">
+                        <i class="fas fa-images"></i>
+                        Voir la Galerie
+                    </button>
+                </div>
+            </div>
+
+            <!-- Œuvre 4 - Cellules de Maison -->
+            <div class="work-card" data-category="spirituel" data-work="cellules-maison">
+                <div class="work-image">
+                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cellules de Maison">
+                    <div class="work-overlay">
+                        <div class="photo-count">
+                            <i class="fas fa-images"></i>
+                            <span>10 photos</span>
+                        </div>
+                        <div class="work-actions">
+                            <button class="btn-view" data-work="cellules-maison">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <span class="work-category">Spirituel</span>
+                    <h3>Cellules de Maison</h3>
+                    <p>Groupes de partage et d'étude biblique dans un cadre chaleureux et familial.</p>
+                    <div class="work-stats">
+                        <div class="stat">
+                            <i class="fas fa-home"></i>
+                            <span>12 cellules</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Hebdomadaire</span>
+                        </div>
+                    </div>
+                    <button class="btn-gallery" data-work="cellules-maison">
+                        <i class="fas fa-images"></i>
+                        Voir la Galerie
+                    </button>
+                </div>
+            </div>
+
+            <!-- Œuvre 5 - Aide aux Démunis -->
+            <div class="work-card" data-category="social" data-work="aide-demunis">
+                <div class="work-image">
+                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Aide aux Démunis">
+                    <div class="work-overlay">
+                        <div class="photo-count">
+                            <i class="fas fa-images"></i>
+                            <span>18 photos</span>
+                        </div>
+                        <div class="work-actions">
+                            <button class="btn-view" data-work="aide-demunis">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <span class="work-category">Action Sociale</span>
+                    <h3>Aide aux Démunis</h3>
+                    <p>Programme d'accompagnement global pour les personnes en situation de précarité.</p>
+                    <div class="work-stats">
+                        <div class="stat">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <span>300+ personnes</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Permanente</span>
+                        </div>
+                    </div>
+                    <button class="btn-gallery" data-work="aide-demunis">
+                        <i class="fas fa-images"></i>
+                        Voir la Galerie
+                    </button>
+                </div>
+            </div>
+
+            <!-- Œuvre 6 - Événements Communautaires -->
+            <div class="work-card" data-category="communautaire" data-work="evenements">
+                <div class="work-image">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Événements Communautaires">
+                    <div class="work-overlay">
+                        <div class="photo-count">
+                            <i class="fas fa-images"></i>
+                            <span>25 photos</span>
+                        </div>
+                        <div class="work-actions">
+                            <button class="btn-view" data-work="evenements">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <span class="work-category">Communautaire</span>
+                    <h3>Événements Communautaires</h3>
+                    <p>Rassemblements, fêtes et célébrations pour renforcer les liens dans la communauté.</p>
+                    <div class="work-stats">
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span>500+ participants</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Trimestriel</span>
+                        </div>
+                    </div>
+                    <button class="btn-gallery" data-work="evenements">
+                        <i class="fas fa-images"></i>
+                        Voir la Galerie
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Galerie -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalWorkTitle">Jeunesse Explosion</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="gallery-carousel">
+                    <button class="carousel-btn carousel-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-track">
+                        <div class="carousel-slide active">
+                            <img src="" alt="" class="carousel-image">
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="gallery-thumbnails" id="galleryThumbnails">
+                    <!-- Les miniatures seront injectées ici par JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="image-counter">
+                    <span id="currentImage">1</span> / <span id="totalImages">12</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-download">
+                        <i class="fas fa-download"></i>
+                        Télécharger
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Événements Section -->
+    <section class="section events" id="evenements">
+        <div class="section-title">
+            <h2>Événements à Venir</h2>
+            <p>Rejoignez-nous pour ces moments spéciaux</p>
+        </div>
+        <div class="events-grid">
+            <div class="event-card fade-in">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Culte Spécial Jeunesse">
+                </div>
+                <div class="event-date">
+                    <div class="day">15</div>
+                    <div class="month">JUIN</div>
+                </div>
+                <div class="event-content">
+                    <h3>Culte Spécial Jeunesse</h3>
+                    <p>Une soirée dynamique dédiée aux jeunes avec musique live, témoignages et message inspirant.</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 19h00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Auditorium Principal</span>
+                    </div>
+                    <a href="#inscription" class="btn btn-tertiary">S'inscrire</a>
+                </div>
+            </div>
+
+            <div class="event-card fade-in">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1540479859555-17af45c78602?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Conférence Foi en Action">
+                </div>
+                <div class="event-date">
+                    <div class="day">22</div>
+                    <div class="month">JUIN</div>
+                </div>
+                <div class="event-content">
+                    <h3>Conférence "Foi en Action"</h3>
+                    <p>Une journée de formation pour apprendre à vivre sa foi concrètement dans tous les domaines de la vie.</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 9h00 - 17h00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Centre de Conférences</span>
+                    </div>
+                    <a href="#inscription" class="btn btn-tertiary">S'inscrire</a>
+                </div>
+            </div>
+
+            <div class="event-card fade-in">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Pique-nique Communautaire">
+                </div>
+                <div class="event-date">
+                    <div class="day">30</div>
+                    <div class="month">JUIN</div>
+                </div>
+                <div class="event-content">
+                    <h3>Pique-nique Communautaire</h3>
+                    <p>Un moment de détente et de connexion pour toute la communauté de l'église. Apportez un plat à partager !</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 12h00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Parc Central</span>
+                    </div>
+                    <a href="#inscription" class="btn btn-tertiary">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="section-title">
+            <h2>Contactez-nous</h2>
+            <p>Nous serions ravis de vous accueillir</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item fade-in-left">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Notre Adresse</h3>
+                        <p>123 Avenue de la Foi<br>75000 Paris, France</p>
+                    </div>
+                </div>
+
+                <div class="contact-item fade-in-left">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Horaires des Cultes</h3>
+                        <p>Dimanche: 10h00 & 18h00<br>Mercredi: 19h30 (Groupe de maison)</p>
+                    </div>
+                </div>
+
+                <div class="contact-item fade-in-left">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Téléphone</h3>
+                        <p>+33 1 23 45 67 89</p>
+                    </div>
+                </div>
+
+                <div class="contact-item fade-in-left">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>contact@propulsion.fr</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form fade-in-right">
+                <h3>Envoyez-nous un message</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer le message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Propulsion</h3>
+                <p>Une communauté passionnée qui vit l'Évangile et impacte sa génération.</p>
+                <div class="social-links" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#apropos">À Propos</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#ministeres">Ministères</a></li>
+                    <li><a href="#equipe">Équipe</a></li>
+                    <li><a href="#evenements">Événements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Ressources</h3>
+                <ul class="footer-links">
+                    <li><a href="#sermons">Sermons</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#podcast">Podcast</a></li>
+                    <li><a href="#mediatheque">Médiathèque</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Inscrivez-vous pour recevoir nos actualités et événements.</p>
+                <form style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Votre email" required style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">
+                    </div>
+                    <button type="submit" class="btn btn-tertiary" style="width: 100%; margin-top: 0.5rem;">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Église Missionnaire Propulsion. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Avancé -->
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.style.opacity = '0';
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 800);
+            }, 1500);
+        });
+
+        // Particles System
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Random properties
+                const size = Math.random() * 6 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 10;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+                particles.appendChild(particle);
+            }
+        }
+
+        // Scroll Animations
+        function handleScroll() {
+            const navbar = document.getElementById('navbar');
+            const scrolled = window.pageYOffset > 50;
+
+            if (scrolled) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Fade in elements
+            const fadeElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for advanced animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
+
+            // Observe all animated elements
+            document.querySelectorAll('.card, .ministry-card, .event-card, .gallery-item, .team-member').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Magnetic Button Effect
+        document.querySelectorAll('.btn, .nav-cta').forEach(button => {
+            button.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                this.style.setProperty('--x', `${x}px`);
+                this.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // Animation des compteurs
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+
+        const updateCounter = () => {
+            current += step;
+            if (current < target) {
+                counter.textContent = Math.ceil(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target;
+                counter.classList.add('animated');
+            }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        observer.observe(counter);
+    });
+}
+
+// Effet parallax
+function initParallax() {
+    const parallaxImage = document.querySelector('.parallax-image');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.3;
+        parallaxImage.style.transform = `translateY(${rate}px)`;
+    });
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    animateCounters();
+    initParallax();
+});
+
+// Animation des cartes au scroll
+function animateCardsOnScroll() {
+    const cards = document.querySelectorAll('.service-card');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(50px)';
+        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(card);
+    });
+}
+
+// Effet de parallax sur le background
+function initServicesParallax() {
+    const bgImage = document.querySelector('.bg-image');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        bgImage.style.transform = `scale(1.1) translateY(${rate}px)`;
+    });
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    animateCardsOnScroll();
+    initServicesParallax();
+});
+
+// Données des galeries pour chaque œuvre
+const worksData = {
+    'jeunesse-explosion': {
+        title: 'Jeunesse Explosion',
+        images: [
+            'https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            '{% static "images/photoAccueil.jpg" %}'
+        ]
+    },
+    'kids-propulsion': {
+        title: 'Kids Propulsion',
+        images: [
+            'https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ]
+    },
+    'soutien-alimentaire': {
+        title: 'Soutien Alimentaire',
+        images: [
+            'https://images.unsplash.com/photo-1552422535-c45813c61732?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ]
+    },
+    'cellules-maison': {
+        title: 'Cellules de Maison',
+        images: [
+            'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ]
+    },
+    'aide-demunis': {
+        title: 'Aide aux Démunis',
+        images: [
+            'https://images.unsplash.com/photo-1552422535-c45813c61732?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ]
+    },
+    'evenements': {
+        title: 'Événements Communautaires',
+        images: [
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ]
+    }
+};
+
+class WorksGallery {
+    constructor() {
+        this.currentWork = null;
+        this.currentImageIndex = 0;
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.initFilter();
+    }
+
+    bindEvents() {
+        // Boutons de galerie
+        document.querySelectorAll('.btn-gallery, .btn-view').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const workId = e.currentTarget.dataset.work;
+                this.openGallery(workId);
+            });
+        });
+
+        // Fermeture modal
+        document.getElementById('modalClose').addEventListener('click', () => {
+            this.closeGallery();
+        });
+
+        // Navigation carousel
+        document.querySelector('.carousel-prev').addEventListener('click', () => {
+            this.prevImage();
+        });
+
+        document.querySelector('.carousel-next').addEventListener('click', () => {
+            this.nextImage();
+        });
+
+        // Clic en dehors du modal
+        document.getElementById('galleryModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                this.closeGallery();
+            }
+        });
+
+        // Touches clavier
+        document.addEventListener('keydown', (e) => {
+            if (this.currentWork) {
+                if (e.key === 'Escape') this.closeGallery();
+                if (e.key === 'ArrowLeft') this.prevImage();
+                if (e.key === 'ArrowRight') this.nextImage();
+            }
+        });
+    }
+
+    initFilter() {
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Retirer active de tous les boutons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Activer le bouton cliqué
+                btn.classList.add('active');
+
+                const category = btn.dataset.category;
+                this.filterWorks(category);
+            });
+        });
+    }
+
+    filterWorks(category) {
+        const works = document.querySelectorAll('.work-card');
+
+        works.forEach(work => {
+            if (category === 'all' || work.dataset.category === category) {
+                work.style.display = 'block';
+                // Réanimation
+                work.classList.remove('visible');
+                setTimeout(() => work.classList.add('visible'), 100);
+            } else {
+                work.style.display = 'none';
+            }
+        });
+    }
+
+    openGallery(workId) {
+        this.currentWork = worksData[workId];
+        this.currentImageIndex = 0;
+
+        if (!this.currentWork) return;
+
+        // Mettre à jour le titre
+        document.getElementById('modalWorkTitle').textContent = this.currentWork.title;
+
+        // Afficher le modal
+        document.getElementById('galleryModal').classList.add('active');
+
+        // Charger les images
+        this.loadGalleryImages();
+
+        // Empêcher le scroll du body
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeGallery() {
+        document.getElementById('galleryModal').classList.remove('active');
+        this.currentWork = null;
+        document.body.style.overflow = '';
+    }
+
+    loadGalleryImages() {
+        const carouselTrack = document.querySelector('.carousel-track');
+        const thumbnailsContainer = document.getElementById('galleryThumbnails');
+
+        // Vider les contenus précédents
+        carouselTrack.innerHTML = '';
+        thumbnailsContainer.innerHTML = '';
+
+        // Créer les slides et thumbnails
+        this.currentWork.images.forEach((image, index) => {
+            // Slide principal
+            const slide = document.createElement('div');
+            slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+            slide.innerHTML = `<img src="${image}" alt="${this.currentWork.title} - Image ${index + 1}" class="carousel-image">`;
+            carouselTrack.appendChild(slide);
+
+            // Thumbnail
+            const thumbnail = document.createElement('div');
+            thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+            thumbnail.innerHTML = `<img src="${image}" alt="Thumbnail ${index + 1}">`;
+            thumbnail.addEventListener('click', () => this.goToImage(index));
+            thumbnailsContainer.appendChild(thumbnail);
+        });
+
+        // Mettre à jour le compteur
+        this.updateCounter();
+    }
+
+    updateCounter() {
+        document.getElementById('currentImage').textContent = this.currentImageIndex + 1;
+        document.getElementById('totalImages').textContent = this.currentWork.images.length;
+    }
+
+    goToImage(index) {
+        this.currentImageIndex = index;
+
+        // Mettre à jour les slides
+        const slides = document.querySelectorAll('.carousel-slide');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+
+        thumbnails.forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === index);
+        });
+
+        this.updateCounter();
+    }
+
+    prevImage() {
+        if (this.currentImageIndex > 0) {
+            this.goToImage(this.currentImageIndex - 1);
+        } else {
+            this.goToImage(this.currentWork.images.length - 1);
+        }
+    }
+
+    nextImage() {
+        if (this.currentImageIndex < this.currentWork.images.length - 1) {
+            this.goToImage(this.currentImageIndex + 1);
+        } else {
+            this.goToImage(0);
+        }
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    new WorksGallery();
+
+    // Animation au scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.work-card').forEach(card => {
+        observer.observe(card);
+    });
+});
+    </script>
+</body>
+</html>
