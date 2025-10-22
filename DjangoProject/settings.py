@@ -84,17 +84,13 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]       # (CSS/JS/images source)
 STATIC_ROOT = BASE_DIR / "staticfiles"         # (destination collectstatic)
 
-# Django 4.2+ : configuration des storages (WhiteNoise compress + manifest)
+# WhiteNoise (compression, SANS manifest pour éviter l'erreur de fichier manquant)
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
     },
 }
-
-# WhiteNoise : ne plante pas si un fichier référencé en CSS est manquant
-WHITENOISE_MANIFEST_STRICT = False
-
 
 # --- Sécurité derrière proxy HTTPS (Render) ---
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
