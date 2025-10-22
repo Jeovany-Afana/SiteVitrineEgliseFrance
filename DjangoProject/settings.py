@@ -92,6 +92,10 @@ STORAGES = {
     },
 }
 
+# WhiteNoise : ne plante pas si un fichier référencé en CSS est manquant
+WHITENOISE_MANIFEST_STRICT = False
+
+
 # --- Sécurité derrière proxy HTTPS (Render) ---
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 if not DEBUG:
