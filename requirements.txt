@@ -1,0 +1,6 @@
+Django>=4.2,<5.0
+gunicorn
+whitenoise
+dj-database-url
+psycopg2-binary   # utile si tu prends Postgres chez Render (sinon ça gêne pas)
+python-dotenv     # optionnel, pratique en local
