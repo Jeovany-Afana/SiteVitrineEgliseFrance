@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 import dj_database_url
 
-# Chemins de base
+# --- Chemins de base ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- Sécurité / Debug via variables d'environnement ---
@@ -15,7 +15,6 @@ render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if render_host:
     ALLOWED_HOSTS.append(render_host)
 
-# CSRF exige les schémas complets
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 if render_host:
     CSRF_TRUSTED_ORIGINS.append(f"https://{render_host}")
@@ -48,7 +47,7 @@ ROOT_URLCONF = "DjangoProject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # répertoire de templates global
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -63,14 +62,24 @@ TEMPLATES = [
 WSGI_APPLICATION = "DjangoProject.wsgi.application"
 
 # --- Base de données ---
-# Utilise DATABASE_URL (Postgres Render) si présent, sinon SQLite local.
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=bool(os.getenv("RENDER", "")),  # SSL pour Render
-    )
-}
+# Si DATABASE_URL est défini (Postgres Render), on l'utilise avec SSL.
+# Sinon, on reste en SQLite sans SSL (pas de 'sslmode' injecté).
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,  # OK pour Postgres
+        )
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # --- Internationalisation ---
 LANGUAGE_CODE = "fr-fr"
@@ -79,17 +88,14 @@ USE_I18N = True
 USE_TZ = True
 
 # --- Fichiers statiques ---
-# /static = URL ; sources dans BASE_DIR/static ; collectstatic vers BASE_DIR/staticfiles
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]       # (CSS/JS/images source)
-STATIC_ROOT = BASE_DIR / "staticfiles"         # (destination collectstatic)
+STATICFILES_DIRS = [BASE_DIR / "static"]   # sources (CSS/JS/images)
+STATIC_ROOT = BASE_DIR / "staticfiles"     # destination collectstatic
 
-# WhiteNoise (compression, SANS manifest pour éviter l'erreur de fichier manquant)
+# WhiteNoise (compression, sans manifest pour éviter les refs manquantes)
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
-    },
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
 
 # --- Sécurité derrière proxy HTTPS (Render) ---
@@ -99,5 +105,4 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
 
-# --- Divers ---
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
