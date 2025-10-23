@@ -1,0 +1,487 @@
+{% load static %}
+
+<nav class="prop-nav" id="propNav">
+  <div class="prop-nav__container">
+  <a class="prop-nav__brand" href="{% url 'index' %}">
+  <img
+    class="prop-nav__logo-img"
+    src="{% static 'images/LogoEglise.png' %}"
+    alt="Église Missionnaire Propulsion — logo"
+    width="36" height="36"
+    decoding="async" loading="eager"
+  />
+</a>
+
+
+    <!-- Bouton burger -->
+    <button class="prop-nav__toggle" id="propNavToggle"
+            aria-label="Ouvrir le menu"
+            aria-controls="propNavPanel"
+            aria-expanded="false">
+      <span class="prop-nav__bar"></span>
+      <span class="prop-nav__bar"></span>
+      <span class="prop-nav__bar"></span>
+    </button>
+
+    <!-- Liens (desktop horizontal / mobile off-canvas) -->
+    <ul class="prop-nav__links" id="propNavPanel">
+      <li><a href="{% url 'index' %}">Accueil</a></li>
+      <li><a href="{% url 'about' %}">À Propos</a></li>
+      <li><a href="{% url 'gallery' %}">Galerie</a></li>
+      <li><a href="{% url 'ministeres' %}">Ministères</a></li>
+
+      <li><a href="{% url 'evenements' %}">Événements</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+
+  <!-- Overlay -->
+  <div class="prop-nav__backdrop" id="propNavBackdrop" hidden></div>
+</nav>
+
+<style>
+/* ----- Variables modernes ----- */
+:root {
+  --prop-primary: #2563eb;
+  --prop-primary-light: #3b82f6;
+  --prop-secondary: #ec4899;
+  --prop-secondary-light: #f472b6;
+  --prop-text: #1e293b;
+  --prop-text-light: #64748b;
+  --prop-white: #ffffff;
+  --prop-gray-50: #f8fafc;
+  --prop-gray-100: #f1f5f9;
+  --prop-gray-200: #e2e8f0;
+  --prop-gray-300: #cbd5e1;
+  --prop-gray-800: #1e293b;
+  --prop-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --prop-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --prop-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --prop-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --prop-radius: 12px;
+  --prop-radius-lg: 16px;
+  --prop-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ----- Reset et base ----- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  line-height: 1.6;
+  color: var(--prop-text);
+  overflow-x: hidden;
+}
+
+/* ----- Nav : layout de base ----- */
+.prop-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+  transition: var(--prop-transition);
+  padding: 1rem 0;
+}
+
+.prop-nav--scrolled {
+  padding: 0.75rem 0;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--prop-shadow-md);
+  border-bottom: 1px solid var(--prop-gray-200);
+}
+
+.prop-nav__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+
+/* ----- Brand ----- */
+.prop-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 1.5rem;
+  letter-spacing: -0.025em;
+  color: var(--prop-text);
+  transition: var(--prop-transition);
+}
+
+.prop-nav__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--prop-primary), var(--prop-secondary));
+  color: var(--prop-white);
+  border-radius: 10px;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.prop-nav__brand:hover {
+  transform: translateY(-1px);
+}
+
+/* ----- CTA (desktop) ----- */
+.prop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--prop-radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--prop-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.prop-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+}
+
+.prop-btn:hover::before {
+  left: 100%;
+}
+
+.prop-btn--don {
+  color: var(--prop-white);
+  background: linear-gradient(135deg, var(--prop-primary), var(--prop-secondary));
+  box-shadow: var(--prop-shadow-sm);
+}
+
+.prop-btn--don:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--prop-shadow-lg);
+}
+
+/* ----- Liens desktop ----- */
+.prop-nav__links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.prop-nav__links a {
+  text-decoration: none;
+  color: var(--prop-text);
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: var(--prop-transition);
+}
+
+.prop-nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--prop-primary), var(--prop-secondary));
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.prop-nav__links a:hover {
+  color: var(--prop-primary);
+}
+
+.prop-nav__links a:hover::after {
+  width: 100%;
+}
+
+/* ----- Burger (desktop hidden) ----- */
+.prop-nav__toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--prop-radius);
+  border: 1px solid var(--prop-gray-200);
+  background: var(--prop-white);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  z-index: 1002;
+  transition: var(--prop-transition);
+  box-shadow: var(--prop-shadow-sm);
+}
+
+.prop-nav__toggle:hover {
+  border-color: var(--prop-gray-300);
+  box-shadow: var(--prop-shadow-md);
+}
+
+.prop-nav__bar {
+  width: 20px;
+  height: 2px;
+  background: var(--prop-text);
+  border-radius: 2px;
+  transition: var(--prop-transition);
+}
+
+.prop-nav--open .prop-nav__bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.prop-nav--open .prop-nav__bar:nth-child(2) {
+  opacity: 0;
+}
+
+.prop-nav--open .prop-nav__bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ----- Off-canvas mobile ----- */
+.prop-nav__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--prop-transition);
+  z-index: 1000;
+}
+
+.prop-nav--open .prop-nav__backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 992px) {
+  .prop-nav__toggle {
+    display: inline-flex;
+  }
+
+  .prop-nav__cta {
+    display: none;
+  } /* CTA desktop cachée en mobile */
+
+  .prop-nav__links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(85vw, 360px);
+    background: var(--prop-white);
+    padding: 6rem 1.5rem 2rem;
+    box-shadow: -16px 0 40px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow-y: auto;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--prop-transition);
+    z-index: 1001;
+  }
+
+  .prop-nav--open .prop-nav__links {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .prop-nav__links li {
+    border-bottom: 1px solid var(--prop-gray-100);
+    padding: 1rem 0;
+    width: 100%;
+  }
+
+  .prop-nav__links a {
+    display: block;
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    width: 100%;
+  }
+
+  .prop-nav__links-cta {
+    border-bottom: 0;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .prop-nav__links-cta .prop-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Animation d'entrée pour les éléments du menu mobile */
+@media (max-width: 992px) {
+  .prop-nav__links li {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .prop-nav--open .prop-nav__links li {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .prop-nav--open .prop-nav__links li:nth-child(1) { transition-delay: 0.1s; }
+  .prop-nav--open .prop-nav__links li:nth-child(2) { transition-delay: 0.15s; }
+  .prop-nav--open .prop-nav__links li:nth-child(3) { transition-delay: 0.2s; }
+  .prop-nav--open .prop-nav__links li:nth-child(4) { transition-delay: 0.25s; }
+  .prop-nav--open .prop-nav__links li:nth-child(5) { transition-delay: 0.3s; }
+  .prop-nav--open .prop-nav__links li:nth-child(6) { transition-delay: 0.35s; }
+  .prop-nav--open .prop-nav__links li:nth-child(7) { transition-delay: 0.4s; }
+  .prop-nav--open .prop-nav__links li:nth-child(8) { transition-delay: 0.45s; }
+}
+
+/* Améliorations pour les écrans larges */
+@media (min-width: 1280px) {
+  .prop-nav__container {
+    padding: 0 2rem;
+  }
+}
+
+/* Support de la réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================
+   Logo brand – tailles fluides
+   ========================= */
+:root{
+  --prop-logo-size: 56px;          /* taille desktop */
+  --prop-logo-size-mobile: 48px;   /* taille mobile */
+  --prop-logo-size-scrolled: 44px; /* taille quand la nav est scrollée */
+}
+
+.prop-nav__brand { gap: .75rem; }
+
+/* Image du logo */
+.prop-nav__logo-img{
+  width: var(--prop-logo-size);
+  height: var(--prop-logo-size);
+  display: block;
+  object-fit: contain;
+  /* retire l'arrondi si ton logo n'est pas carré */
+  border-radius: 0;
+  /* dé-snap la ligne de base pour un alignement nickel */
+  vertical-align: middle;
+}
+
+/* Réduction légère en mode scrolled */
+.prop-nav--scrolled .prop-nav__logo-img{
+  width: var(--prop-logo-size-scrolled);
+  height: var(--prop-logo-size-scrolled);
+}
+
+/* Mobile: un peu plus compact */
+@media (max-width: 480px){
+  .prop-nav__logo-img{
+    width: var(--prop-logo-size-mobile);
+    height: var(--prop-logo-size-mobile);
+  }
+}
+
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('propNav');
+  const toggle = document.getElementById('propNavToggle');
+  const panel = document.getElementById('propNavPanel');
+  const backdrop = document.getElementById('propNavBackdrop');
+
+  const firstFocusable = () => panel.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
+
+  function openMenu() {
+    root.classList.add('prop-nav--open');
+    toggle.setAttribute('aria-expanded', 'true');
+    backdrop.hidden = false;
+    document.body.style.overflow = 'hidden';
+    const f = firstFocusable();
+    f && f.focus({ preventScroll: true });
+  }
+
+  function closeMenu() {
+    root.classList.remove('prop-nav--open');
+    toggle.setAttribute('aria-expanded', 'false');
+    backdrop.hidden = true;
+    document.body.style.overflow = '';
+    toggle.focus({ preventScroll: true });
+  }
+
+  function isOpen() {
+    return root.classList.contains('prop-nav--open');
+  }
+
+  toggle.addEventListener('click', () => isOpen() ? closeMenu() : openMenu());
+  backdrop.addEventListener('click', closeMenu);
+
+  // Fermer au clic d'un lien
+  panel.addEventListener('click', (e) => {
+    if (e.target.closest('a')) closeMenu();
+  });
+
+  // ESC + trap focus minimal
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) {
+      e.preventDefault();
+      closeMenu();
+    }
+    if (e.key === 'Tab' && isOpen()) {
+      const focusables = panel.querySelectorAll('a,button,[tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  // Fermer si on repasse en desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 992 && isOpen()) closeMenu();
+  });
+
+  // Effet scrolled
+  const onScroll = () => root.classList.toggle('prop-nav--scrolled', window.pageYOffset > 50);
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>

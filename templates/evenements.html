@@ -1,0 +1,1255 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #052594;
+            --primary-dark: #052594;
+            --primary-light: #3174d9;
+            --accent: #f8073f;
+            --accent-dark: #9b0b22;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+            --neon-glow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Hero Événements Futuriste */
+        .events-hero {
+            min-height: 80vh;
+            background:
+                linear-gradient(135deg, rgb(3, 42, 178) 0%, rgba(30, 58, 35, 0.95) 100%),
+                url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .events-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(30, 58, 35, 0.4) 0%, transparent 50%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .hero-particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: floatParticle 6s ease-in-out infinite;
+            box-shadow: var(--neon-glow);
+        }
+
+        @keyframes floatParticle {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg) scale(1.2);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            animation: neonPulse 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+                border-color: rgba(212, 175, 55, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.4);
+                border-color: rgba(212, 175, 55, 1);
+            }
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, #4A7C59 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Navigation Futuriste */
+        .events-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-filter {
+            background: white;
+            border: 2px solid var(--light-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-filter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .time-filter:hover::before {
+            left: 100%;
+        }
+
+        .time-filter:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .time-filter.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: var(--neon-glow);
+        }
+
+        /* Section Événements Principale */
+        .events-main {
+            padding: 6rem 0;
+            background: var(--light-bg);
+            position: relative;
+        }
+
+        .events-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Grille Événements Futuriste */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transform: translateY(50px) scale(0.95);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .event-card.visible {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44, 85, 48, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .event-card:hover::before {
+            opacity: 1;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.15),
+                var(--neon-glow);
+        }
+
+        .card-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            filter: brightness(0.9);
+        }
+
+        .event-card:hover .card-image {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.5rem 1.2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            z-index: 2;
+        }
+
+        .event-date {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .date-day {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .date-month {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-content {
+            padding: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .event-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .meta-item i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 10px 25px rgba(44, 85, 48, 0.4),
+                var(--neon-glow);
+        }
+
+        .btn-outline {
+            flex: 1;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Section Événements à Venir en Vedette */
+        .featured-events {
+            padding: 6rem 0;
+            background: white;
+            position: relative;
+        }
+
+        .featured-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .featured-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .featured-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+        }
+
+        .featured-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            position: relative;
+            color: white;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .featured-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .featured-content {
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-card-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .featured-card-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 15px;
+            min-width: 80px;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section Calendrier */
+        .calendar-section {
+            padding: 6rem 0;
+            background: var(--light-bg);
+        }
+
+        .calendar-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .calendar-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .month-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .month-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .month-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .month-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .calendar-event {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-event:hover {
+            background: var(--primary-light);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .event-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .event-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .event-info span {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* CTA Section */
+        .events-cta {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .cta-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-neon {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 1.2rem 2.5rem;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: var(--neon-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-neon:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 15px 40px rgba(212, 175, 55, 0.6),
+                var(--neon-glow);
+            background: var(--accent-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .featured-title {
+                font-size: 2.2rem;
+            }
+
+            .cta-title {
+                font-size: 2.5rem;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .countdown {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="events-hero">
+        <div class="hero-particles" id="eventsParticles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-calendar-star"></i> ÉVÉNEMENTS PROPHÉTIQUES
+            </div>
+            <h1 class="hero-title">
+                L'Avenir<br>
+                Nous Attend
+            </h1>
+            <p class="hero-subtitle">
+                Découvrez les événements transformateurs qui façonneront votre destinée spirituelle.<br>
+                Des rencontres prophétiques aux célébrations glorieuses, vivez l'extraordinaire.
+            </p>
+        </div>
+    </section>
+
+    <!-- Navigation Événements -->
+    <nav class="events-nav">
+        <div class="nav-container">
+            <button class="time-filter active" data-filter="all">
+                <i class="fas fa-layer-group"></i>
+                Tous les Événements
+            </button>
+            <button class="time-filter" data-filter="upcoming">
+                <i class="fas fa-rocket"></i>
+                À Venir
+            </button>
+            <button class="time-filter" data-filter="monthly">
+                <i class="fas fa-calendar-alt"></i>
+                Mensuels
+            </button>
+            <button class="time-filter" data-filter="special">
+                <i class="fas fa-star"></i>
+                Événements Spéciaux
+            </button>
+            <button class="time-filter" data-filter="youth">
+                <i class="fas fa-users"></i>
+                Jeunesse
+            </button>
+            <button class="time-filter" data-filter="conference">
+                <i class="fas fa-microphone"></i>
+                Conférences
+            </button>
+        </div>
+    </nav>
+
+    <!-- Section Événements Principale -->
+    <section class="events-main">
+        <div class="events-container">
+            <div class="events-grid" id="eventsGrid">
+                <!-- Événement 1 -->
+                <div class="event-card" data-category="special upcoming" data-date="2024-06-15">
+                    <div class="card-header">
+                        <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Nuit de Réveil Prophétique" class="card-image">
+                        <div class="event-badge">Événement Spécial</div>
+                        <div class="event-date">
+                            <div class="date-day">15</div>
+                            <div class="date-month">Juin</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="event-title">Nuit de Réveil Prophétique</h3>
+                        <p class="event-description">
+                            Une nuit de percée spirituelle avec des prophéties, des guérisons et des témoignages puissants.
+                            Laissez Dieu transformer votre vie dans cette atmosphère de gloire.
+                        </p>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>19h00 - 23h00</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Auditorium Principal</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>500+ participants</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#inscription" class="btn-primary">
+                                <i class="fas fa-ticket-alt"></i>
+                                Réserver ma place
+                            </a>
+                            <a href="#details" class="btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Plus d'infos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Événement 2 -->
+                <div class="event-card" data-category="conference upcoming" data-date="2024-06-22">
+                    <div class="card-header">
+                        <img src="https://images.unsplash.com/photo-1540479859555-17af45c78602?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Conférence Leadership" class="card-image">
+                        <div class="event-badge">Conférence</div>
+                        <div class="event-date">
+                            <div class="date-day">22</div>
+                            <div class="date-month">Juin</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="event-title">Conférence des Leaders Émergents</h3>
+                        <p class="event-description">
+                            Formation intensive pour développer votre leadership spirituel.
+                            Apprenez des stratégies éprouvées pour impacter votre génération.
+                        </p>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>9h00 - 17h00</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Centre de Formation</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>Place limitées</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#inscription" class="btn-primary">
+                                <i class="fas fa-ticket-alt"></i>
+                                S'inscrire
+                            </a>
+                            <a href="#details" class="btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Programme
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Événement 3 -->
+                <div class="event-card" data-category="youth monthly" data-date="2024-06-30">
+                    <div class="card-header">
+                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Concert Jeunesse" class="card-image">
+                        <div class="event-badge">Jeunesse</div>
+                        <div class="event-date">
+                            <div class="date-day">30</div>
+                            <div class="date-month">Juin</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="event-title">Concert Jeunesse Explosion</h3>
+                        <p class="event-description">
+                            Soirée louange et adoration avec les meilleurs groupes de worship jeunes.
+                            Une expérience céleste pour la nouvelle génération.
+                        </p>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>18h00 - 22h00</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Espace Jeunesse</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>13-25 ans</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#inscription" class="btn-primary">
+                                <i class="fas fa-ticket-alt"></i>
+                                Participer
+                            </a>
+                            <a href="#details" class="btn-outline">
+                                <i class="fas fa-music"></i>
+                                Artistes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Événements en Vedette -->
+    <section class="featured-events">
+        <div class="events-container">
+            <div class="featured-header">
+                <h2 class="featured-title">Événements Phares</h2>
+                <p class="featured-subtitle">Des moments inoubliables qui marquent des vies et transforment des destinées</p>
+            </div>
+
+            <div class="featured-grid">
+                <!-- Événement Vedette 1 -->
+                <div class="featured-card">
+                    <div class="featured-content">
+                        <div class="featured-badge">Événement de l'Année</div>
+                        <h3 class="featured-card-title">Conférence Annuelle "Impact Prophétique"</h3>
+                        <p class="featured-card-description">
+                            3 jours de formation intensive avec des orateurs internationaux.
+                            Découvrez les clés pour vivre votre destinée prophétique et impacter votre génération.
+                        </p>
+
+                        <div class="countdown" id="countdown1">
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="days1">00</div>
+                                <div class="countdown-label">Jours</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="hours1">00</div>
+                                <div class="countdown-label">Heures</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="minutes1">00</div>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="seconds1">00</div>
+                                <div class="countdown-label">Secondes</div>
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <a href="#inscription" class="btn-neon">
+                                <i class="fas fa-gem"></i>
+                                Réserver Premium
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Événement Vedette 2 -->
+                <div class="featured-card">
+                    <div class="featured-content">
+                        <div class="featured-badge">Exclusivité</div>
+                        <h3 class="featured-card-title">Retraite Spirituelle "Mont Sion"</h3>
+                        <p class="featured-card-description">
+                            Une retraite de 5 jours en montagne pour une rencontre profonde avec Dieu.
+                            Enseignements avancés, moments dans la présence divine et communion fraternelle.
+                        </p>
+
+                        <div class="countdown" id="countdown2">
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="days2">00</div>
+                                <div class="countdown-label">Jours</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="hours2">00</div>
+                                <div class="countdown-label">Heures</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="minutes2">00</div>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="seconds2">00</div>
+                                <div class="countdown-label">Secondes</div>
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <a href="#inscription" class="btn-neon">
+                                <i class="fas fa-mountain"></i>
+                                S'inscrire
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Calendrier -->
+    <section class="calendar-section">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h2 class="calendar-title">Calendrier des Événements</h2>
+                <p class="featured-subtitle">Planifiez votre année spirituelle avec nos événements réguliers</p>
+            </div>
+
+            <div class="calendar-grid">
+                <!-- Mois 1 -->
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3 class="month-name">Juillet 2024</h3>
+                    </div>
+                    <div class="events-list">
+                        <div class="calendar-event">
+                            <div class="event-dot"></div>
+                            <div class="event-info">
+                                <h4>Culte de Réveil Estival</h4>
+                                <span>Tous les dimanches à 10h00</span>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <div class="event-dot"></div>
+                            <div class="event-info">
+                                <h4>Camp Jeunesse "Fire Camp"</h4>
+                                <span>15-20 Juillet • Centre Événementiel</span>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <div class="event-dot"></div>
+                            <div class="event-info">
+                                <h4>Conférence Couples</h4>
+                                <span>27 Juillet • 14h00-18h00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mois 2 -->
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3 class="month-name">Août 2024</h3>
+                    </div>
+                    <div class="events-list">
+                        <div class="calendar-event">
+                            <div class="event-dot"></div>
+                            <div class="event-info">
+                                <h4>Retraite de Jeûne et Prière</h4>
+                                <span>5-7 Août • Centre Spirituel</span>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <div class="event-dot"></div>
+                            <div class="event-info">
+                                <h4>Festival de la Famille</h4>
+                                <span>18 Août • Parc Central</span>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <div class="event-dot"></div>
+                            <div class="event-info">
+                                <h4>School of Ministry</h4>
+                                <span>25-30 Août • Inscriptions ouvertes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="events-cta">
+        <div class="cta-content">
+            <h2 class="cta-title">Ne Manquez Aucun Événement</h2>
+            <p class="cta-subtitle">
+                Restez informé des prochains événements transformateurs. Inscrivez-vous à notre newsletter<br>
+                et soyez les premiers à connaître les dates importantes.
+            </p>
+            <div class="cta-buttons">
+                <a href="#newsletter" class="btn-neon">
+                    <i class="fas fa-bell"></i>
+                    S'inscrire aux Alertes
+                </a>
+                <a href="#calendar" class="btn-outline" style="color: white; border-color: white;">
+                    <i class="fas fa-calendar-plus"></i>
+                    Ajouter au Calendrier
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <script>
+        // Création des particules
+        function createEventsParticles() {
+            const container = document.getElementById('eventsParticles');
+            const count = 25;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'hero-particle';
+
+                particle.style.width = `${Math.random() * 10 + 5}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 6}s`;
+                particle.style.opacity = Math.random() * 0.7 + 0.3;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Filtrage des événements
+        function initEventFilters() {
+            const filterButtons = document.querySelectorAll('.time-filter');
+            const eventCards = document.querySelectorAll('.event-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.getAttribute('data-filter');
+
+                    // Mettre à jour les boutons actifs
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Filtrer les cartes
+                    eventCards.forEach(card => {
+                        const categories = card.getAttribute('data-category').split(' ');
+
+                        if (filter === 'all' || categories.includes(filter)) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.classList.add('visible');
+                            }, 100);
+                        } else {
+                            card.classList.remove('visible');
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        // Compte à rebours
+        function initCountdowns() {
+            function updateCountdown(targetDate, countdownId) {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById(countdownId).innerHTML = '<div style="color: var(--accent); font-size: 1.5rem; font-weight: 700;">COMMENCE BIENTÔT!</div>';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById(`days${countdownId}`).textContent = days.toString().padStart(2, '0');
+                document.getElementById(`hours${countdownId}`).textContent = hours.toString().padStart(2, '0');
+                document.getElementById(`minutes${countdownId}`).textContent = minutes.toString().padStart(2, '0');
+                document.getElementById(`seconds${countdownId}`).textContent = seconds.toString().padStart(2, '0');
+            }
+
+            // Dates cibles pour les comptes à rebours
+            const targetDate1 = new Date('2024-07-15T19:00:00').getTime();
+            const targetDate2 = new Date('2024-08-01T09:00:00').getTime();
+
+            // Mettre à jour immédiatement puis toutes les secondes
+            updateCountdown(targetDate1, '1');
+            updateCountdown(targetDate2, '2');
+
+            setInterval(() => {
+                updateCountdown(targetDate1, '1');
+                updateCountdown(targetDate2, '2');
+            }, 1000);
+        }
+
+        // Animation au scroll
+        function initScrollAnimations() {
+            const eventCards = document.querySelectorAll('.event-card');
+            const featuredCards = document.querySelectorAll('.featured-card');
+            const monthCards = document.querySelectorAll('.month-card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            eventCards.forEach(card => observer.observe(card));
+            featuredCards.forEach(card => observer.observe(card));
+            monthCards.forEach(card => observer.observe(card));
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            createEventsParticles();
+            initEventFilters();
+            initCountdowns();
+            initScrollAnimations();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1061 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #032ab2;
+            --primary-dark: #052594;
+            --primary-light: #76a7e8;
+            --accent: #f8073f;
+            --accent-dark: #9b0b22;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+        }
+
+        /* Hero Contact */
+        .contact-hero {
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .contact-particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: floatContact 6s ease-in-out infinite;
+        }
+
+        @keyframes floatContact {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg) scale(1.1);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Section Contact Principale */
+        .contact-main {
+            padding: 6rem 0;
+            background: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* Carte Informations de Contact */
+        .contact-info-card {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .contact-info-card.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .info-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .info-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .info-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .method-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover .method-icon {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            transform: scale(1.1);
+        }
+
+        .method-content h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .method-content p {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .method-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .method-link:hover {
+            color: var(--accent-dark);
+        }
+
+        /* Horaires */
+        .opening-hours {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 15px;
+            color: white;
+        }
+
+        .opening-hours h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .hour-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hour-item:last-child {
+            border-bottom: none;
+        }
+
+        .day {
+            font-weight: 600;
+        }
+
+        .time {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Formulaire de Contact */
+        .contact-form-card {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateX(50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .contact-form-card.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .form-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input:valid {
+            border-color: var(--primary-light);
+        }
+
+        .form-label {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.5rem;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: white;
+            padding: 0 0.5rem;
+        }
+
+        .form-input:focus + .form-label,
+        .form-input:valid + .form-label {
+            top: -0.5rem;
+            left: 1rem;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(44, 85, 48, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Carte Interactive */
+        .map-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .map-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .map-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .map-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .map-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+
+        .map-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .map-header p {
+            opacity: 0.9;
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 0;
+            background: var(--light-bg);
+        }
+
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .faq-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .faq-header p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .faq-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            background: var(--primary);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--primary-dark);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: white;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 2rem;
+            max-height: 500px;
+        }
+
+        /* CTA Section */
+        .contact-cta {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            background: var(--accent-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-info-card,
+            .contact-form-card {
+                transform: translateY(50px);
+            }
+
+            .contact-info-card.visible,
+            .contact-form-card.visible {
+                transform: translateY(0);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .contact-info-card,
+            .contact-form-card {
+                padding: 2rem;
+            }
+
+            .contact-method {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .cta-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <div class="contact-particles" id="contactParticles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-envelope"></i> CONTACTEZ-NOUS
+            </div>
+            <h1 class="hero-title">
+                Restons en Contact
+            </h1>
+            <p class="hero-subtitle">
+                Nous sommes là pour vous écouter, vous accompagner et répondre à toutes vos questions.<br>
+                N'hésitez pas à nous contacter, nous vous répondrons dans les plus brefs délais.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section Contact Principale -->
+    <section class="contact-main">
+        <div class="contact-container">
+            <!-- Carte Informations -->
+            <div class="contact-info-card" id="contactInfo">
+                <div class="info-header">
+                    <h2>Nos Coordonnées</h2>
+                    <p>Plusieurs façons de nous rejoindre</p>
+                </div>
+
+                <div class="contact-methods">
+                    <!-- Téléphone -->
+                    <div class="contact-method" onclick="window.location.href='tel:+33123456789'">
+                        <div class="method-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>Téléphone</h3>
+                            <p>Du lundi au vendredi, 9h-18h</p>
+                            <a href="tel:+33123456789" class="method-link">+33 1 23 45 67 89</a>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="contact-method" onclick="window.location.href='mailto:contact@propulsion.fr'">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>Email</h3>
+                            <p>Réponse sous 24h</p>
+                            <a href="mailto:contact@propulsion.fr" class="method-link">contact@propulsion.fr</a>
+                        </div>
+                    </div>
+
+                    <!-- Adresse -->
+                    <div class="contact-method" onclick="scrollToMap()">
+                        <div class="method-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>Adresse</h3>
+                            <p>Venez nous rencontrer</p>
+                            <span class="method-link">123 Avenue de la Foi, 75000 Paris</span>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="contact-method" onclick="window.open('https://wa.me/33123456789', '_blank')">
+                        <div class="method-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>WhatsApp</h3>
+                            <p>Message direct</p>
+                            <span class="method-link">Écrivez-nous</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horaires -->
+                <div class="opening-hours">
+                    <h3><i class="fas fa-clock"></i> Horaires d'Ouverture</h3>
+                    <div class="hours-grid">
+                        <div class="hour-item">
+                            <span class="day">Dimanche</span>
+                            <span class="time">10h00 - 18h00</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Lundi - Vendredi</span>
+                            <span class="time">9h00 - 18h00</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Samedi</span>
+                            <span class="time">10h00 - 16h00</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Réunions de prière</span>
+                            <span class="time">Mercredi 19h30</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire de Contact -->
+            <div class="contact-form-card" id="contactForm">
+                <div class="form-header">
+                    <h2>Envoyez-nous un Message</h2>
+                    <p>Remplissez le formulaire ci-dessous</p>
+                </div>
+
+                <form class="contact-form" id="mainContactForm">
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="name" required>
+                        <label for="name" class="form-label">Votre nom complet</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-input" id="email" required>
+                        <label for="email" class="form-label">Votre adresse email</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="tel" class="form-input" id="phone">
+                        <label for="phone" class="form-label">Votre numéro de téléphone</label>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-input" id="subject" required>
+                            <option value=""></option>
+                            <option value="information">Demande d'information</option>
+                            <option value="prayer">Demande de prière</option>
+                            <option value="visit">Planifier une visite</option>
+                            <option value="volunteer">Devenir bénévole</option>
+                            <option value="donation">Information sur les dons</option>
+                            <option value="other">Autre</option>
+                        </select>
+                        <label for="subject" class="form-label">Sujet de votre message</label>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-input" id="message" required></textarea>
+                        <label for="message" class="form-label">Votre message</label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carte Interactive -->
+    <section class="map-section">
+        <div class="map-container">
+            <div class="map-card" id="mapCard">
+                <div class="map-header">
+                    <h2><i class="fas fa-map-marked-alt"></i> Notre Localisation</h2>
+                    <p>Venez nous rencontrer dans nos locaux</p>
+                </div>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937595!2d2.292292615509614!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1620000000000!5m2!1sfr!2sfr"
+                    class="map-iframe"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2>Questions Fréquentes</h2>
+                <p>Retrouvez les réponses aux questions les plus courantes</p>
+            </div>
+
+            <div class="faq-grid">
+                <!-- FAQ 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment planifier ma première visite ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Vous pouvez planifier votre première visite en nous contactant par téléphone, email ou via le formulaire de contact. Nous vous accueillerons avec joie et vous ferons visiter nos locaux. Les cultes ont lieu le dimanche à 10h00 et 18h00.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Proposez-vous un accompagnement spirituel ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Oui, notre équipe pastorale est disponible pour un accompagnement spirituel personnalisé. Vous pouvez prendre rendez-vous pour une rencontre individuelle ou participer à nos groupes de maison pour un soutien communautaire.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment puis-je me impliquer comme bénévole ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nous avons de nombreuses opportunités de bénévolat selon vos talents et disponibilités. Contactez-nous pour discuter des différents ministères où vous pourriez vous investir : accueil, louange, jeunesse, actions sociales, etc.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quels sont les programmes pour les enfants ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nous proposons des programmes adaptés pour chaque âge : Kids Propulsion pour les 3-12 ans le dimanche matin, et Jeunesse Explosion pour les ados et jeunes adultes avec des activités spécifiques en semaine.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="contact-cta">
+        <div class="cta-content">
+            <h2 class="cta-title">Prêt à Nous Rejoindre ?</h2>
+            <p class="cta-subtitle">
+                Que ce soit pour une visite, une demande de prière ou pour vous impliquer,<br>
+                nous sommes impatients de faire votre connaissance.
+            </p>
+            <div class="cta-buttons">
+                <a href="tel:+33123456789" class="btn-primary">
+                    <i class="fas fa-phone"></i>
+                    Nous Appeler
+                </a>
+                <a href="#contactForm" class="btn-secondary" onclick="scrollToForm()">
+                    <i class="fas fa-envelope"></i>
+                    Écrire un Message
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <script>
+        // Création des particules
+        function createContactParticles() {
+            const container = document.getElementById('contactParticles');
+            const count = 20;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'contact-particle';
+
+                particle.style.width = `${Math.random() * 8 + 4}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Animation au scroll
+        function initScrollAnimations() {
+            const elements = [
+                document.getElementById('contactInfo'),
+                document.getElementById('contactForm'),
+                document.getElementById('mapCard')
+            ];
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => {
+                if (el) observer.observe(el);
+            });
+
+            // Animation FAQ items
+            const faqObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            faqItems.forEach((item, index) => {
+                faqObserver.observe(item);
+            });
+        }
+
+        // Gestion de la FAQ
+        function initFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+
+                question.addEventListener('click', () => {
+                    // Fermer les autres items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+
+                    // Basculer l'item actuel
+                    item.classList.toggle('active');
+                });
+            });
+        }
+
+        // Gestion du formulaire
+        function initForm() {
+            const form = document.getElementById('mainContactForm');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Animation de soumission
+                const submitBtn = form.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+                submitBtn.disabled = true;
+
+                // Simulation d'envoi
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message envoyé !';
+                    submitBtn.style.background = 'linear-gradient(135deg, #4A7C59, #2C5530)';
+
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-dark))';
+                        form.reset();
+
+                        // Réinitialiser les labels
+                        form.querySelectorAll('.form-input').forEach(input => {
+                            input.classList.remove('valid');
+                        });
+                    }, 2000);
+                }, 1500);
+            });
+
+            // Animation des labels
+            const inputs = form.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value) {
+                        this.classList.add('valid');
+                    } else {
+                        this.classList.remove('valid');
+                    }
+                });
+            });
+        }
+
+        // Fonctions de navigation
+        function scrollToMap() {
+            document.getElementById('mapCard').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        function scrollToForm() {
+            document.getElementById('contactForm').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            createContactParticles();
+            initScrollAnimations();
+            initFAQ();
+            initForm();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,855 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #3174d9;
+            --primary-dark: #032ab2;
+            --primary-light: #76a7e8;
+            --accent: #D4AF37;
+            --accent-dark: #B8941F;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+        }
+
+        /* Hero Galerie */
+       /* Hero Galerie — image + voile bleu */
+.gallery-hero {
+  min-height: 60vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+
+  /* 1) Dégradé bleu semi-transparent  2) Image derrière */
+  background-image:
+    linear-gradient(135deg, rgba(49,116,217,0.85) 0%, rgba(3,42,178,0.85) 100%),
+    url("{% static 'images/photoAccueil.jpg' %}");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+
+  /* Donne un vrai “tint” bleu à l’image */
+  background-blend-mode: multiply;
+  /* Parallaxe douce sur desktop */
+  background-attachment: fixed, fixed;
+}
+
+/* iOS & mobiles: on évite le tremblement du fixed */
+@media (max-width: 1024px) {
+  .gallery-hero {
+    background-attachment: scroll, scroll;
+  }
+}
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Filtres Sticky */
+/* ===== Filtres sticky ===== */
+.gallery-filters{
+  position: sticky; top: 0; z-index: 50;
+  background: #fff; backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
+/* PARENT pour les dégradés de bord */
+.gallery-filters{ position: sticky; }
+.gallery-filters .filters-container{
+  max-width: 1200px; margin: 0 auto; padding: .75rem 1rem;
+  display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; /* desktop */
+}
+
+/* --- MODE MOBILE: rail horizontal défilable --- */
+@media (max-width: 768px){
+  .gallery-filters{ position: sticky; }
+  .gallery-filters .filters-container{
+    flex-wrap: nowrap;                /* une seule ligne */
+    overflow-x: auto;                 /* défilement horizontal */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: .6rem;
+    scroll-snap-type: x proximity;    /* snap doux */
+  }
+  .gallery-filters .filters-container::-webkit-scrollbar{ display: none; }
+
+  /* dégradés de bords (indice visuel de scroll) */
+  .gallery-filters::before,
+  .gallery-filters::after{
+    content:""; position: sticky; top: 0; width: 28px; height: 100%;
+    pointer-events: none; z-index: 51;
+  }
+  .gallery-filters::before{
+    left: 0; background: linear-gradient(to right, #fff, rgba(255,255,255,0));
+  }
+  .gallery-filters::after{
+    margin-left: auto;
+    background: linear-gradient(to left, #fff, rgba(255,255,255,0));
+  }
+
+  /* pills compactes et snappées */
+  .filter-btn{
+    flex: 0 0 auto;                   /* pas de rétrécissement */
+    scroll-snap-align: start;
+    padding: .55rem .9rem;
+    border-radius: 999px;
+    font-size: .9rem;
+    line-height: 1;
+    white-space: nowrap;              /* pas de retour à la ligne */
+  }
+  .filter-btn i{ font-size: .95rem; }
+}
+
+/* --- Desktop: look “chips” élégantes --- */
+.filter-btn{
+  background: var(--light-bg);
+  border: 2px solid transparent;
+  color: var(--text-dark);
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .7rem 1.1rem; border-radius: 999px;
+  font-weight: 600; cursor: pointer; transition: .2s ease;
+}
+.filter-btn:hover{ background: var(--primary-light); color: #fff; }
+.filter-btn.active{ background: var(--primary); color:#fff; border-color: var(--accent); }
+
+
+        /* Grille Galerie Avancée */
+        .gallery-section {
+            padding: 4rem 0;
+            background: var(--light-bg);
+        }
+
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .item-image {
+            transform: scale(1.05);
+        }
+
+        .item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .item-overlay {
+            transform: translateY(0);
+        }
+
+        .item-category {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Modal Lightbox */
+        .lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 70vh;
+            display: block;
+        }
+
+        .lightbox-info {
+            padding: 2rem;
+            background: white;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1001;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .lightbox-prev {
+            left: 2rem;
+        }
+
+        .lightbox-next {
+            right: 2rem;
+        }
+
+        /* Statistiques Impact */
+        .gallery-stats {
+            padding: 4rem 0;
+            background: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA */
+        .gallery-cta {
+            padding: 6rem 0;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .masonry-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-container {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .lightbox-prev {
+                left: 1rem;
+            }
+
+            .lightbox-next {
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-images"></i> NOTRE IMPACT EN IMAGES
+            </div>
+            <h1 class="hero-title">
+                Galerie des Œuvres<br>
+                & Missions
+            </h1>
+            <p class="hero-subtitle">
+                Découvrez en images comment nous transformons des vies à travers nos actions<br>
+                en France, au Cameroun et au-delà.
+            </p>
+        </div>
+    </section>
+
+    <!-- Filtres -->
+    <div class="gallery-filters">
+        <div class="filters-container">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-layer-group"></i>
+                Toutes les photos
+            </button>
+            <button class="filter-btn" data-filter="missions">
+                <i class="fas fa-hands-helping"></i>
+                Missions Humanitaires
+            </button>
+            <button class="filter-btn" data-filter="jeunesse">
+                <i class="fas fa-users"></i>
+                Ministère Jeunesse
+            </button>
+            <button class="filter-btn" data-filter="culte">
+                <i class="fas fa-church"></i>
+                Cultes & Célébrations
+            </button>
+            <button class="filter-btn" data-filter="social">
+                <i class="fas fa-heart"></i>
+                Actions Sociales
+            </button>
+            <button class="filter-btn" data-filter="formation">
+                <i class="fas fa-graduation-cap"></i>
+                Formations
+            </button>
+            <button class="filter-btn" data-filter="international">
+                <i class="fas fa-globe"></i>
+                Impact International
+            </button>
+        </div>
+    </div>
+
+    <!-- Galerie -->
+    <section class="gallery-section">
+        <div class="gallery-container">
+            <div class="masonry-grid" id="galleryGrid">
+                <!-- Item 1 - Mission Cameroun -->
+                <div class="gallery-item visible" data-category="missions international">
+                    <img src="{% static 'images/gallery/mission-cameroun.jpg' %}" alt="Mission humanitaire Cameroun" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Missions Internationales</span>
+                        <h3 class="item-title">Distribution Alimentaire - Cameroun</h3>
+                        <p class="item-description">Plus de 500 familles soutenues lors de notre mission humanitaire à Yaoundé</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 - Jeunesse France -->
+                <div class="gallery-item visible" data-category="jeunesse">
+                    <img src="{% static 'images/gallery/jeunesse-france.jpg' %}" alt="Camp jeunesse France" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Jeunesse Explosion</span>
+                        <h3 class="item-title">Camp d'Été 2024</h3>
+                        <p class="item-description">150 jeunes réunis pour 3 jours de formation, louange et communion</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 - Culte -->
+                <div class="gallery-item visible" data-category="culte">
+                    <img src="{% static 'images/gallery/culte-special.jpg' %}" alt="Culte de réveil" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Culte Dynamique</span>
+                        <h3 class="item-title">Nuit de Réveil Spirituel</h3>
+                        <p class="item-description">Moment puissant de prière et d'adoration avec plus de 800 participants</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 - Action Sociale -->
+                <div class="gallery-item visible" data-category="social">
+                    <img src="{% static 'images/gallery/aide-scolaire.jpg' %}" alt="Soutien scolaire" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Action Sociale</span>
+                        <h3 class="item-title">Programme de Soutien Scolaire</h3>
+                        <p class="item-description">Accompagnement éducatif pour 200 enfants défavorisés</p>
+                    </div>
+                </div>
+
+                <!-- Item 5 - Formation -->
+                <div class="gallery-item visible" data-category="formation">
+                    <img src="{% static 'images/gallery/formation-leaders.jpg' %}" alt="Formation de leaders" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Formation</span>
+                        <h3 class="item-title">École de Leaders</h3>
+                        <p class="item-description">Formation intensive pour 50 futurs leaders communautaires</p>
+                    </div>
+                </div>
+
+                <!-- Item 6 - Mission France -->
+                <div class="gallery-item visible" data-category="missions">
+                    <img src="{% static 'images/gallery/mission-france.jpg' %}" alt="Mission en France" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Missions Locales</span>
+                        <h3 class="item-title">Marche de l'Espoir 2024</h3>
+                        <p class="item-description">Collecte de fonds pour les familles dans le besoin en région parisienne</p>
+                    </div>
+                </div>
+
+                <!-- Item 7 - International -->
+                <div class="gallery-item visible" data-category="international">
+                    <img src="{% static 'images/gallery/international.jpg' %}" alt="Impact international" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Impact Global</span>
+                        <h3 class="item-title">Conférence des Leaders Africains</h3>
+                        <p class="item-description">Rassemblement de 30 leaders d'églises de 12 pays différents</p>
+                    </div>
+                </div>
+
+                <!-- Item 8 - Social -->
+                <div class="gallery-item visible" data-category="social">
+                    <img src="{% static 'images/gallery/entraide.jpg' %}" alt="Programme d'entraide" class="item-image">
+                    <div class="item-overlay">
+                        <span class="item-category">Solidarité</span>
+                        <h3 class="item-title">Banque Alimentaire Communautaire</h3>
+                        <p class="item-description">Distribution mensuelle à 300 familles nécessiteuses</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistiques -->
+    <section class="gallery-stats">
+        <div class="section-header">
+            <h2 style="color: var(--primary); margin-bottom: 3rem; font-size: 2.5rem;">
+                Notre Impact en Chiffres
+            </h2>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="stat-number" data-count="500">0</div>
+                <p>Missions Documentées</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-number" data-count="2">0</div>
+                <p>Pays d'Intervention</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" data-count="5000">0</div>
+                <p>Vies Impactées</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="stat-number" data-count="14">0</div>
+                <p>Années de Service</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="gallery-cta">
+        <div class="cta-content">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Faites Partie de l'Histoire</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Rejoignez-nous dans notre mission de transformation et laissez votre empreinte
+            </p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn-primary">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    Devenir Bénévole
+                </a>
+                <a href="/dons" class="btn-secondary">
+                    <i class="fas fa-donate"></i>
+                    Soutenir nos Missions
+                </a>
+                <a href="/visite" class="btn-secondary">
+                    <i class="fas fa-church"></i>
+                    Visiter nos Locaux
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <button class="lightbox-close" id="lightboxClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            <div class="lightbox-info">
+                <h3 id="lightboxTitle">Titre de l'image</h3>
+                <p id="lightboxDescription">Description de l'image</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <script>
+        // Filtrage de la galerie
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightboxModal = document.getElementById('lightboxModal');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxTitle = document.getElementById('lightboxTitle');
+            const lightboxDescription = document.getElementById('lightboxDescription');
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+
+            let currentImageIndex = 0;
+            let filteredItems = [];
+
+            // Filtrage
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.getAttribute('data-filter');
+
+                    // Mettre à jour les boutons actifs
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Filtrer les éléments
+                    galleryItems.forEach(item => {
+                        const categories = item.getAttribute('data-category').split(' ');
+
+                        if (filter === 'all' || categories.includes(filter)) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, 100);
+                        } else {
+                            item.classList.remove('visible');
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Lightbox
+            function openLightbox(index) {
+                const items = Array.from(document.querySelectorAll('.gallery-item[style*="block"]'));
+                filteredItems = items;
+                currentImageIndex = index;
+
+                const item = items[index];
+                const image = item.querySelector('.item-image');
+                const title = item.querySelector('.item-title').textContent;
+                const description = item.querySelector('.item-description').textContent;
+
+                lightboxImage.src = image.src;
+                lightboxTitle.textContent = title;
+                lightboxDescription.textContent = description;
+
+                lightboxModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightboxModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function navigateLightbox(direction) {
+                currentImageIndex += direction;
+
+                if (currentImageIndex < 0) {
+                    currentImageIndex = filteredItems.length - 1;
+                } else if (currentImageIndex >= filteredItems.length) {
+                    currentImageIndex = 0;
+                }
+
+                openLightbox(currentImageIndex);
+            }
+
+            // Événements lightbox
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    openLightbox(index);
+                });
+            });
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+            lightboxNext.addEventListener('click', () => navigateLightbox(1));
+
+            // Fermer avec ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            });
+
+            // Animation des compteurs
+            const counters = document.querySelectorAll('.stat-number');
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+
+                observer.observe(counter);
+            });
+
+            // Animation au scroll
+            const animateOnScroll = () => {
+                const items = document.querySelectorAll('.gallery-item');
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 100);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                items.forEach(item => {
+                    observer.observe(item);
+                });
+            };
+
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>

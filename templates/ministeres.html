@@ -1,0 +1,1010 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Ministères - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #032ab2;
+            --primary-dark: #052594;
+            --primary-light: #76a7e8;
+            --accent: #f8073f;
+            --accent-dark: #9b0b22;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+        }
+
+        /* Hero Section Globale */
+        .ministries-hero {
+            min-height: 80vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Navigation Globale */
+        .global-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .continent-btn {
+            background: white;
+            border: 2px solid var(--light-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .continent-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .continent-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Section Ministères */
+        .ministries-section {
+            padding: 6rem 0;
+            background: var(--light-bg);
+        }
+
+        .ministries-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .ministries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .ministry-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .ministry-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .ministry-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .ministry-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .ministry-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .ministry-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .ministry-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            flex: 1;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Carte Interactive Mondiale */
+        .world-map-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .map-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+/* Carte visible, indépendante et lisible */
+.world-map{
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  height: clamp(360px, 60vh, 520px);
+  border-radius: 20px;
+  overflow: hidden;
+
+  /* Couleur de fond au cas où aucune image ne charge */
+  background-color: #eaf2ff;
+
+  /* Fallbacks d’image (locale recommandée + fallback distant) */
+  /* Mets un fichier dans /static/images/world-map.png (ou .jpg / .webp) */
+  background-image:
+    url("{% static 'images/world-map.png' %}"),
+    url("https://images.unsplash.com/photo-1483721310020-0330c8b1350d?auto=format&fit=crop&w=2000&q=80");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Assombrir légèrement pour que les points ressortent */
+.world-map::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(3,42,178,.18), rgba(3,42,178,.35));
+  pointer-events:none;
+  z-index: 1; /* en-dessous des points */
+}
+
+/* Les points au-dessus de l’overlay */
+.map-point{
+  position: absolute;
+  width: 18px; height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transform: scale(0);
+  animation: popIn .6s ease forwards;
+  transition: transform .25s ease, background .25s ease;
+  z-index: 2;
+}
+.map-point:hover{ transform: scale(1.4); background: var(--primary); }
+.map-point::after{
+  content:"";
+  position:absolute; inset: -10px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity:.15;
+  animation: pulse 2s infinite;
+  z-index: -1;
+}
+
+/* Tooltip au top */
+.map-tooltip{
+  position: absolute;
+  background: #fff;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+  opacity: 0;
+  transform: translate(-50%, -120%); /* centré au-dessus du point */
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+.map-tooltip.show{
+  opacity: 1;
+  transform: translate(-50%, -140%);
+}
+
+@keyframes popIn{ to{ transform: scale(1); } }
+
+
+        /* Modal des Ministères */
+        .ministry-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ministry-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .ministry-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1001;
+        }
+
+        .modal-header {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .modal-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .modal-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 15px;
+        }
+
+        .modal-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .ministries-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .modal-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-body {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="ministries-hero">
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-globe"></i> IMPACT MONDIAL
+            </div>
+            <h1 class="hero-title">
+                Nos Ministères<br>
+                à Travers le Monde
+            </h1>
+            <p class="hero-subtitle">
+                Découvrez comment l'Église Missionnaire Propulsion transforme des vies<br>
+                et construit des communautés fortes sur tous les continents
+            </p>
+            <div class="hero-actions">
+                <a href="#ministries" class="btn-primary">
+                    <i class="fas fa-compass"></i>
+                    Explorer les Ministères
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Globale -->
+    <nav class="global-nav">
+        <div class="nav-container">
+            <button class="continent-btn active" data-continent="all">
+                <i class="fas fa-globe-americas"></i>
+                Tous les Continents
+            </button>
+            <button class="continent-btn" data-continent="africa">
+                <i class="fas fa-globe-africa"></i>
+                Afrique
+            </button>
+            <button class="continent-btn" data-continent="europe">
+                <i class="fas fa-globe-europe"></i>
+                Europe
+            </button>
+            <button class="continent-btn" data-continent="asia">
+                <i class="fas fa-globe-asia"></i>
+                Asie
+            </button>
+            <button class="continent-btn" data-continent="americas">
+                <i class="fas fa-globe-americas"></i>
+                Amériques
+            </button>
+        </div>
+    </nav>
+
+    <!-- Carte Mondiale Interactive -->
+    <section class="world-map-section">
+        <div class="map-container">
+            <div class="section-header">
+                <h2 style="text-align: center; color: var(--primary); margin-bottom: 3rem; font-size: 2.5rem;">
+                    Notre Présence Mondiale
+                </h2>
+            </div>
+            <div class="world-map" id="worldMap">
+                <!-- Points seront ajoutés dynamiquement -->
+                <div class="map-tooltip" id="mapTooltip"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section des Ministères -->
+    <section class="ministries-section" id="ministries">
+        <div class="ministries-container">
+            <div class="section-header">
+                <h2 style="text-align: center; color: var(--primary); margin-bottom: 3rem; font-size: 2.5rem;">
+                    Nos Ministères en Action
+                </h2>
+            </div>
+
+            <div class="ministries-grid" id="ministriesGrid">
+                <!-- Ministère 1 - Cameroun -->
+                <div class="ministry-card" data-continent="africa" data-country="cameroon">
+                    <div class="card-header">
+                        <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Ministère Jeunesse Cameroun" class="card-image">
+                        <div class="card-badge">Cameroun</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="ministry-title">Jeunesse Explosion Cameroun</h3>
+                        <p class="ministry-description">
+                            Programme dynamique pour les jeunes de 13-25 ans axé sur le développement du leadership,
+                            la formation spirituelle et l'engagement communautaire.
+                        </p>
+                        <div class="ministry-stats">
+                            <div class="stat">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Jeunes</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Groupes</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">5</div>
+                                <div class="stat-label">Villes</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline view-details" data-ministry="jeunesse-cameroun">
+                                <i class="fas fa-eye"></i>
+                                Voir Détails
+                            </button>
+                            <a href="#" class="btn-outline">
+                                <i class="fas fa-hands-helping"></i>
+                                S'impliquer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ministère 2 - France -->
+                <div class="ministry-card" data-continent="europe" data-country="france">
+                    <div class="card-header">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Action Sociale France" class="card-image">
+                        <div class="card-badge">France</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="ministry-title">Actions Sociales Paris</h3>
+                        <p class="ministry-description">
+                            Programme d'aide alimentaire et d'accompagnement social pour les familles
+                            défavorisées de la région parisienne.
+                        </p>
+                        <div class="ministry-stats">
+                            <div class="stat">
+                                <div class="stat-number">200</div>
+                                <div class="stat-label">Familles</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">50</div>
+                                <div class="stat-label">Bénévoles</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">3</div>
+                                <div class="stat-label">Centres</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline view-details" data-ministry="social-france">
+                                <i class="fas fa-eye"></i>
+                                Voir Détails
+                            </button>
+                            <a href="#" class="btn-outline">
+                                <i class="fas fa-hands-helping"></i>
+                                S'impliquer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ministère 3 - USA -->
+                <div class="ministry-card" data-continent="americas" data-country="usa">
+                    <div class="card-header">
+                        <img src="https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Formation Leaders USA" class="card-image">
+                        <div class="card-badge">États-Unis</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="ministry-title">Centre de Formation International</h3>
+                        <p class="ministry-description">
+                            Formation avancée pour les leaders d'églises et responsables de ministères
+                            venant du monde entier.
+                        </p>
+                        <div class="ministry-stats">
+                            <div class="stat">
+                                <div class="stat-number">150</div>
+                                <div class="stat-label">Leaders</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">25</div>
+                                <div class="stat-label">Pays</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">5</div>
+                                <div class="stat-label">Programmes</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline view-details" data-ministry="formation-usa">
+                                <i class="fas fa-eye"></i>
+                                Voir Détails
+                            </button>
+                            <a href="#" class="btn-outline">
+                                <i class="fas fa-hands-helping"></i>
+                                S'impliquer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ajoutez d'autres ministères ici -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal des Ministères -->
+    <div class="ministry-modal" id="ministryModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <img src="" alt="" class="modal-image" id="modalImage">
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle">Titre du Ministère</h2>
+                <div class="modal-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="modalLocation">Localisation</span>
+                </div>
+                <p class="modal-description" id="modalDescription">
+                    Description détaillée du ministère...
+                </p>
+                <div class="modal-stats" id="modalStats">
+                    <!-- Les stats seront injectées ici -->
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-primary">
+                        <i class="fas fa-donate"></i>
+                        Soutenir ce Ministère
+                    </button>
+                    <button class="btn-outline">
+                        <i class="fas fa-user-plus"></i>
+                        Devenir Bénévole
+                    </button>
+                    <button class="btn-outline">
+                        <i class="fas fa-share-alt"></i>
+                        Partager
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <script>
+        // Données des ministères
+        const ministriesData = {
+            'jeunesse-cameroun': {
+                title: 'Jeunesse Explosion Cameroun',
+                location: 'Yaoundé, Cameroun',
+                image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                description: 'Le ministère Jeunesse Explosion au Cameroun est un mouvement dynamique qui touche plus de 500 jeunes à travers 5 villes principales. Notre programme inclut des formations au leadership, des retraites spirituelles, des actions communautaires et des événements culturels qui aident les jeunes à découvrir leur potentiel en Christ.',
+                stats: [
+                    { number: '500+', label: 'Jeunes Actifs' },
+                    { number: '12', label: 'Groupes Locaux' },
+                    { number: '5', label: 'Villes Impactées' },
+                    { number: '3', label: 'Événements/An' }
+                ]
+            },
+            'social-france': {
+                title: 'Actions Sociales Paris',
+                location: 'Paris, France',
+                image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                description: 'Notre ministère d\'action sociale à Paris soutient plus de 200 familles dans le besoin grâce à un réseau de 3 centres d\'accueil. Nous fournissons une aide alimentaire, un accompagnement social et un soutien spirituel aux personnes les plus vulnérables de notre communauté.',
+                stats: [
+                    { number: '200', label: 'Familles Soutenues' },
+                    { number: '50', label: 'Bénévoles Actifs' },
+                    { number: '3', label: 'Centres d\'Accueil' },
+                    { number: '1000+', label: 'Repas/Mois' }
+                ]
+            },
+            'formation-usa': {
+                title: 'Centre de Formation International',
+                location: 'New York, États-Unis',
+                image: 'https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                description: 'Notre centre de formation international à New York équipe les leaders d\'églises venant de 25 pays différents. Avec 5 programmes spécialisés, nous formons la prochaine génération de leaders capables d\'impacter leurs nations pour Christ.',
+                stats: [
+                    { number: '150', label: 'Leaders Formés' },
+                    { number: '25', label: 'Pays Représentés' },
+                    { number: '5', label: 'Programmes' },
+                    { number: '98%', label: 'Taux de Réussite' }
+                ]
+            }
+        };
+
+        // Points sur la carte mondiale
+        const mapPoints = [
+            { x: 45, y: 35, country: 'France', continent: 'europe', ministry: 'social-france' },
+            { x: 48, y: 45, country: 'Cameroun', continent: 'africa', ministry: 'jeunesse-cameroun' },
+            { x: 25, y: 40, country: 'USA', continent: 'americas', ministry: 'formation-usa' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Création des particules
+            createParticles();
+
+            // Initialisation de la carte mondiale
+            initWorldMap();
+
+            // Filtrage par continent
+            initContinentFilter();
+
+            // Modal des ministères
+            initMinistryModal();
+
+            // Animations au scroll
+            initScrollAnimations();
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const count = 15;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                particle.style.width = `${Math.random() * 10 + 5}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+                container.appendChild(particle);
+            }
+        }
+
+        function initWorldMap() {
+            const map = document.getElementById('worldMap');
+            const tooltip = document.getElementById('mapTooltip');
+
+            mapPoints.forEach(point => {
+                const pointElement = document.createElement('div');
+                pointElement.className = 'map-point';
+                pointElement.style.left = `${point.x}%`;
+                pointElement.style.top = `${point.y}%`;
+                pointElement.style.animationDelay = `${Math.random() * 2}s`;
+                pointElement.setAttribute('data-country', point.country);
+                pointElement.setAttribute('data-ministry', point.ministry);
+
+                pointElement.addEventListener('mouseenter', () => {
+                    tooltip.textContent = point.country;
+                    tooltip.style.left = `${point.x}%`;
+                    tooltip.style.top = `${point.y - 10}%`;
+                    tooltip.classList.add('show');
+                });
+
+                pointElement.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('show');
+                });
+
+                pointElement.addEventListener('click', () => {
+                    openMinistryModal(point.ministry);
+                });
+
+                map.appendChild(pointElement);
+            });
+        }
+
+        function initContinentFilter() {
+            const filterButtons = document.querySelectorAll('.continent-btn');
+            const ministryCards = document.querySelectorAll('.ministry-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const continent = button.getAttribute('data-continent');
+
+                    // Mettre à jour les boutons actifs
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Filtrer les cartes
+                    ministryCards.forEach(card => {
+                        const cardContinent = card.getAttribute('data-continent');
+
+                        if (continent === 'all' || cardContinent === continent) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.classList.add('visible');
+                            }, 100);
+                        } else {
+                            card.classList.remove('visible');
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        function initMinistryModal() {
+            const modal = document.getElementById('ministryModal');
+            const closeBtn = document.getElementById('modalClose');
+            const viewButtons = document.querySelectorAll('.view-details');
+
+            viewButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const ministryId = button.getAttribute('data-ministry');
+                    openMinistryModal(ministryId);
+                });
+            });
+
+            closeBtn.addEventListener('click', closeMinistryModal);
+
+            // Fermer en cliquant en dehors
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeMinistryModal();
+                }
+            });
+
+            // Fermer avec ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeMinistryModal();
+                }
+            });
+        }
+
+        function openMinistryModal(ministryId) {
+            const modal = document.getElementById('ministryModal');
+            const data = ministriesData[ministryId];
+
+            if (!data) return;
+
+            document.getElementById('modalImage').src = data.image;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalLocation').textContent = data.location;
+            document.getElementById('modalDescription').textContent = data.description;
+
+            const statsContainer = document.getElementById('modalStats');
+            statsContainer.innerHTML = '';
+
+            data.stats.forEach(stat => {
+                const statElement = document.createElement('div');
+                statElement.className = 'modal-stat';
+                statElement.innerHTML = `
+                    <div class="modal-stat-number">${stat.number}</div>
+                    <div class="stat-label">${stat.label}</div>
+                `;
+                statsContainer.appendChild(statElement);
+            });
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMinistryModal() {
+            const modal = document.getElementById('ministryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function initScrollAnimations() {
+            const cards = document.querySelectorAll('.ministry-card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        }
+    </script>
+</body>
+</html>

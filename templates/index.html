@@ -32,46 +32,10 @@
     <div class="particles" id="particles"></div>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="logo">PROPULSION</div>
-            <ul class="nav-links">
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#apropos">À Propos</a></li>
-                <li><a href="#galerie">Galerie</a></li>
-                <li><a href="#ministeres">Ministères</a></li>
-                <li><a href="#equipe">Équipe</a></li>
-                <li><a href="#evenements">Événements</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <a href="#don" class="nav-cta">
-                <i class="fas fa-heart"></i> Faire un Don
-            </a>
-        </div>
-    </nav>
+    {% include 'includes/navbar.html' %}
 
     <!-- Hero Section -->
-    <section class="hero" id="accueil">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-star"></i> Bienvenue au Cœur de la Propulsion
-            </div>
-            <h1 class="hero-title">
-                Une Foi Qui<br>Transforme
-            </h1>
-            <p class="hero-subtitle">
-                Découvrez une communauté passionnée qui vit l'Évangile et impacte sa génération. Rejoignez l'aventure !
-            </p>
-            <div class="hero-actions">
-                <a href="#visite" class="btn btn-primary">
-                    <i class="fas fa-play-circle"></i> Découvrir
-                </a>
-                <a href="#direct" class="btn btn-secondary">
-                    <i class="fas fa-video"></i> Regarder le Direct
-                </a>
-            </div>
-        </div>
-    </section>
+    {% include 'includes/hero.html' %}
 
     <!-- Section Mot du Dr. Richard ONDOA -->
 <section class="pastor-word" id="mot-pasteur">
@@ -895,56 +859,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-column">
-                <h3>Propulsion</h3>
-                <p>Une communauté passionnée qui vit l'Évangile et impacte sa génération.</p>
-                <div class="social-links" style="display: flex; gap: 1rem; margin-top: 1rem;">
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-
-            <div class="footer-column">
-                <h3>Liens Rapides</h3>
-                <ul class="footer-links">
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#apropos">À Propos</a></li>
-                    <li><a href="#galerie">Galerie</a></li>
-                    <li><a href="#ministeres">Ministères</a></li>
-                    <li><a href="#equipe">Équipe</a></li>
-                    <li><a href="#evenements">Événements</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h3>Ressources</h3>
-                <ul class="footer-links">
-                    <li><a href="#sermons">Sermons</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#podcast">Podcast</a></li>
-                    <li><a href="#mediatheque">Médiathèque</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h3>Newsletter</h3>
-                <p>Inscrivez-vous pour recevoir nos actualités et événements.</p>
-                <form style="margin-top: 1rem;">
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Votre email" required style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">
-                    </div>
-                    <button type="submit" class="btn btn-tertiary" style="width: 100%; margin-top: 0.5rem;">S'inscrire</button>
-                </form>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 Église Missionnaire Propulsion. Tous droits réservés.</p>
-        </div>
-    </footer>
+  {% include 'includes/footer.html' %}
 
     <!-- JavaScript Avancé -->
     <script>
@@ -988,27 +903,25 @@
         }
 
         // Scroll Animations
-        function handleScroll() {
-            const navbar = document.getElementById('navbar');
-            const scrolled = window.pageYOffset > 50;
+        // remplace l’ancienne récupération du navbar + handleScroll
+  const navEl = document.getElementById('propNav') || document.getElementById('navbar');
 
-            if (scrolled) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+  function handleScroll() {
+    const scrolled = window.pageYOffset > 50;
 
-            // Fade in elements
-            const fadeElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
-            fadeElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
+    // Gérer les deux styles possibles (ancienne .scrolled ou nouvelle .prop-nav--scrolled)
+    if (navEl) {
+      navEl.classList.toggle('scrolled', scrolled);            // si tu as encore l’ancien CSS
+      navEl.classList.toggle('prop-nav--scrolled', scrolled);  // pour la nouvelle prop-nav
+    }
 
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('visible');
-                }
-            });
-        }
+    // Révéler les éléments animés
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if (top < window.innerHeight - 150) el.classList.add('visible');
+    });
+  }
+
 
         // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
