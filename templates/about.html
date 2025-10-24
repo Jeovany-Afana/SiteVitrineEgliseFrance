@@ -45,7 +45,7 @@
       position:relative; min-height:68vh; display:grid; place-items:center; text-align:center; color:#fff; overflow:hidden;
       background-image:
         linear-gradient(120deg, rgba(14,90,167,.85), rgba(10,63,120,.85)),
-        url("{% static 'images/photoAccueil.jpg' %}");
+        url("{% static 'images/egliseCameroun/20250810_103945.jpg' %}");
       background-size:cover; background-position:center;
     }
     .about-hero .content{padding:2rem; max-width:900px}
@@ -292,7 +292,7 @@
         </div>
         <div style="display:flex;gap:.6rem;flex-wrap:wrap">
           <a href="/#services" class="btn btn-secondary"><i class="fa-solid fa-compass"></i> Parcours</a>
-          <a href="/#contact" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Nous écrire</a>
+          <a href="{% url 'contact' %}" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Nous écrire</a>
         </div>
       </div>
     </div>

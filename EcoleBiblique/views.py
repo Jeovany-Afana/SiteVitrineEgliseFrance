@@ -18,3 +18,6 @@ def contact(request):
 
 def evenements(request):
     return render(request, 'evenements.html')
+
+def equipes(request):
+    return render(request, 'equipes.html')
