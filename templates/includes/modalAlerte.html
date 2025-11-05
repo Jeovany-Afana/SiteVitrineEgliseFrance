@@ -1,0 +1,1025 @@
+<!-- Nouveau Modal Alertes Événements - Design Moderne -->
+<!-- Nouveau Modal Alertes Événements - Design Moderne -->
+<div class="modal-overlay" id="alertsModal">
+    <div class="modal-container">
+        <!-- Header avec fond gradient -->
+        <div class="modal-header">
+            <div class="header-content">
+                <div class="header-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="header-text">
+                    <h3 class="modal-title">Ne manquez plus jamais un événement</h3>
+                    <p class="modal-subtitle">Soyez informé en avant-première</p>
+                </div>
+            </div>
+            <button class="modal-close" id="closeAlertsModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <!-- Étape 1 : Formulaire -->
+            <div class="form-step active" id="step1">
+                <div class="form-intro">
+                    <div class="intro-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <p>Recevez les notifications des prochains événements qui correspondent à vos centres d'intérêt</p>
+                </div>
+
+                <form class="alerts-form" id="alertsForm">
+                    {% csrf_token %}
+
+                    <div class="form-grid">
+                        <div class="form-group floating-group">
+                            <input type="text" id="alertFirstName" name="first_name" class="floating-input" required>
+                            <label for="alertFirstName" class="floating-label">Prénom *</label>
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group floating-group">
+                            <input type="text" id="alertLastName" name="last_name" class="floating-input" required>
+                            <label for="alertLastName" class="floating-label">Nom *</label>
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group floating-group">
+                        <input type="email" id="alertEmail" name="email" class="floating-input" required>
+                        <label for="alertEmail" class="floating-label">Adresse email *</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group floating-group">
+                        <input type="tel" id="alertPhone" name="phone" class="floating-input">
+                        <label for="alertPhone" class="floating-label">Téléphone (optionnel)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                    </div>
+
+                    <!-- Sélecteur de localisation amélioré -->
+                    <div class="form-group">
+                        <label class="section-label">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Lieu préféré
+                        </label>
+                        <div class="location-selector">
+                            <div class="location-options">
+                                <input type="radio" name="location" value="all" id="loc-all" checked>
+                                <label for="loc-all" class="location-option">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Tous les lieux</span>
+                                </label>
+
+                                <input type="radio" name="location" value="cergy" id="loc-cergy">
+                                <label for="loc-cergy" class="location-option">
+                                    <i class="fas fa-church"></i>
+                                    <span>Cergy</span>
+                                </label>
+
+                                <input type="radio" name="location" value="paris" id="loc-paris">
+                                <label for="loc-paris" class="location-option">
+                                    <i class="fas fa-city"></i>
+                                    <span>Paris</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catégories sous forme de cartes -->
+                    <div class="form-group">
+                        <label class="section-label">
+                            <i class="fas fa-tags"></i>
+                            Types d'événements préférés
+                        </label>
+                        <div class="categories-cards">
+                            <div class="category-card">
+                                <input type="checkbox" name="categories" value="special" id="cat-special" checked>
+                                <label for="cat-special" class="category-label">
+                                    <div class="category-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="category-name">Événements spéciaux</span>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="category-card">
+                                <input type="checkbox" name="categories" value="conference" id="cat-conference" checked>
+                                <label for="cat-conference" class="category-label">
+                                    <div class="category-icon">
+                                        <i class="fas fa-microphone"></i>
+                                    </div>
+                                    <span class="category-name">Conférences</span>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="category-card">
+                                <input type="checkbox" name="categories" value="youth" id="cat-youth" checked>
+                                <label for="cat-youth" class="category-label">
+                                    <div class="category-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <span class="category-name">Jeunesse</span>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="category-card">
+                                <input type="checkbox" name="categories" value="prayer" id="cat-prayer" checked>
+                                <label for="cat-prayer" class="category-label">
+                                    <div class="category-icon">
+                                        <i class="fas fa-hands-praying"></i>
+                                    </div>
+                                    <span class="category-name">Prière</span>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn-submit" id="submitAlerts">
+                            <span class="btn-text">Activer les alertes</span>
+                            <div class="btn-loader">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+
+                        <div class="privacy-notice">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>100% confidentiel · Désabonnement instantané</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Étape 2 : Confirmation -->
+            <div class="form-step" id="step2">
+                <div class="success-content">
+                    <div class="success-animation">
+                        <div class="success-circle">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confetti"></div>
+                    </div>
+
+                    <h3 class="success-title">Félicitations !</h3>
+                    <p class="success-message" id="successText">
+                        Vous êtes maintenant inscrit aux alertes événements. Vous recevrez nos prochaines annonces en avant-première.
+                    </p>
+
+                    <div class="success-details">
+                        <div class="detail-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications par email</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Rappels automatiques</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-gift"></i>
+                            <span>Accès prioritaire</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-success" id="closeSuccess">
+                        <i class="fas fa-thumbs-up"></i>
+                        Parfait, merci !
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Script amélioré pour le nouveau modal avec enregistrement en base de données
+function initAlertsModal() {
+    const modal = document.getElementById('alertsModal');
+    const openBtn = document.querySelector('a[href="#newsletter"]');
+    const closeBtn = document.getElementById('closeAlertsModal');
+    const closeSuccessBtn = document.getElementById('closeSuccess');
+    const form = document.getElementById('alertsForm');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const submitBtn = document.getElementById('submitAlerts');
+    const successText = document.getElementById('successText');
+
+    if (!modal || !openBtn) return;
+
+    // Ouvrir le modal
+    openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        resetForm();
+    });
+
+    // Fermer le modal
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            step1.classList.add('active');
+            step2.classList.remove('active');
+        }, 300);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    closeSuccessBtn.addEventListener('click', closeModal);
+
+    // Fermer en cliquant en dehors
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Réinitialiser le formulaire
+    function resetForm() {
+        form.reset();
+        submitBtn.classList.remove('loading');
+
+        // Réinitialiser les labels flottants
+        document.querySelectorAll('.floating-input').forEach(input => {
+            if (!input.value) {
+                input.parentElement.classList.remove('focused');
+            }
+        });
+    }
+
+    // Animation des labels flottants
+    document.querySelectorAll('.floating-input').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+
+        // Initialiser l'état des champs remplis
+        if (input.value) {
+            input.parentElement.classList.add('focused');
+        }
+    });
+
+    // Soumission du formulaire avec enregistrement en base de données
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Animation de chargement
+        submitBtn.classList.add('loading');
+
+        try {
+            // Récupérer les données du formulaire
+            const formData = {
+                first_name: document.getElementById('alertFirstName').value.trim(),
+                last_name: document.getElementById('alertLastName').value.trim(),
+                email: document.getElementById('alertEmail').value.trim(),
+                phone: document.getElementById('alertPhone').value.trim(),
+                location: document.querySelector('input[name="location"]:checked').value,
+                categories: Array.from(form.querySelectorAll('input[name="categories"]:checked'))
+                    .map(checkbox => checkbox.value)
+            };
+
+            // Validation côté client
+            if (!formData.first_name || !formData.last_name || !formData.email) {
+                throw new Error('Veuillez remplir tous les champs obligatoires.');
+            }
+
+            // Envoi des données à l'API Django
+            const response = await fetch('/api/event-alerts/subscribe/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Afficher l'étape de succès avec le message personnalisé
+                successText.textContent = result.message;
+                step1.classList.remove('active');
+                step2.classList.add('active');
+            } else {
+                throw new Error(result.message);
+            }
+
+        } catch (error) {
+            // Gestion des erreurs
+            showError(error.message);
+            submitBtn.classList.remove('loading');
+        }
+    });
+
+    // Fonction pour récupérer le token CSRF
+    function getCSRFToken() {
+        const csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+        return csrfInput ? csrfInput.value : '';
+    }
+
+    // Fonction pour afficher les erreurs
+    function showError(message) {
+        // Vous pouvez remplacer cette alerte par un système de notification plus élégant
+        alert('Erreur: ' + message);
+    }
+
+    // Échappement pour fermer le modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
+
+// Initialiser le modal quand le DOM est chargé
+document.addEventListener('DOMContentLoaded', function() {
+    initAlertsModal();
+
+    // Initialiser aussi les autres fonctionnalités de votre page
+    createEventsParticles();
+    initEventFilters();
+    initCountdowns();
+    initScrollAnimations();
+});
+</script>
+
+<style>
+/* Nouveau design du modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-container {
+    background: white;
+    border-radius: 30px;
+    max-width: 550px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: modalSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header amélioré */
+.modal-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    border-radius: 30px 30px 0 0;
+}
+
+.modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    border-radius: 30px 30px 0 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.header-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-text {
+    flex: 1;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.modal-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Corps du modal */
+.modal-body {
+    padding: 2.5rem 2rem;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Introduction */
+.form-intro {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
+}
+
+.intro-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--light-bg), #e8f4fd);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.form-intro p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Champs de formulaire améliorés */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.section-label i {
+    color: var(--accent);
+}
+
+/* Champs flottants */
+.floating-group {
+    position: relative;
+}
+
+.floating-input {
+    width: 100%;
+    padding: 1.5rem 1rem 1rem 3rem;
+    border: 2px solid var(--light-bg);
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--text-dark);
+}
+
+.floating-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(248, 7, 63, 0.1);
+    transform: translateY(-2px);
+}
+
+.floating-input:focus + .floating-label,
+.floating-input:not(:placeholder-shown) + .floating-label {
+    top: 0.5rem;
+    left: 3rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: white;
+    padding: 0 0.5rem;
+}
+
+.floating-label {
+    position: absolute;
+    top: 1.5rem;
+    left: 3rem;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: white;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    transition: color 0.3s ease;
+}
+
+.floating-input:focus ~ .input-icon {
+    color: var(--accent);
+}
+
+/* Sélecteur de localisation */
+.location-selector {
+    background: var(--light-bg);
+    border-radius: 15px;
+    padding: 1.5rem;
+}
+
+.location-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.location-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.5rem 1rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.location-option i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+
+.location-option span {
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: color 0.3s ease;
+}
+
+.location-option:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.location-options input[type="radio"]:checked + .location-option {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+}
+
+.location-options input[type="radio"]:checked + .location-option i,
+.location-options input[type="radio"]:checked + .location-option span {
+    color: white;
+}
+
+.location-options input[type="radio"] {
+    display: none;
+}
+
+/* Catégories en cartes */
+.categories-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.category-card {
+    position: relative;
+}
+
+.category-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: white;
+    border: 2px solid var(--light-bg);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.category-label:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.category-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--light-bg);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.category-name {
+    flex: 1;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: color 0.3s ease;
+}
+
+.check-indicator {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--text-light);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    transition: all 0.3s ease;
+}
+
+.category-card input[type="checkbox"]:checked + .category-label {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(248, 7, 63, 0.05), transparent);
+}
+
+.category-card input[type="checkbox"]:checked + .category-label .category-icon {
+    background: var(--accent);
+    color: white;
+}
+
+.category-card input[type="checkbox"]:checked + .category-label .check-indicator {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.category-card input[type="checkbox"] {
+    display: none;
+}
+
+/* Bouton de soumission */
+.form-footer {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+    border: none;
+    padding: 1.3rem 3rem;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 200px;
+}
+
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.btn-submit:hover::before {
+    left: 100%;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 30px rgba(248, 7, 63, 0.4),
+        0 0 0 1px rgba(248, 7, 63, 0.1);
+}
+
+.btn-loader {
+    display: none;
+}
+
+.btn-submit.loading .btn-text {
+    opacity: 0;
+}
+
+.btn-submit.loading .btn-loader {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.privacy-notice {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Étape de succès */
+.success-content {
+    text-align: center;
+    padding: 1rem 0 2rem;
+}
+
+.success-animation {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.success-circle {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    color: white;
+    font-size: 2.5rem;
+    animation: successScale 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes successScale {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.confetti {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 100px;
+}
+
+.confetti::before,
+.confetti::after {
+    content: '🎉';
+    position: absolute;
+    font-size: 2rem;
+    animation: confettiFall 1s ease-out;
+}
+
+.confetti::before {
+    left: 20%;
+    animation-delay: 0.2s;
+}
+
+.confetti::after {
+    right: 20%;
+    animation-delay: 0.4s;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(20px) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+.success-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.success-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 12px;
+}
+
+.detail-item i {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.detail-item span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(5, 37, 148, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-container {
+        margin: 1rem;
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 2rem 1.5rem 1.5rem;
+    }
+
+    .modal-body {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .location-options {
+        grid-template-columns: 1fr;
+    }
+
+    .success-details {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 1rem;
+    }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .header-icon {
+        align-self: center;
+    }
+}
+</style>
+

@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
-from .models import ContactMessage, ChurchLocation, FAQ, Event, EventRegistration, NewsletterSubscriber
+from .models import ContactMessage, ChurchLocation, FAQ, Event, EventRegistration, NewsletterSubscriber, CalendarEvent, \
+    EventAlertSubscription
 
 
 @admin.register(ContactMessage)
@@ -31,11 +32,39 @@ class ContactMessageAdmin(admin.ModelAdmin):
         url = reverse('admin:EcoleBiblique_contactmessage_change', args=[obj.pk])
         return format_html('<a class="button" href="{}">Voir</a>', url)
 
+
 @admin.register(ChurchLocation)
 class ChurchLocationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'city', 'country', 'phone', 'is_active']
+    # Montrer les colonnes existantes du modèle
+    list_display = ['name', 'city', 'country', 'pastor_in_charge', 'phone', 'is_active', 'sort_order']
+    # Le premier lien cliquable (NE DOIT PAS être dans list_editable)
+    list_display_links = ['name']
+    # On n’édite que des champs RÉELS du modèle et présents dans list_display
+    list_editable = ['is_active', 'sort_order']
+
     list_filter = ['country', 'city', 'is_active']
-    search_fields = ['name', 'city', 'address']
+    search_fields = ['name', 'city', 'pastor_in_charge', 'address']
+
+    fieldsets = (
+        ('Informations principales', {
+            # Remplacer 'order' par 'sort_order'
+            'fields': ('name', 'pastor_in_charge', 'is_active', 'sort_order')
+        }),
+        ('Adresse', {
+            'fields': ('address', 'city', 'country')
+        }),
+        ('Coordonnées', {
+            'fields': ('phone', 'email')
+        }),
+        ('Coordonnées GPS', {
+            'fields': ('latitude', 'longitude'),
+            'classes': ('collapse',)
+        }),
+        ('Horaires', {
+            'fields': ('opening_hours',)
+        }),
+    )
+
 
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
@@ -127,6 +156,23 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
     list_filter = ['is_active', 'subscribed_at']
     search_fields = ['email', 'first_name', 'last_name']
     readonly_fields = ['subscribed_at', 'ip_address']
+
+# admin.py
+@admin.register(EventAlertSubscription)
+class EventAlertSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ['email', 'first_name', 'last_name', 'get_location_display', 'is_active', 'subscribed_at']
+    list_filter = ['location', 'is_active', 'subscribed_at']
+    search_fields = ['email', 'first_name', 'last_name']
+    readonly_fields = ['subscribed_at', 'ip_address', 'token']
+    list_editable = ['is_active']
+
+@admin.register(CalendarEvent)
+class CalendarEventAdmin(admin.ModelAdmin):
+    list_display = ['title', 'event_type', 'location', 'start_date', 'is_featured', 'is_upcoming']
+    list_filter = ['event_type', 'location', 'is_featured', 'start_date']
+    search_fields = ['title', 'description']
+    date_hierarchy = 'start_date'
+    list_editable = ['is_featured']
 
 # Customisation de l'admin
 admin.site.site_header = "Église Missionnaire Propulsion - Administration"

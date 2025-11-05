@@ -52,6 +52,12 @@ class ChurchLocation(models.Model):
     address = models.TextField(verbose_name="Adresse complète")
     city = models.CharField(max_length=100, verbose_name="Ville")
     country = models.CharField(max_length=100, verbose_name="Pays", default="France")
+    pastor_in_charge = models.CharField(
+        "Pasteur responsable", max_length=255, blank=True, null=True
+    )
+    sort_order = models.PositiveIntegerField(
+        "Ordre d’affichage", default=0, db_index=True
+    )
 
     phone = models.CharField(max_length=20, verbose_name="Téléphone")
     email = models.EmailField(verbose_name="Email")
@@ -69,6 +75,7 @@ class ChurchLocation(models.Model):
     class Meta:
         verbose_name = "Lieu d'église"
         verbose_name_plural = "Lieux d'église"
+        ordering = ["sort_order", "name"]  # optionnel
 
     def __str__(self):
         return f"{self.name} - {self.city}"
@@ -334,3 +341,88 @@ class NewsletterSubscriber(models.Model):
 
     def __str__(self):
         return self.email
+
+
+# models.py
+class EventAlertSubscription(models.Model):
+    LOCATION_CHOICES = [
+        ('all', 'Tous les lieux'),
+        ('cergy', 'Cergy'),
+        ('paris', 'Paris'),
+        ('yaounde', 'Yaoundé'),
+        ('douala', 'Douala'),
+    ]
+
+    CATEGORY_CHOICES = [
+        ('all', 'Tous les événements'),
+        ('special', 'Événements spéciaux'),
+        ('conference', 'Conférences'),
+        ('youth', 'Jeunesse'),
+        ('prayer', 'Prière'),
+        ('worship', 'Adoration'),
+    ]
+
+    email = models.EmailField(verbose_name="Adresse email")
+    first_name = models.CharField(max_length=100, verbose_name="Prénom")
+    last_name = models.CharField(max_length=100, verbose_name="Nom")
+    phone = models.CharField(max_length=20, blank=True, verbose_name="Téléphone")
+    location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default='all', verbose_name="Lieu préféré")
+    categories = models.JSONField(default=list, verbose_name="Catégories préférées")
+    is_active = models.BooleanField(default=True, verbose_name="Actif")
+    subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name="Date d'inscription")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="Adresse IP")
+    token = models.CharField(max_length=100, unique=True, verbose_name="Token de sécurité")
+
+    class Meta:
+        verbose_name = "Abonnement aux alertes événements"
+        verbose_name_plural = "Abonnements aux alertes événements"
+        ordering = ['-subscribed_at']
+
+    def __str__(self):
+        return f"{self.email} - {self.get_location_display()}"
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            import secrets
+            self.token = secrets.token_urlsafe(32)
+        super().save(*args, **kwargs)
+
+
+class CalendarEvent(models.Model):
+    EVENT_TYPE_CHOICES = [
+        ('regular', 'Régulier'),
+        ('special', 'Spécial'),
+        ('conference', 'Conférence'),
+        ('prayer', 'Prière'),
+        ('youth', 'Jeunesse'),
+        ('social', 'Social'),
+    ]
+
+    title = models.CharField(max_length=200, verbose_name="Titre")
+    description = models.TextField(verbose_name="Description")
+    event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES, verbose_name="Type d'événement")
+    location = models.ForeignKey('ChurchLocation', on_delete=models.CASCADE, verbose_name="Lieu")  # Utilise le premier ChurchLocation
+    start_date = models.DateTimeField(verbose_name="Date et heure de début")
+    end_date = models.DateTimeField(verbose_name="Date et heure de fin")
+    is_recurring = models.BooleanField(default=False, verbose_name="Événement récurrent")
+    recurrence_pattern = models.CharField(max_length=100, blank=True, verbose_name="Modèle de récurrence")
+    image = models.ImageField(upload_to='calendar/', blank=True, null=True, verbose_name="Image")
+    registration_required = models.BooleanField(default=False, verbose_name="Inscription requise")
+    registration_url = models.URLField(blank=True, verbose_name="Lien d'inscription")
+    max_participants = models.IntegerField(default=0, verbose_name="Nombre maximum de participants")
+    is_featured = models.BooleanField(default=False, verbose_name="En vedette")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Date de modification")
+
+    class Meta:
+        verbose_name = "Événement calendrier"
+        verbose_name_plural = "Événements calendrier"
+        ordering = ['start_date']
+
+    def __str__(self):
+        return f"{self.title} - {self.location.city} - {self.start_date.strftime('%d/%m/%Y')}"
+
+    @property
+    def is_upcoming(self):
+        from django.utils import timezone
+        return self.start_date > timezone.now()

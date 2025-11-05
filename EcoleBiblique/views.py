@@ -6,7 +6,8 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
-from EcoleBiblique.models import FAQ, ChurchLocation, ContactMessage, Event, EventRegistration, NewsletterSubscriber
+from EcoleBiblique.models import FAQ, ChurchLocation, ContactMessage, Event, EventRegistration, NewsletterSubscriber, \
+    CalendarEvent, EventAlertSubscription
 from django.utils import timezone
 from django.contrib import messages
 
@@ -313,33 +314,6 @@ def event_registrations_list(request, event_id):
     return render(request, 'event_registrations_list.html', context)
 
 
-def events_calendar(request):
-    """Vue pour le calendrier des événements"""
-    # Récupérer tous les événements à venir groupés par mois
-    upcoming_events = Event.objects.filter(
-        start_date__gte=timezone.now()
-    ).order_by('start_date')
-
-    # Grouper les événements par mois
-    events_by_month = {}
-    for event in upcoming_events:
-        month_key = event.start_date.strftime('%Y-%m')
-        month_name = event.start_date.strftime('%B %Y')
-
-        if month_key not in events_by_month:
-            events_by_month[month_key] = {
-                'name': month_name,
-                'events': []
-            }
-
-        events_by_month[month_key]['events'].append(event)
-
-    context = {
-        'events_by_month': events_by_month,
-    }
-    return render(request, 'events_calendar.html', context)
-
-
 @require_POST
 @csrf_exempt
 def subscribe_newsletter(request):
@@ -382,3 +356,136 @@ def subscribe_newsletter(request):
             'success': False,
             'message': 'Une erreur est survenue. Veuillez réessayer.'
         }, status=500)
+
+
+
+
+def events_calendar(request):
+    """Vue pour le calendrier complet des événements"""
+    # Récupérer les paramètres de filtrage
+    location_slug = request.GET.get('location', 'all')
+    event_type = request.GET.get('type', 'all')
+    month = request.GET.get('month', timezone.now().month)
+    year = request.GET.get('year', timezone.now().year)
+
+    # Filtrer les événements
+    calendar_events = CalendarEvent.objects.filter(
+        start_date__gte=timezone.now()
+    ).select_related('location')
+
+    if location_slug != 'all':
+        calendar_events = calendar_events.filter(location__city_slug=location_slug)
+
+    if event_type != 'all':
+        calendar_events = calendar_events.filter(event_type=event_type)
+
+    # Grouper par mois
+    events_by_month = {}
+    for event in calendar_events:
+        month_key = event.start_date.strftime('%Y-%m')
+        if month_key not in events_by_month:
+            events_by_month[month_key] = {
+                'name': event.start_date.strftime('%B %Y'),
+                'events': []
+            }
+        events_by_month[month_key]['events'].append(event)
+
+    # Lieux disponibles
+    locations = ChurchLocation.objects.filter(is_active=True)
+
+    context = {
+        'calendar_events': calendar_events,
+        'events_by_month': events_by_month,
+        'locations': locations,
+        'current_location': location_slug,
+        'current_event_type': event_type,
+    }
+
+    return render(request, 'events_calendar.html', context)
+
+
+@require_POST
+@csrf_exempt
+def subscribe_event_alerts(request):
+    """API pour s'inscrire aux alertes événements"""
+    try:
+        data = json.loads(request.body)
+        email = data.get('email')
+        first_name = data.get('first_name', '')
+        last_name = data.get('last_name', '')
+        phone = data.get('phone', '')
+        location = data.get('location', 'all')
+        categories = data.get('categories', [])
+
+        if not email:
+            return JsonResponse({
+                'success': False,
+                'message': 'L\'adresse email est obligatoire.'
+            }, status=400)
+
+        # Vérifier si l'email existe déjà
+        if EventAlertSubscription.objects.filter(email=email, is_active=True).exists():
+            return JsonResponse({
+                'success': False,
+                'message': 'Vous êtes déjà inscrit aux alertes événements.'
+            }, status=400)
+
+        # Désactiver les anciennes inscriptions du même email
+        EventAlertSubscription.objects.filter(email=email).update(is_active=False)
+
+        # Créer la nouvelle inscription
+        subscription = EventAlertSubscription(
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            phone=phone,
+            location=location,
+            categories=categories,
+            ip_address=get_client_ip(request)
+        )
+        subscription.save()
+
+        return JsonResponse({
+            'success': True,
+            'message': 'Félicitations ! Vous êtes maintenant inscrit aux alertes événements.'
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': 'Une erreur est survenue. Veuillez réessayer.'
+        }, status=500)
+
+
+def get_upcoming_events_api(request):
+    """API pour récupérer les événements à venir"""
+    location = request.GET.get('location', 'all')
+    limit = int(request.GET.get('limit', 10))
+
+    events = CalendarEvent.objects.filter(
+        start_date__gte=timezone.now()
+    ).select_related('location').order_by('start_date')[:limit]
+
+    if location != 'all':
+        events = events.filter(location__city_slug=location)
+
+    events_data = []
+    for event in events:
+        events_data.append({
+            'id': event.id,
+            'title': event.title,
+            'description': event.description,
+            'event_type': event.event_type,
+            'location': {
+                'name': event.location.name,
+                'city': event.location.city,
+                'address': event.location.address
+            },
+            'start_date': event.start_date.isoformat(),
+            'end_date': event.end_date.isoformat(),
+            'image_url': event.image.url if event.image else None,
+            'registration_required': event.registration_required,
+            'registration_url': event.registration_url,
+        })
+
+    return JsonResponse(events_data, safe=False)
