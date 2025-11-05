@@ -225,13 +225,17 @@
     animation: pulse 2s ease-in-out infinite;
 }
 
-.card-icon-wrapper i {
-    font-size: 2.5rem;
-    color: var(--primary);
-    position: relative;
-    z-index: 2;
+.card-icon-wrapper{
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1 / 1;      /* ceinture+bretelles */
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;           /* évite qu’un flex parent l’étire */
+    isolation: isolate;       /* coupe les effets des voisins */
+    transform: translateZ(0); /* propre couche GPU, limite les distorsions 3D */
 }
-
 .card-front h3 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
@@ -428,4 +432,64 @@
     .services-cta {
         padding: 2rem 1.5rem;
     }
+}
+
+/* === Badge d'icône circulaire (nouveau nommage) === */
+.service-badge{
+    /* Personnalisables par carte */
+    --badge-size: 100px;
+    --badge-color: var(--primary);
+
+    position: relative;
+    width: var(--badge-size);
+    height: var(--badge-size);
+    aspect-ratio: 1 / 1;          /* carré garanti */
+    border-radius: 50%;           /* cercle */
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;               /* ne pas s’étirer dans un flex */
+    isolation: isolate;           /* protège des effets voisins */
+    contain: layout paint;        /* évite certaines déformations héritées */
+    transform: translateZ(0);     /* évite les artefacts 3D */
+}
+
+.badge-halo{
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    /* halo doux + dégradé interne, reste un cercle même animé */
+    background:
+            radial-gradient(closest-side,
+            color-mix(in oklab, var(--badge-color) 25%, white) 0%,
+            transparent 60%) ,
+            linear-gradient(135deg,
+            color-mix(in oklab, var(--badge-color) 80%, white),
+            var(--badge-color));
+    opacity: .12;
+    animation: badgePulse 2s ease-in-out infinite;
+    z-index: 0;
+}
+
+.badge-icon{
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--badge-color);
+    z-index: 1;
+}
+
+/* Animation spécifique pour éviter les conflits avec tes @keyframes existants */
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+}
+
+/* Couleurs par carte (tu peux ajuster) */
+.card-1 .service-badge { --badge-color: var(--primary);   }
+.card-2 .service-badge { --badge-color: var(--secondary); }
+.card-3 .service-badge { --badge-color: var(--accent);    }
+.card-4 .service-badge { --badge-color: #8e44ad;          }
+
+/* Responsive */
+@media (max-width: 768px){
+    .service-badge{ --badge-size: 84px; }
 }

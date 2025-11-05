@@ -199,7 +199,7 @@
       rgba(14, 90, 167, 0.9) 0%,
       rgba(10, 63, 120, 0.8) 50%,
       rgba(230, 57, 70, 0.1) 100%),
-      url('/static/images/photoAccueil.jpg'); /* ← ton image locale */
+      url('/static/images/hero_page_principale.jpeg'); /* ← ton image locale */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -1183,3 +1183,9 @@
         justify-content: center;
     }
 }
+
+
+
+
+
+

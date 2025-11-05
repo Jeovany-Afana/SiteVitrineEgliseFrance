@@ -1,50 +1,579 @@
-  <footer class="footer">
+<style>
+    /* Footer Moderne */
+.footer-modern {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    position: relative;
+    margin-top: 6rem;
+}
+
+.footer-wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.footer-wave svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 100px;
+}
+
+.footer-wave .shape-fill {
+    fill: var(--primary);
+}
+
+.footer-main {
+    padding: 6rem 0 3rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr;
+    gap: 4rem;
+}
+
+/* Brand Section */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.brand-logo i {
+    font-size: 2rem;
+}
+
+.brand-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.8rem;
+    max-width: 250px;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-link:hover {
+    background: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(248, 7, 63, 0.3);
+}
+
+/* Navigation */
+.footer-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.nav-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+    transform: translateX(5px);
+}
+
+.nav-links i {
+    width: 16px;
+    color: var(--accent);
+}
+
+/* Contact */
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.contact-item i {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.contact-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.contact-item strong {
+    font-size: 0.9rem;
+    color: white;
+}
+
+.contact-item span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+}
+
+/* Newsletter */
+.footer-newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.newsletter-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.newsletter-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.newsletter-form {
+    position: relative;
+}
+
+.form-group {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 1rem 1.5rem;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-btn {
+    background: var(--accent);
+    border: none;
+    padding: 1rem 1.5rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.newsletter-btn:hover {
+    background: var(--accent-dark);
+}
+
+.form-message {
+    margin-top: 0.8rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.form-message.success {
+    background: rgba(72, 187, 120, 0.2);
+    color: #48bb78;
+    border: 1px solid #48bb78;
+    display: block;
+}
+
+.form-message.error {
+    background: rgba(245, 101, 101, 0.2);
+    color: #f56565;
+    border: 1px solid #f56565;
+    display: block;
+}
+
+.newsletter-features {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.feature i {
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 0;
+}
+
+.bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.legal-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.legal-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+    color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .footer-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .legal-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .social-grid {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-main {
+        padding: 4rem 0 2rem;
+    }
+
+    .footer-container {
+        padding: 0 1.5rem;
+    }
+
+    .newsletter-features {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+
+}
+</style>
+
+<footer class="footer-modern">
+    <!-- Wave Separator -->
+    <div class="footer-wave">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+        </svg>
+    </div>
+
+    <div class="footer-main">
         <div class="footer-container">
-            <div class="footer-column">
-                <h3>Propulsion</h3>
-                <p>Une communauté passionnée qui vit l'Évangile et impacte sa génération.</p>
-                <div class="social-links" style="display: flex; gap: 1rem; margin-top: 1rem;">
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-youtube"></i></a>
+            <!-- Logo et Description -->
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <i class="fas fa-cross"></i>
+                    <span>PROPULSION</span>
+                </div>
+                <p class="brand-description">
+                    Une communauté passionnée qui propulse des vies vers leur destinée divine.
+                    Ensemble, vivons une foi qui transforme et impacte notre génération.
+                </p>
+                <div class="social-grid">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="footer-column">
-                <h3>Liens Rapides</h3>
-                <ul class="footer-links">
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#apropos">À Propos</a></li>
-                    <li><a href="#galerie">Galerie</a></li>
-                    <li><a href="#ministeres">Ministères</a></li>
-                    <li><a href="#equipe">Équipe</a></li>
-                    <li><a href="#evenements">Événements</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+            <!-- Navigation Rapide -->
+            <div class="footer-nav">
+                <div class="nav-column">
+                    <h4 class="nav-title">Navigation</h4>
+                    <ul class="nav-links">
+                        <li><a href="{% url 'index' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                        <li><a href="{% url 'about' %}"><i class="fas fa-info-circle"></i>À Propos</a></li>
+                        <li><a href="{% url 'ministeres' %}"><i class="fas fa-hands-helping"></i>Ministères</a></li>
+                        <li><a href="{% url 'evenements' %}"><i class="fas fa-calendar-star"></i>Événements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-column">
+                    <h4 class="nav-title">Église</h4>
+                    <ul class="nav-links">
+                     <!--   <li><a href="#oeuvres"><i class="fas fa-heart"></i>Nos Œuvres</a></li>
+                        <li><a href="#equipe"><i class="fas fa-users"></i>Notre Équipe</a></li> -->
+                        <li><a href="{% url 'gallery' %}"><i class="fas fa-images"></i>Galerie</a></li>
+                        <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i>Contact</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="footer-column">
-                <h3>Ressources</h3>
-                <ul class="footer-links">
-                    <li><a href="#sermons">Sermons</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#podcast">Podcast</a></li>
-                    <li><a href="#mediatheque">Médiathèque</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h3>Newsletter</h3>
-                <p>Inscrivez-vous pour recevoir nos actualités et événements.</p>
-                <form style="margin-top: 1rem;">
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Votre email" required style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h4 class="contact-title">Nous Contacter</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Adresse</strong>
+                            <span>123 Avenue de la Foi<br>75000 Paris, France</span>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-tertiary" style="width: 100%; margin-top: 0.5rem;">S'inscrire</button>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Téléphone</strong>
+                            <span>+33 7 68 16 22 61</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong>
+                            <span>eglisepropulsion@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-newsletter">
+                <h4 class="newsletter-title">Restez Connecté</h4>
+                <p class="newsletter-description">
+                    Recevez nos actualités, événements et inspirations directement dans votre boîte mail.
+                </p>
+
+                <form class="newsletter-form" id="newsletterForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Votre adresse email" required class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="form-message" id="newsletterMessage"></div>
                 </form>
+
+                <div class="newsletter-features">
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% sécurisé</span>
+                    </div>
+
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 Église Missionnaire Propulsion. Tous droits réservés.</p>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <div class="footer-container">
+            <div class="bottom-content">
+                <div class="copyright">
+                    <p>&copy; 2024 Église Missionnaire Propulsion. Tous droits réservés.</p>
+                </div>
+                <div class="legal-links">
+                    <a href="#confidentialite">Politique de confidentialité</a>
+                    <a href="#mentions">Mentions légales</a>
+                    <a href="#cookies">Cookies</a>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
+
+<script>
+    // Gestion de la newsletter
+function initNewsletter() {
+    const form = document.getElementById('newsletterForm');
+    const message = document.getElementById('newsletterMessage');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalHtml = submitBtn.innerHTML;
+
+        // Animation de chargement
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+
+        try {
+            const formData = {
+                email: form.querySelector('input[name="email"]').value
+            };
+
+            const response = await fetch('/newsletter/subscribe/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                message.textContent = result.message;
+                message.className = 'form-message success';
+                form.reset();
+            } else {
+                throw new Error(result.message);
+            }
+
+        } catch (error) {
+            message.textContent = error.message;
+            message.className = 'form-message error';
+        } finally {
+            submitBtn.innerHTML = originalHtml;
+            submitBtn.disabled = false;
+
+            // Masquer le message après 5 secondes
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+    });
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    initNewsletter();
+});
+</script>

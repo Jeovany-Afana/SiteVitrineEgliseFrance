@@ -1,0 +1,364 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.title }} - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #052594;
+            --primary-dark: #052594;
+            --primary-light: #3174d9;
+            --accent: #f8073f;
+            --accent-dark: #9b0b22;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+        }
+
+        .event-detail-hero {
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .event-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+        }
+
+        .event-main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .event-description {
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .event-sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .registration-card {
+            text-align: center;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .price.free {
+            color: var(--accent);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(248, 7, 63, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spots-info {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .spots-info.limited {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 968px) {
+            .event-detail-container {
+                grid-template-columns: 1fr;
+            }
+
+            .event-sidebar {
+                position: static;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="event-detail-hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-calendar-star"></i> {{ event.get_category_display }}
+            </div>
+            <h1 class="hero-title">{{ event.title }}</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">
+                {{ event.start_date|date:"l d F Y" }} • {{ event.location }}
+            </p>
+        </div>
+    </section>
+
+    <!-- Event Detail Content -->
+    <section class="event-detail-container">
+        <!-- Main Content -->
+        <div class="event-main-content">
+            <a href="{% url 'evenements' %}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Retour aux événements
+            </a>
+
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image">
+            {% else %}
+                <img src="{% static 'images/event-default.jpg' %}" alt="{{ event.title }}" class="event-image">
+            {% endif %}
+
+            <div class="event-description">
+                {{ event.description|linebreaks }}
+            </div>
+
+            <div class="event-info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-clock"></i> Date et Heure</h3>
+                    <p>{{ event.start_date|date:"l d F Y" }}</p>
+                    <p>De {{ event.start_date|date:"H:i" }} à {{ event.end_date|date:"H:i" }}</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Lieu</h3>
+                    <p>{{ event.location }}</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Participants</h3>
+                    <p>
+                        {% if event.max_participants > 0 %}
+                            {{ event.current_participants }}/{{ event.max_participants }} places
+                        {% else %}
+                            Participation illimitée
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-tag"></i> Catégorie</h3>
+                    <p>{{ event.get_category_display }}</p>
+                </div>
+            </div>
+
+            {% if event.featured %}
+            <div style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #fdcb6e;">
+                <h3 style="color: #856404; margin-bottom: 0.5rem;">
+                    <i class="fas fa-star"></i> Événement Vedette
+                </h3>
+                <p style="color: #856404; margin: 0;">Cet événement fait partie de nos événements phares de l'année.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar - Registration -->
+        <div class="event-sidebar">
+            <div class="registration-card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Inscription</h3>
+
+                {% if event.price > 0 %}
+                    <div class="price">{{ event.price }} €</div>
+                {% else %}
+                    <div class="price free">Gratuit</div>
+                {% endif %}
+
+                <div class="spots-info {% if event.max_participants > 0 and event.available_spots < 10 %}limited{% endif %}">
+                    {% if event.max_participants > 0 %}
+                        {% if event.available_spots > 0 %}
+                            {{ event.available_spots }} place(s) disponible(s)
+                        {% else %}
+                            <span style="color: var(--accent);">COMPLET</span>
+                        {% endif %}
+                    {% else %}
+                        Places illimitées
+                    {% endif %}
+                </div>
+
+                {% if event.available_spots > 0 or event.max_participants == 0 %}
+                    {% if event.registration_url %}
+                        <a href="{{ event.registration_url }}" class="btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            S'inscrire en ligne
+                        </a>
+                    {% else %}
+                        <a href="{% url 'event_registration' event.id %}" class="btn-primary">
+                            <i class="fas fa-ticket-alt"></i>
+                            S'inscrire maintenant
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <button class="btn-primary" disabled>
+                        <i class="fas fa-times-circle"></i>
+                        Événement complet
+                    </button>
+                {% endif %}
+
+                <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 1rem;">
+                    <i class="fas fa-info-circle"></i>
+                    Inscription sécurisée
+                </p>
+            </div>
+
+            <!-- Quick Info -->
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--light-bg);">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">Informations rapides</h4>
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-clock" style="color: var(--accent);"></i>
+                        <span>{{ event.start_date|date:"H:i" }} - {{ event.end_date|date:"H:i" }}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-calendar" style="color: var(--accent);"></i>
+                        <span>{{ event.start_date|date:"d/m/Y" }}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
+                        <span>{{ event.location }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+</body>
+</html>

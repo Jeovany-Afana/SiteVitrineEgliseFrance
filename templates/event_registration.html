@@ -1,0 +1,487 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - {{ event.title }} - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #052594;
+            --primary-dark: #052594;
+            --primary-light: #3174d9;
+            --accent: #f8073f;
+            --accent-dark: #9b0b22;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+        }
+
+        .registration-hero {
+            min-height: 50vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .registration-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+        }
+
+        .registration-form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .event-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            transform: translateX(-5px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(248, 7, 63, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(248, 7, 63, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .price-section {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .price.free {
+            color: var(--accent);
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 2px solid;
+        }
+
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+            color: #856404;
+        }
+
+        .alert-info {
+            background: rgba(23, 162, 184, 0.1);
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.1);
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .waiting-list-info {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        @media (max-width: 968px) {
+            .registration-container {
+                grid-template-columns: 1fr;
+            }
+
+            .event-summary {
+                position: static;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="registration-hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-ticket-alt"></i> INSCRIPTION
+            </div>
+            <h1 class="hero-title">Réserver ma place</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">
+                Pour l'événement "{{ event.title }}"
+            </p>
+        </div>
+    </section>
+
+    <!-- Registration Content -->
+    <section class="registration-container">
+        <!-- Registration Form -->
+        <div class="registration-form-container">
+            <a href="{% url 'event_detail' event.id %}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Retour aux détails
+            </a>
+
+            <h2 style="color: var(--primary); margin-bottom: 2rem;">Formulaire d'inscription</h2>
+
+            <!-- Messages Django -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+                        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if event.max_participants > 0 and event.available_spots <= 0 %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Événement complet</strong><br>
+                    Désolé, toutes les places pour cet événement ont été réservées.
+                </div>
+
+                <!-- Option liste d'attente même si complet -->
+                <div class="waiting-list-info">
+                    <h4 style="color: #856404; margin-bottom: 0.5rem;">
+                        <i class="fas fa-clock"></i> Liste d'attente
+                    </h4>
+                    <p style="margin-bottom: 1rem;">
+                        Vous pouvez vous inscrire sur liste d'attente. Nous vous contacterons si des places se libèrent.
+                    </p>
+                    <form method="post" id="waitingListForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="waiting_list" value="true">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-list"></i>
+                            S'inscrire sur liste d'attente
+                        </button>
+                    </form>
+                </div>
+
+            {% else %}
+                {% if event.max_participants > 0 and event.available_spots < 10 %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-clock"></i>
+                        <strong>Plus que {{ event.available_spots }} place(s) disponible(s)</strong><br>
+                        Dépêchez-vous de réserver votre place !
+                    </div>
+                {% endif %}
+
+                <form method="post" id="registrationForm">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="full_name" class="form-label">Nom complet *</label>
+                        <input type="text" id="full_name" name="full_name" class="form-input"
+                               value="{{ request.POST.full_name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Adresse email *</label>
+                        <input type="email" id="email" name="email" class="form-input"
+                               value="{{ request.POST.email }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Numéro de téléphone</label>
+                        <input type="tel" id="phone" name="phone" class="form-input"
+                               value="{{ request.POST.phone }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participants" class="form-label">Nombre de personnes *</label>
+                        <select id="participants" name="participants" class="form-input" required>
+                            <option value="">Sélectionnez...</option>
+                            {% with max_participants=event.max_participants available_spots=event.available_spots %}
+                                {% if max_participants > 0 %}
+                                    {% for i in "123456789"|make_list %}
+                                        {% if forloop.counter <= available_spots and forloop.counter <= 10 %}
+                                            <option value="{{ forloop.counter }}"
+                                                    {% if request.POST.participants == forloop.counter|stringformat:"i" %}selected{% endif %}>
+                                                {{ forloop.counter }} personne{{ forloop.counter|pluralize }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for i in "123456789"|make_list %}
+                                        {% if forloop.counter <= 10 %}
+                                            <option value="{{ forloop.counter }}"
+                                                    {% if request.POST.participants == forloop.counter|stringformat:"i" %}selected{% endif %}>
+                                                {{ forloop.counter }} personne{{ forloop.counter|pluralize }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message (optionnel)</label>
+                        <textarea id="message" name="message" class="form-input" rows="4"
+                                  placeholder="Avez-vous des questions ou des besoins particuliers ?">{{ request.POST.message }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Confirmer l'inscription
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
+        <!-- Event Summary -->
+        <div class="event-summary">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">Résumé de l'événement</h3>
+
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image">
+            {% else %}
+                <img src="{% static 'images/event-default.jpg' %}" alt="{{ event.title }}" class="event-image">
+            {% endif %}
+
+            <h4 style="color: var(--text-dark); margin-bottom: 1rem;">{{ event.title }}</h4>
+
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-calendar" style="color: var(--accent);"></i>
+                    <span>{{ event.start_date|date:"l d F Y" }}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-clock" style="color: var(--accent);"></i>
+                    <span>{{ event.start_date|date:"H:i" }} - {{ event.end_date|date:"H:i" }}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
+                    <span>{{ event.location }}</span>
+                </div>
+            </div>
+
+            <div class="price-section">
+                {% if event.price > 0 %}
+                    <div class="price">{{ event.price }} €</div>
+                    <small>par personne</small>
+                {% else %}
+                    <div class="price free">Gratuit</div>
+                {% endif %}
+            </div>
+
+            <div style="background: var(--light-bg); padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-users" style="color: var(--accent);"></i>
+                    <span>
+                        {% if event.max_participants > 0 %}
+                            {{ event.current_participants }}/{{ event.max_participants }} inscrits
+                            ({{ event.available_spots }} disponible{{ event.available_spots|pluralize }})
+                        {% else %}
+                            Participation illimitée
+                        {% endif %}
+                    </span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-tag" style="color: var(--accent);"></i>
+                    <span>{{ event.get_category_display }}</span>
+                </div>
+            </div>
+
+            <!-- Informations importantes -->
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-bg);">
+                <h5 style="color: var(--primary); margin-bottom: 0.5rem;">
+                    <i class="fas fa-info-circle"></i> Informations
+                </h5>
+                <ul style="color: var(--text-light); font-size: 0.8rem; padding-left: 1rem;">
+                    <li>Confirmation par email</li>
+                    <li>Annulation possible 48h avant</li>
+                    <li>Paiement sur place si applicable</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <script>
+        // Gestion de l'affichage du loading
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        const originalText = submitBtn.innerHTML;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+                        submitBtn.disabled = true;
+
+                        // Réactiver le bouton après 10s au cas où
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }, 10000);
+                    }
+                });
+            });
+
+            // Validation du formulaire
+            const registrationForm = document.getElementById('registrationForm');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', function(e) {
+                    const participants = document.getElementById('participants');
+                    const maxParticipants = {{ event.max_participants }};
+                    const availableSpots = {{ event.available_spots }};
+
+                    if (maxParticipants > 0 && participants.value > availableSpots) {
+                        e.preventDefault();
+                        alert(`Désolé, il ne reste que ${availableSpots} place(s) disponible(s). Veuillez ajuster le nombre de participants.`);
+                        participants.focus();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

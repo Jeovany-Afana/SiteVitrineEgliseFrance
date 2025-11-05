@@ -25,6 +25,321 @@
      <link rel="stylesheet" href="{% static 'css/services.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/activites.css' %}">
+
+    <style>
+        /* Contact Section Moderne */
+.contact-modern {
+    padding: 6rem 0;
+    background: var(--light-bg);
+}
+
+.contact-modern-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.contact-modern-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Carte Informations */
+.contact-info-card-modern {
+    background: white;
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+    border: 2px solid var(--primary-light);
+}
+
+.info-header-modern {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.info-header-modern h3 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.info-header-modern p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.contact-methods-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.contact-method-modern {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--light-gray);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.contact-method-modern:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+    background: white;
+}
+
+.method-icon-modern {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.contact-method-modern:hover .method-icon-modern {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    transform: scale(1.1);
+}
+
+.method-content-modern h4 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.method-content-modern p {
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.method-link-modern {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.method-link-modern:hover {
+    color: var(--red-dark);
+}
+
+/* Horaires */
+.opening-hours-modern {
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 15px;
+    color: white;
+    border: 2px solid var(--primary-light);
+}
+
+.opening-hours-modern h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.hours-grid-modern {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.hour-item-modern {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.hour-item-modern:last-child {
+    border-bottom: none;
+}
+
+.day-modern {
+    font-weight: 600;
+}
+
+.time-modern {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Formulaire de Contact */
+.contact-form-card-modern {
+    background: white;
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+    border: 2px solid var(--primary-light);
+}
+
+.form-header-modern {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.form-header-modern h3 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.form-header-modern p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.contact-form-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group-modern {
+    position: relative;
+}
+
+.form-input-modern {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    border: 2px solid var(--primary-light);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--text-dark);
+}
+
+.form-input-modern:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-input-modern:valid {
+    border-color: var(--primary);
+}
+
+.form-label-modern {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.5rem;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: white;
+    padding: 0 0.5rem;
+}
+
+.form-input-modern:focus + .form-label-modern,
+.form-input-modern:valid + .form-label-modern {
+    top: -0.5rem;
+    left: 1rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+textarea.form-input-modern {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+select.form-input-modern {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23D4AF37' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1.5rem center;
+    background-size: 12px;
+}
+
+.submit-btn-modern {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: var(--primary-dark);
+    border: none;
+    padding: 1.2rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.submit-btn-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+}
+
+/* Messages d'alerte */
+.alert-modern {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    display: none;
+    border: 2px solid;
+}
+
+.alert-success-modern {
+    background: rgba(72, 187, 120, 0.1);
+    border-color: #48bb78;
+    color: #2d5a3c;
+}
+
+.alert-error-modern {
+    background: rgba(245, 101, 101, 0.1);
+    border-color: #f56565;
+    color: #7c2a2a;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .contact-modern-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .contact-info-card-modern,
+    .contact-form-card-modern {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-method-modern {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+    </style>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -49,8 +364,8 @@
     <div class="pastor-container">
         <div class="pastor-image fade-in-left">
             <img src="{% static 'images/couplesPastoraux/coupleDr.png' %}" alt="Dr. Richard ONDOA">
-     <span style="margin-left: 3px;">Porteurs de la vision</span> <br>
-            <span style="margin-left: 3px; color: #f6ae46"><b> Richard & Marie-Joelle ONDOA </b></span>
+     <span style="margin-left: 3px;">Visionnaires</span> <br>
+            <span style="margin-left: 3px; color: #f6ae46"><b>Rev. Richard & Marie-Joelle ONDOA </b></span>
         </div>
 
 
@@ -75,18 +390,14 @@
 
             <div class="pastor-signature">
                 <div class="pastor-name">Dr. Richard ONDOA</div>
-                <div class="pastor-role">Pasteur Principal & Fondateur de l'Église Missionnaire Propulsion</div>
+                <div class="pastor-role">Pasteur Principal & Leader des Églises Missionnaires Propulsion</div>
 
                 <div class="pastor-credentials">
+
                     <div class="credential-badge">
-                        <i class="fas fa-graduation-cap"></i> Doctorat en Théologie
+                        <i class="fas fa-book"></i> Missionnaire, Auteur & Enseignant
                     </div>
-                    <div class="credential-badge">
-                        <i class="fas fa-book"></i> Auteur & Conférencier
-                    </div>
-                    <div class="credential-badge">
-                        <i class="fas fa-hands-helping"></i> Leader Visionnaire
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -129,11 +440,12 @@
             <div class="service-card card-1">
                 <div class="card-inner">
                     <div class="card-front">
-                        <div class="card-icon-wrapper">
-                            <div class="icon-bg"></div>
-                            <i class="fas fa-church"></i>
+                        <div class="service-badge" aria-hidden="true">
+                            <span class="badge-halo"></span>
+                            <i class="fas fa-church badge-icon"></i>
                         </div>
-                        <h3>Cultes Dynamiques</h3>
+
+                        <h3>Culte Transformation</h3>
                         <p>Expérimentez la présence de Dieu dans des moments d'adoration puissants</p>
                         <div class="card-cta">
                             <span>Découvrir</span>
@@ -166,7 +478,7 @@
                             <div class="icon-bg"></div>
                             <i class="fas fa-users"></i>
                         </div>
-                        <h3>Groupes de Maison</h3>
+                        <h3>Embassade de Vie</h3>
                         <p>Rejoignez une famille spirituelle pour grandir ensemble dans la foi</p>
                         <div class="card-cta">
                             <span>Explorer</span>
@@ -199,8 +511,8 @@
                             <div class="icon-bg"></div>
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3>Formation</h3>
-                        <p>Parcours de discipleship pour développer votre leadership</p>
+                        <h3>L'École du Disciple</h3>
+                        <p>Parcours d'intégration pour croissance spirituelle</p>
                         <div class="card-cta">
                             <span>Apprendre</span>
                             <i class="fas fa-arrow-right"></i>
@@ -210,10 +522,11 @@
                         <div class="back-content">
                             <h4>Programmes :</h4>
                             <ul>
+                                <li>Parcours d'intégration</li>
                                 <li>École de disciples</li>
                                 <li>Formation leaders</li>
-                                <li>Études bibliques</li>
-                                <li>Ateliers pratiques</li>
+                                <li>Introduction au service</li>
+
                             </ul>
                             <a href="#formation" class="btn-card">
                                 <span>Voir les programmes</span>
@@ -232,7 +545,7 @@
                             <div class="icon-bg"></div>
                             <i class="fas fa-hands-helping"></i>
                         </div>
-                        <h3>Implication</h3>
+                        <h3>Rejoignez-nous</h3>
                         <p>Découvrez vos talents et servez dans la communauté</p>
                         <div class="card-cta">
                             <span>Servir</span>
@@ -278,7 +591,7 @@
                 <h2 class="section-title-main fade-in">
                     <span class="title-line">Propulser</span>
                     <span class="title-line accent">des Vies</span>
-                    <span class="title-line">vers leur destiné</span>
+                    <span class="title-line">vers leur destinée</span>
                 </h2>
             </div>
         </div>
@@ -317,7 +630,7 @@
                         </div>
                         <div class="timeline-content">
                             <h3>Notre Fondation</h3>
-                            <div class="timeline-year">2010</div>
+                            <div class="timeline-year">2022</div>
                             <p>Création de l'Église Missionnaire Propulsion avec une vision claire : transformer des vies par la puissance de l'Évangile.</p>
                         </div>
                     </div>
@@ -329,8 +642,8 @@
                         </div>
                         <div class="timeline-content">
                             <h3>Expansion</h3>
-                            <div class="timeline-year">2015</div>
-                            <p>Ouverture de 3 nouveaux centres et lancement des programmes de formation des leaders.</p>
+                            <div class="timeline-year">2023</div>
+                            <p>Ouverture d'une nouvelle assemblée à Poitiers.</p>
                         </div>
                     </div>
 
@@ -341,8 +654,8 @@
                         </div>
                         <div class="timeline-content">
                             <h3>Impact Communautaire</h3>
-                            <div class="timeline-year">2020</div>
-                            <p>Lancement de projets sociaux impactant plus de 5,000 personnes dans notre région.</p>
+                            <div class="timeline-year">2022</div>
+                            <p>Lancement de projets sociaux impactant plus de 5,000 personnes.</p>
                         </div>
                     </div>
                 </div>
@@ -372,7 +685,9 @@
                             <i class="fas fa-eye"></i>
                         </div>
                         <h3>Notre Vision</h3>
-                        <p>Voir des vies transformées, des familles restaurées et des communautés renouvelées par l'amour de Dieu.</p>
+                        <p><i> (Ésaïe 60:22)
+                            Vision : L'Accélération Divine et l'Expansion du Royaume
+                             Le plus petit deviendra un millier, Et le moindre, une nation puissante. Moi, l'Éternel, je hâterai cela en son temps.</i></p>
                         <ul class="vision-list">
                             <li><i class="fas fa-check"></i> Transformation personnelle</li>
                             <li><i class="fas fa-check"></i> Impact communautaire</li>
@@ -385,22 +700,23 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="modern-cta fade-in">
-            <div class="cta-content">
-                <h3>Prêt à Rejoindre l'Aventure ?</h3>
-                <p>Découvrez comment vous pouvez faire partie de cette communauté transformatrice</p>
-                <div class="cta-buttons">
-                    <a href="#visite" class="btn btn-primary">
-                        <i class="fas fa-calendar-alt"></i>
-                        Planifier une Visite
-                    </a>
-                    <a href="#histoire" class="btn btn-secondary">
-                        <i class="fas fa-book-open"></i>
-                        Notre Histoire Complète
-                    </a>
-                </div>
-            </div>
+     <!-- CTA Section -->
+<div class="modern-cta fade-in">
+    <div class="cta-content">
+        <h3>Votre Prochaine Étape Nous Attend</h3>
+        <p>Que vous soyez nouveau dans la foi ou en recherche spirituelle, nous avons une place pour vous</p>
+        <div class="cta-buttons">
+            <a href="{% url 'evenements' %}" class="btn btn-primary">
+                <i class="fas fa-calendar-check"></i>
+                Prochains Événements
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+                <i class="fas fa-praying-hands"></i>
+                Demande de Prière
+            </a>
         </div>
+    </div>
+</div>
     </div>
 </section>
 
@@ -713,7 +1029,7 @@
 
 
 
-    <!-- Événements Section -->
+    <!-- Événements Section
     <section class="section events" id="evenements">
         <div class="section-title">
             <h2>Événements à Venir</h2>
@@ -777,78 +1093,144 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <!-- Contact Section -->
-    <section class="section contact" id="contact">
+    <!-- Contact Section Moderne -->
+    <section class="section contact-modern" id="contact">
         <div class="section-title">
             <h2>Contactez-nous</h2>
             <p>Nous serions ravis de vous accueillir</p>
         </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-item fade-in-left">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Notre Adresse</h3>
-                        <p>123 Avenue de la Foi<br>75000 Paris, France</p>
+
+        <div class="contact-modern-container">
+            <div class="contact-modern-grid">
+                <!-- Informations de Contact -->
+                <div class="contact-info-modern">
+                    <div class="contact-info-card-modern">
+                        <div class="info-header-modern">
+                            <h3>Nos Coordonnées</h3>
+                            <p>Plusieurs façons de nous rejoindre</p>
+                        </div>
+
+                        <div class="contact-methods-modern">
+                            <!-- Téléphone -->
+                            <div class="contact-method-modern" onclick="window.location.href='tel:+33768162261'">
+                                <div class="method-icon-modern">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="method-content-modern">
+                                    <h4>Téléphone</h4>
+                                    <p>Du lundi au vendredi, 9h-18h</p>
+                                    <a href="tel:+33123456789" class="method-link-modern">+33 7 68 16 22 61</a>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="contact-method-modern" onclick="window.location.href='mailto:eglisepropulsion@gmail.com'">
+                                <div class="method-icon-modern">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="method-content-modern">
+                                    <h4>Email</h4>
+                                    <p>Réponse sous 24h</p>
+                                    <a href="mailto:contact@propulsion.fr" class="method-link-modern">eglisepropulsion@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <!-- Adresse -->
+                            <div class="contact-method-modern">
+                                <div class="method-icon-modern">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="method-content-modern">
+                                    <h4>Adresse</h4>
+                                    <p>Venez nous rencontrer</p>
+                                    <span class="method-link-modern">123 Avenue de la Foi, 75000 Paris</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Horaires -->
+                        <div class="opening-hours-modern">
+                            <h4><i class="fas fa-clock"></i> Horaires d'Ouverture</h4>
+                            <div class="hours-grid-modern">
+                                <div class="hour-item-modern">
+                                    <span class="day-modern">Dimanche</span>
+                                    <span class="time-modern">10h00 - 18h00</span>
+                                </div>
+                                <div class="hour-item-modern">
+                                    <span class="day-modern">Lundi - Vendredi</span>
+                                    <span class="time-modern">9h00 - 18h00</span>
+                                </div>
+                                <div class="hour-item-modern">
+                                    <span class="day-modern">Samedi</span>
+                                    <span class="time-modern">10h00 - 16h00</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="contact-item fade-in-left">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Horaires des Cultes</h3>
-                        <p>Dimanche: 10h00 & 18h00<br>Mercredi: 19h30 (Groupe de maison)</p>
+                <!-- Formulaire de Contact -->
+                <div class="contact-form-modern">
+                    <div class="contact-form-card-modern">
+                        <div class="form-header-modern">
+                            <h3>Envoyez-nous un Message</h3>
+                            <p>Votre message sera sauvegardé dans notre base de données</p>
+                        </div>
+
+                        <!-- Messages d'alerte -->
+                        <div class="alert-modern alert-success-modern" id="successAlertHome">
+                            <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès !
+                        </div>
+                        <div class="alert-modern alert-error-modern" id="errorAlertHome">
+                            <i class="fas fa-exclamation-circle"></i> Une erreur est survenue. Veuillez réessayer.
+                        </div>
+
+                        <form class="contact-form-inner" id="homeContactForm">
+                            {% csrf_token %}
+
+                            <div class="form-group-modern">
+                                <input type="text" class="form-input-modern" id="nameHome" name="name" required>
+                                <label for="nameHome" class="form-label-modern">Votre nom complet</label>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <input type="email" class="form-input-modern" id="emailHome" name="email" required>
+                                <label for="emailHome" class="form-label-modern">Votre adresse email</label>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <input type="tel" class="form-input-modern" id="phoneHome" name="phone">
+                                <label for="phoneHome" class="form-label-modern">Votre numéro de téléphone</label>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <select class="form-input-modern" id="subjectHome" name="subject" required>
+                                    <option value=""></option>
+                                    <option value="information">Demande d'information</option>
+                                    <option value="prayer">Demande de prière</option>
+                                    <option value="visit">Planifier une visite</option>
+                                    <option value="volunteer">Devenir bénévole</option>
+                                    <option value="donation">Information sur les dons</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                                <label for="subjectHome" class="form-label-modern">Sujet de votre message</label>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <textarea class="form-input-modern" id="messageHome" name="message" required></textarea>
+                                <label for="messageHome" class="form-label-modern">Votre message</label>
+                            </div>
+
+                            <button type="submit" class="submit-btn-modern" id="submitBtnHome">
+                                <i class="fas fa-paper-plane"></i>
+                                Envoyer le message
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                <div class="contact-item fade-in-left">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Téléphone</h3>
-                        <p>+33 1 23 45 67 89</p>
-                    </div>
-                </div>
-
-                <div class="contact-item fade-in-left">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Email</h3>
-                        <p>contact@propulsion.fr</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="contact-form fade-in-right">
-                <h3>Envoyez-nous un message</h3>
-                <form>
-                    <div class="form-group">
-                        <label for="name">Nom complet</label>
-                        <input type="text" id="name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Sujet</label>
-                        <input type="text" id="subject" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" class="form-control" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer le message</button>
-                </form>
             </div>
         </div>
     </section>
@@ -958,7 +1340,7 @@
             const scrolled = window.pageYOffset;
             const parallax = document.querySelector('.hero');
             if (parallax) {
-                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+                parallax.style.transform = `translateY(${scrolled * 0.9}px)`;
             }
         });
 
@@ -1061,8 +1443,19 @@ function initServicesParallax() {
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    animateCounters();
+    initParallax();
     animateCardsOnScroll();
     initServicesParallax();
+    initHomeContactForm(); // Ajoute cette ligne
+
+    // Observe all animated elements
+    document.querySelectorAll('.card, .ministry-card, .event-card, .gallery-item, .team-member').forEach(card => {
+        observer.observe(card);
+    });
 });
 
 // Données des galeries pour chaque œuvre
@@ -1280,6 +1673,94 @@ class WorksGallery {
         }
     }
 }
+// Gestion du formulaire de contact sur la page d'accueil
+function initHomeContactForm() {
+    const form = document.getElementById('homeContactForm');
+    const submitBtn = document.getElementById('submitBtnHome');
+    const successAlert = document.getElementById('successAlertHome');
+    const errorAlert = document.getElementById('errorAlertHome');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Animation de soumission
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+        submitBtn.disabled = true;
+
+        // Masquer les alertes précédentes
+        successAlert.style.display = 'none';
+        errorAlert.style.display = 'none';
+
+        try {
+            // Récupérer les données du formulaire
+            const formData = {
+                name: document.getElementById('nameHome').value,
+                email: document.getElementById('emailHome').value,
+                phone: document.getElementById('phoneHome').value,
+                subject: document.getElementById('subjectHome').value,
+                message: document.getElementById('messageHome').value
+            };
+
+            // Envoyer les données à l'API Django
+            const response = await fetch('/contact/submit/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Succès
+                successAlert.style.display = 'block';
+                form.reset();
+
+                // Réinitialiser les labels
+                form.querySelectorAll('.form-input-modern').forEach(input => {
+                    input.classList.remove('valid');
+                });
+
+                // Scroll vers le haut du formulaire pour voir le message de succès
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // Erreur
+                throw new Error(result.message);
+            }
+
+        } catch (error) {
+            // Erreur
+            errorAlert.style.display = 'block';
+            console.error('Erreur:', error);
+        } finally {
+            // Réinitialiser le bouton
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Animation des labels
+    const inputs = form.querySelectorAll('.form-input-modern');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value) {
+                this.classList.add('valid');
+            } else {
+                this.classList.remove('valid');
+            }
+        });
+    });
+}
+
+// Initialisation du formulaire contact home
+document.addEventListener('DOMContentLoaded', function() {
+    initHomeContactForm();
+});
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
@@ -1298,6 +1779,8 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
 });
+
+
     </script>
 </body>
 </html>

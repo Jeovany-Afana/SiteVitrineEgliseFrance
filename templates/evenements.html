@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -30,7 +29,7 @@
             min-height: 80vh;
             background:
                 linear-gradient(135deg, rgb(3, 42, 178) 0%, rgba(30, 58, 35, 0.95) 100%),
-                url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+                url('{% static "images/events-hero.jpg" %}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -758,6 +757,27 @@
                 justify-content: center;
             }
         }
+
+        /* État complet */
+        .sold-out {
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .sold-out::after {
+            content: 'COMPLET';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -793,21 +813,17 @@
                 <i class="fas fa-rocket"></i>
                 À Venir
             </button>
-            <button class="time-filter" data-filter="monthly">
-                <i class="fas fa-calendar-alt"></i>
-                Mensuels
-            </button>
             <button class="time-filter" data-filter="special">
                 <i class="fas fa-star"></i>
                 Événements Spéciaux
             </button>
-            <button class="time-filter" data-filter="youth">
-                <i class="fas fa-users"></i>
-                Jeunesse
-            </button>
             <button class="time-filter" data-filter="conference">
                 <i class="fas fa-microphone"></i>
                 Conférences
+            </button>
+            <button class="time-filter" data-filter="youth">
+                <i class="fas fa-users"></i>
+                Jeunesse
             </button>
         </div>
     </nav>
@@ -816,134 +832,101 @@
     <section class="events-main">
         <div class="events-container">
             <div class="events-grid" id="eventsGrid">
-                <!-- Événement 1 -->
-                <div class="event-card" data-category="special upcoming" data-date="2024-06-15">
-                    <div class="card-header">
-                        <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Nuit de Réveil Prophétique" class="card-image">
-                        <div class="event-badge">Événement Spécial</div>
-                        <div class="event-date">
-                            <div class="date-day">15</div>
-                            <div class="date-month">Juin</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="event-title">Nuit de Réveil Prophétique</h3>
-                        <p class="event-description">
-                            Une nuit de percée spirituelle avec des prophéties, des guérisons et des témoignages puissants.
-                            Laissez Dieu transformer votre vie dans cette atmosphère de gloire.
-                        </p>
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>19h00 - 23h00</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Auditorium Principal</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-users"></i>
-                                <span>500+ participants</span>
-                            </div>
-                        </div>
-                        <div class="card-actions">
-                            <a href="#inscription" class="btn-primary">
-                                <i class="fas fa-ticket-alt"></i>
-                                Réserver ma place
-                            </a>
-                            <a href="#details" class="btn-outline">
-                                <i class="fas fa-info-circle"></i>
-                                Plus d'infos
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <!-- Boucle sur les événements de la base de données -->
+                {% for event in upcoming_events %}
+                <div class="event-card {% if event.available_spots <= 0 %}sold-out{% endif %}"
+                     data-category="{{ event.category }}"
+                     data-date="{{ event.start_date|date:'Y-m-d' }}">
 
-                <!-- Événement 2 -->
-                <div class="event-card" data-category="conference upcoming" data-date="2024-06-22">
                     <div class="card-header">
-                        <img src="https://images.unsplash.com/photo-1540479859555-17af45c78602?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Conférence Leadership" class="card-image">
-                        <div class="event-badge">Conférence</div>
-                        <div class="event-date">
-                            <div class="date-day">22</div>
-                            <div class="date-month">Juin</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="event-title">Conférence des Leaders Émergents</h3>
-                        <p class="event-description">
-                            Formation intensive pour développer votre leadership spirituel.
-                            Apprenez des stratégies éprouvées pour impacter votre génération.
-                        </p>
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>9h00 - 17h00</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Centre de Formation</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-users"></i>
-                                <span>Place limitées</span>
-                            </div>
-                        </div>
-                        <div class="card-actions">
-                            <a href="#inscription" class="btn-primary">
-                                <i class="fas fa-ticket-alt"></i>
-                                S'inscrire
-                            </a>
-                            <a href="#details" class="btn-outline">
-                                <i class="fas fa-info-circle"></i>
-                                Programme
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                        {% if event.image %}
+                            <img src="https://fcsei.cstj.qc.ca/wp-content/uploads/2021/05/Coordination_evenement-1.jpg" alt="{{ event.title }}" class="card-image">
+                        {% else %}
+                            <img src="{% static 'images/event-default.jpg' %}" alt="{{ event.title }}" class="card-image">
+                        {% endif %}
 
-                <!-- Événement 3 -->
-                <div class="event-card" data-category="youth monthly" data-date="2024-06-30">
-                    <div class="card-header">
-                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Concert Jeunesse" class="card-image">
-                        <div class="event-badge">Jeunesse</div>
+                        <div class="event-badge">
+                            {{ event.get_category_display }}
+                        </div>
+
                         <div class="event-date">
-                            <div class="date-day">30</div>
-                            <div class="date-month">Juin</div>
+                            <div class="date-day">{{ event.start_date|date:"d" }}</div>
+                            <div class="date-month">{{ event.start_date|date:"M"|upper }}</div>
                         </div>
                     </div>
+
                     <div class="card-content">
-                        <h3 class="event-title">Concert Jeunesse Explosion</h3>
+                        <h3 class="event-title">{{ event.title }}</h3>
+
                         <p class="event-description">
-                            Soirée louange et adoration avec les meilleurs groupes de worship jeunes.
-                            Une expérience céleste pour la nouvelle génération.
+                            {% if event.short_description %}
+                                {{ event.short_description }}
+                            {% else %}
+                                {{ event.description|truncatewords:30 }}
+                            {% endif %}
                         </p>
+
                         <div class="event-meta">
                             <div class="meta-item">
                                 <i class="fas fa-clock"></i>
-                                <span>18h00 - 22h00</span>
+                                <span>{{ event.start_date|date:"H:i" }} - {{ event.end_date|date:"H:i" }}</span>
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Espace Jeunesse</span>
+                                <span>{{ event.location }}</span>
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-users"></i>
-                                <span>13-25 ans</span>
+                                <span>
+                                    {% if event.max_participants > 0 %}
+                                        {{ event.current_participants }}/{{ event.max_participants }}
+                                    {% else %}
+                                        Illimité
+                                    {% endif %}
+                                </span>
                             </div>
+                            {% if event.price > 0 %}
+                            <div class="meta-item">
+                                <i class="fas fa-tag"></i>
+                                <span>{{ event.price }} €</span>
+                            </div>
+                            {% endif %}
                         </div>
+
                         <div class="card-actions">
-                            <a href="#inscription" class="btn-primary">
-                                <i class="fas fa-ticket-alt"></i>
-                                Participer
-                            </a>
-                            <a href="#details" class="btn-outline">
-                                <i class="fas fa-music"></i>
-                                Artistes
+                            {% if event.available_spots > 0 or event.max_participants == 0 %}
+                                {% if event.registration_url %}
+                                    <a href="{{ event.registration_url }}" class="btn-primary" target="_blank">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        S'inscrire
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'event_registration' event.id %}" class="btn-primary">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        S'inscrire
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <button class="btn-primary" disabled>
+                                    <i class="fas fa-times-circle"></i>
+                                    Complet
+                                </button>
+                            {% endif %}
+
+                            <a href="{% url 'event_detail' event.id %}" class="btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Détails
                             </a>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="no-events" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                    <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--text-dark); margin-bottom: 1rem;">Aucun événement à venir</h3>
+                    <p style="color: var(--text-light);">Revenez bientôt pour découvrir nos prochains événements !</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -957,153 +940,55 @@
             </div>
 
             <div class="featured-grid">
-                <!-- Événement Vedette 1 -->
-                <div class="featured-card">
+                <!-- Boucle sur les événements vedettes -->
+                {% for event in featured_events %}
+                <div class="featured-card" id="featured-{{ forloop.counter }}">
                     <div class="featured-content">
-                        <div class="featured-badge">Événement de l'Année</div>
-                        <h3 class="featured-card-title">Conférence Annuelle "Impact Prophétique"</h3>
+                        <div class="featured-badge">Événement Vedette</div>
+                        <h3 class="featured-card-title">{{ event.title }}</h3>
                         <p class="featured-card-description">
-                            3 jours de formation intensive avec des orateurs internationaux.
-                            Découvrez les clés pour vivre votre destinée prophétique et impacter votre génération.
+                            {{ event.short_description|default:event.description|truncatewords:40 }}
                         </p>
 
-                        <div class="countdown" id="countdown1">
+                        <div class="countdown" id="countdown-{{ forloop.counter }}">
                             <div class="countdown-item">
-                                <div class="countdown-number" id="days1">00</div>
+                                <div class="countdown-number" id="days-{{ forloop.counter }}">00</div>
                                 <div class="countdown-label">Jours</div>
                             </div>
                             <div class="countdown-item">
-                                <div class="countdown-number" id="hours1">00</div>
+                                <div class="countdown-number" id="hours-{{ forloop.counter }}">00</div>
                                 <div class="countdown-label">Heures</div>
                             </div>
                             <div class="countdown-item">
-                                <div class="countdown-number" id="minutes1">00</div>
+                                <div class="countdown-number" id="minutes-{{ forloop.counter }}">00</div>
                                 <div class="countdown-label">Minutes</div>
                             </div>
                             <div class="countdown-item">
-                                <div class="countdown-number" id="seconds1">00</div>
+                                <div class="countdown-number" id="seconds-{{ forloop.counter }}">00</div>
                                 <div class="countdown-label">Secondes</div>
                             </div>
                         </div>
 
                         <div class="card-actions">
-                            <a href="#inscription" class="btn-neon">
-                                <i class="fas fa-gem"></i>
-                                Réserver Premium
-                            </a>
+                            {% if event.registration_url %}
+                                <a href="{{ event.registration_url }}" class="btn-neon" target="_blank">
+                                    <i class="fas fa-gem"></i>
+                                    Réserver maintenant
+                                </a>
+                            {% else %}
+                                <a href="{% url 'event_detail' event.id %}" class="btn-neon">
+                                    <i class="fas fa-gem"></i>
+                                    Découvrir
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-                <!-- Événement Vedette 2 -->
-                <div class="featured-card">
-                    <div class="featured-content">
-                        <div class="featured-badge">Exclusivité</div>
-                        <h3 class="featured-card-title">Retraite Spirituelle "Mont Sion"</h3>
-                        <p class="featured-card-description">
-                            Une retraite de 5 jours en montagne pour une rencontre profonde avec Dieu.
-                            Enseignements avancés, moments dans la présence divine et communion fraternelle.
-                        </p>
-
-                        <div class="countdown" id="countdown2">
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="days2">00</div>
-                                <div class="countdown-label">Jours</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="hours2">00</div>
-                                <div class="countdown-label">Heures</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="minutes2">00</div>
-                                <div class="countdown-label">Minutes</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="seconds2">00</div>
-                                <div class="countdown-label">Secondes</div>
-                            </div>
-                        </div>
-
-                        <div class="card-actions">
-                            <a href="#inscription" class="btn-neon">
-                                <i class="fas fa-mountain"></i>
-                                S'inscrire
-                            </a>
-                        </div>
-                    </div>
+                {% empty %}
+                <div class="no-featured" style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                    <p style="color: var(--text-light);">Aucun événement vedette pour le moment</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Calendrier -->
-    <section class="calendar-section">
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <h2 class="calendar-title">Calendrier des Événements</h2>
-                <p class="featured-subtitle">Planifiez votre année spirituelle avec nos événements réguliers</p>
-            </div>
-
-            <div class="calendar-grid">
-                <!-- Mois 1 -->
-                <div class="month-card">
-                    <div class="month-header">
-                        <h3 class="month-name">Juillet 2024</h3>
-                    </div>
-                    <div class="events-list">
-                        <div class="calendar-event">
-                            <div class="event-dot"></div>
-                            <div class="event-info">
-                                <h4>Culte de Réveil Estival</h4>
-                                <span>Tous les dimanches à 10h00</span>
-                            </div>
-                        </div>
-                        <div class="calendar-event">
-                            <div class="event-dot"></div>
-                            <div class="event-info">
-                                <h4>Camp Jeunesse "Fire Camp"</h4>
-                                <span>15-20 Juillet • Centre Événementiel</span>
-                            </div>
-                        </div>
-                        <div class="calendar-event">
-                            <div class="event-dot"></div>
-                            <div class="event-info">
-                                <h4>Conférence Couples</h4>
-                                <span>27 Juillet • 14h00-18h00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mois 2 -->
-                <div class="month-card">
-                    <div class="month-header">
-                        <h3 class="month-name">Août 2024</h3>
-                    </div>
-                    <div class="events-list">
-                        <div class="calendar-event">
-                            <div class="event-dot"></div>
-                            <div class="event-info">
-                                <h4>Retraite de Jeûne et Prière</h4>
-                                <span>5-7 Août • Centre Spirituel</span>
-                            </div>
-                        </div>
-                        <div class="calendar-event">
-                            <div class="event-dot"></div>
-                            <div class="event-info">
-                                <h4>Festival de la Famille</h4>
-                                <span>18 Août • Parc Central</span>
-                            </div>
-                        </div>
-                        <div class="calendar-event">
-                            <div class="event-dot"></div>
-                            <div class="event-info">
-                                <h4>School of Ministry</h4>
-                                <span>25-30 Août • Inscriptions ouvertes</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -1121,9 +1006,9 @@
                     <i class="fas fa-bell"></i>
                     S'inscrire aux Alertes
                 </a>
-                <a href="#calendar" class="btn-outline" style="color: white; border-color: white;">
+                <a href="{% url 'events_calendar' %}" class="btn-outline" style="color: white; border-color: white;">
                     <i class="fas fa-calendar-plus"></i>
-                    Ajouter au Calendrier
+                    Voir le Calendrier Complet
                 </a>
             </div>
         </div>
@@ -1168,9 +1053,9 @@
 
                     // Filtrer les cartes
                     eventCards.forEach(card => {
-                        const categories = card.getAttribute('data-category').split(' ');
+                        const category = card.getAttribute('data-category');
 
-                        if (filter === 'all' || categories.includes(filter)) {
+                        if (filter === 'all' || category === filter) {
                             card.style.display = 'block';
                             setTimeout(() => {
                                 card.classList.add('visible');
@@ -1186,40 +1071,43 @@
             });
         }
 
-        // Compte à rebours
+        // Compte à rebours dynamique pour les événements vedettes
         function initCountdowns() {
-            function updateCountdown(targetDate, countdownId) {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
+            const featuredEvents = document.querySelectorAll('.featured-card');
 
-                if (distance < 0) {
-                    document.getElementById(countdownId).innerHTML = '<div style="color: var(--accent); font-size: 1.5rem; font-weight: 700;">COMMENCE BIENTÔT!</div>';
-                    return;
+            featuredEvents.forEach((card, index) => {
+                const eventId = card.id.replace('featured-', '');
+                const eventDateElement = document.querySelector(`[data-featured-date="${eventId}"]`);
+
+                if (eventDateElement) {
+                    const targetDate = new Date(eventDateElement.getAttribute('data-date')).getTime();
+
+                    function updateCountdown() {
+                        const now = new Date().getTime();
+                        const distance = targetDate - now;
+
+                        if (distance < 0) {
+                            document.getElementById(`countdown-${eventId}`).innerHTML =
+                                '<div style="color: var(--accent); font-size: 1.5rem; font-weight: 700;">COMMENCE BIENTÔT!</div>';
+                            return;
+                        }
+
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        document.getElementById(`days-${eventId}`).textContent = days.toString().padStart(2, '0');
+                        document.getElementById(`hours-${eventId}`).textContent = hours.toString().padStart(2, '0');
+                        document.getElementById(`minutes-${eventId}`).textContent = minutes.toString().padStart(2, '0');
+                        document.getElementById(`seconds-${eventId}`).textContent = seconds.toString().padStart(2, '0');
+                    }
+
+                    // Mettre à jour immédiatement puis toutes les secondes
+                    updateCountdown();
+                    setInterval(updateCountdown, 1000);
                 }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById(`days${countdownId}`).textContent = days.toString().padStart(2, '0');
-                document.getElementById(`hours${countdownId}`).textContent = hours.toString().padStart(2, '0');
-                document.getElementById(`minutes${countdownId}`).textContent = minutes.toString().padStart(2, '0');
-                document.getElementById(`seconds${countdownId}`).textContent = seconds.toString().padStart(2, '0');
-            }
-
-            // Dates cibles pour les comptes à rebours
-            const targetDate1 = new Date('2024-07-15T19:00:00').getTime();
-            const targetDate2 = new Date('2024-08-01T09:00:00').getTime();
-
-            // Mettre à jour immédiatement puis toutes les secondes
-            updateCountdown(targetDate1, '1');
-            updateCountdown(targetDate2, '2');
-
-            setInterval(() => {
-                updateCountdown(targetDate1, '1');
-                updateCountdown(targetDate2, '2');
-            }, 1000);
+            });
         }
 
         // Animation au scroll

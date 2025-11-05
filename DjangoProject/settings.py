@@ -5,6 +5,9 @@ import dj_database_url
 # === Chemins de base ===
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # === Détection auto de l'environnement ===
 # Prod si Render/DATABASE_URL est présent, sinon Local (dev)
 DATABASE_URL = (os.getenv("DATABASE_URL") or "").strip()
@@ -126,6 +129,19 @@ else:
             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
         },
     }
+
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Ou ton serveur SMTP
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ton-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'ton-mot-de-passe'
+DEFAULT_FROM_EMAIL = 'eglisepropulsion@gmail.com'
+CONTACT_EMAIL = 'eglisepropulsion@gmail.com'
+
+
+
 
 # === Sécurité / Proxy HTTPS ===
 if IS_PROD:
