@@ -35,6 +35,10 @@ if IS_PROD:
         ALLOWED_HOSTS.append(render_host)
         CSRF_TRUSTED_ORIGINS.append(f"https://{render_host}")
     CSRF_TRUSTED_ORIGINS += ["https://*.onrender.com"]
+
+    ALLOWED_HOSTS += ["eglisepropulsion.fr", "www.eglisepropulsion.fr"]
+    CSRF_TRUSTED_ORIGINS += ["https://eglisepropulsion.fr", "https://www.eglisepropulsion.fr"]
+
 else:
     # Local (HTTP)
     ALLOWED_HOSTS += ["localhost", "127.0.0.1", "[::1]", "0.0.0.0"]

@@ -1,10 +1,685 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Événements - Église Missionnaire Propulsion</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary: #052594;
+            --primary-dark: #052594;
+            --primary-light: #3174d9;
+            --accent: #f8073f;
+            --accent-dark: #9b0b22;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --light-bg: #F7FAFC;
+        }
+
+        /* Hero Calendrier */
+        .calendar-hero {
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Filtres */
+        .calendar-filters {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--light-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(248, 7, 63, 0.1);
+        }
+
+        /* Section Calendrier */
+        .calendar-main {
+            padding: 4rem 0;
+            background: var(--light-bg);
+        }
+
+        .calendar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Vue Mois */
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .month-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .month-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .month-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .month-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .month-year {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .calendar-event-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent);
+        }
+
+        .calendar-event-item:hover {
+            background: var(--primary-light);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .calendar-event-item:hover .event-date-badge,
+        .calendar-event-item:hover .event-location,
+        .calendar-event-item:hover .event-description {
+            color: white;
+        }
+
+        .event-date-badge {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 70px;
+            border: 2px solid var(--accent);
+        }
+
+        .event-day {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .event-month {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-content {
+            flex: 1;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar-event-item:hover .event-title {
+            color: white;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .event-time, .event-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .event-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-calendar {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Aucun événement */
+        .no-events {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .no-events i {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .no-events h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .no-events p {
+            color: var(--text-light);
+        }
+
+        /* Indicateurs */
+        .event-indicators {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-special { background: var(--accent); }
+        .dot-conference { background: #4C51BF; }
+        .dot-youth { background: #38A169; }
+        .dot-prayer { background: #D69E2E; }
+        .dot-regular { background: #718096; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .months-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .calendar-event-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .event-date-badge {
+                align-self: center;
+            }
+
+            .event-meta {
+                justify-content: center;
+            }
+
+            .event-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-container {
+                padding: 0 1rem;
+            }
+
+            .month-card {
+                padding: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-$END$
+    <!-- Navigation -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="calendar-hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-calendar-alt"></i> CALENDRIER COMPLET
+            </div>
+            <h1 class="hero-title">
+                Agenda des Événements
+            </h1>
+            <p class="hero-subtitle">
+                Découvrez tous les événements à venir dans nos différentes implantations
+            </p>
+        </div>
+    </section>
+
+    <!-- Filtres -->
+    <section class="calendar-filters">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label class="filter-label">Lieu</label>
+                <select class="filter-select" id="locationFilter">
+                    <option value="all">Tous les lieux</option>
+                    {% for location in locations %}
+                    <option value="{{ location.city|lower }}" {% if current_location == location.city|lower %}selected{% endif %}>
+                        {{ location.name }} - {{ location.city }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Type d'événement</label>
+                <select class="filter-select" id="typeFilter">
+                    <option value="all">Tous les types</option>
+                    <option value="special" {% if current_event_type == 'special' %}selected{% endif %}>Événements spéciaux</option>
+                    <option value="conference" {% if current_event_type == 'conference' %}selected{% endif %}>Conférences</option>
+                    <option value="youth" {% if current_event_type == 'youth' %}selected{% endif %}>Jeunesse</option>
+                    <option value="prayer" {% if current_event_type == 'prayer' %}selected{% endif %}>Prière</option>
+                    <option value="regular" {% if current_event_type == 'regular' %}selected{% endif %}>Réguliers</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Mois</label>
+                <select class="filter-select" id="monthFilter">
+                    {% for month_key, month_data in events_by_month.items %}
+                    <option value="{{ month_key }}">{{ month_data.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendrier Principal -->
+    <section class="calendar-main">
+        <div class="calendar-container">
+            {% if events_by_month %}
+                <div class="months-grid">
+                    {% for month_key, month_data in events_by_month.items %}
+                    <div class="month-card">
+                        <div class="month-header">
+                            <h2 class="month-name">{{ month_data.name|title }}</h2>
+                            <div class="month-year">{{ month_data.events.0.start_date|date:"Y" }}</div>
+                        </div>
+
+                        <div class="events-list">
+                            {% for event in month_data.events %}
+                            <div class="calendar-event-item" data-event-type="{{ event.event_type }}" data-location="{{ event.location.city|lower }}">
+                                <div class="event-date-badge">
+                                    <div class="event-day">{{ event.start_date|date:"d" }}</div>
+                                    <div class="event-month">{{ event.start_date|date:"M"|upper }}</div>
+                                </div>
+
+                                <div class="event-content">
+                                    <h3 class="event-title">{{ event.title }}</h3>
+
+                                    <div class="event-meta">
+                                        <div class="event-time">
+                                            <i class="fas fa-clock"></i>
+                                            {{ event.start_date|date:"H:i" }} - {{ event.end_date|date:"H:i" }}
+                                        </div>
+                                        <div class="event-location">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{ event.location.name }} - {{ event.location.city }}
+                                        </div>
+                                    </div>
+
+                                    <p class="event-description">
+                                        {{ event.description|truncatewords:20 }}
+                                    </p>
+
+                                    <div class="event-actions">
+                                        {% if event.registration_required %}
+                                            {% if event.registration_url %}
+                                                <a href="{{ event.registration_url }}" class="btn-calendar btn-primary" target="_blank">
+                                                    <i class="fas fa-ticket-alt"></i>
+                                                    S'inscrire
+                                                </a>
+                                            {% else %}
+                                                <a href="#" class="btn-calendar btn-primary">
+                                                    <i class="fas fa-ticket-alt"></i>
+                                                    S'inscrire
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                        <a href="#" class="btn-calendar btn-outline">
+                                            <i class="fas fa-info-circle"></i>
+                                            Détails
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Indicateurs -->
+                <div class="event-indicators">
+                    <div class="indicator">
+                        <div class="indicator-dot dot-special"></div>
+                        <span>Événements spéciaux</span>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-dot dot-conference"></div>
+                        <span>Conférences</span>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-dot dot-youth"></div>
+                        <span>Jeunesse</span>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-dot dot-prayer"></div>
+                        <span>Prière</span>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-dot dot-regular"></div>
+                        <span>Réguliers</span>
+                    </div>
+                </div>
+
+            {% else %}
+                <div class="no-events">
+                    <i class="fas fa-calendar-times"></i>
+                    <h3>Aucun événement à venir</h3>
+                    <p>Revenez bientôt pour découvrir nos prochains événements !</p>
+                    <a href="{% url 'evenements' %}" class="btn-calendar btn-primary" style="margin-top: 1rem;">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour aux événements
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <script>
+        // Filtrage des événements
+        function initCalendarFilters() {
+            const locationFilter = document.getElementById('locationFilter');
+            const typeFilter = document.getElementById('typeFilter');
+            const monthFilter = document.getElementById('monthFilter');
+            const eventItems = document.querySelectorAll('.calendar-event-item');
+
+            function filterEvents() {
+                const selectedLocation = locationFilter.value;
+                const selectedType = typeFilter.value;
+
+                eventItems.forEach(item => {
+                    const eventLocation = item.getAttribute('data-location');
+                    const eventType = item.getAttribute('data-event-type');
+
+                    const locationMatch = selectedLocation === 'all' || eventLocation === selectedLocation;
+                    const typeMatch = selectedType === 'all' || eventType === selectedType;
+
+                    if (locationMatch && typeMatch) {
+                        item.style.display = 'flex';
+                        // Animation d'apparition
+                        item.style.opacity = '0';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                        }, 100);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Gérer l'affichage des mois vides
+                document.querySelectorAll('.month-card').forEach(monthCard => {
+                    const visibleEvents = monthCard.querySelectorAll('.calendar-event-item[style*="display: flex"]');
+                    if (visibleEvents.length === 0) {
+                        monthCard.style.display = 'none';
+                    } else {
+                        monthCard.style.display = 'block';
+                    }
+                });
+            }
+
+            locationFilter.addEventListener('change', filterEvents);
+            typeFilter.addEventListener('change', filterEvents);
+
+            // Filtrage par mois (scroll vers le mois)
+            if (monthFilter) {
+                monthFilter.addEventListener('change', function() {
+                    const selectedMonth = this.value;
+                    const targetMonth = document.querySelector(`[data-month="${selectedMonth}"]`);
+                    if (targetMonth) {
+                        targetMonth.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+
+            // Ajouter l'attribut data-month aux cartes de mois
+            document.querySelectorAll('.month-card').forEach((card, index) => {
+                const monthHeader = card.querySelector('.month-name').textContent.toLowerCase();
+                card.setAttribute('data-month', monthHeader.replace(' ', '-'));
+            });
+        }
+
+        // Animation au scroll
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Animer les cartes de mois
+            document.querySelectorAll('.month-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Animer les événements
+            document.querySelectorAll('.calendar-event-item').forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                item.style.transition = 'all 0.4s ease';
+                setTimeout(() => {
+                    observer.observe(item);
+                }, index * 50);
+            });
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            initCalendarFilters();
+            initScrollAnimations();
+        });
+    </script>
 </body>
 </html>
