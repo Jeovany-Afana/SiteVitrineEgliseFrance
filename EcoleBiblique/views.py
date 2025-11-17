@@ -47,10 +47,12 @@ def api_gallery_images(request):
 
     # Répertoires à scanner
     directories = [
-        ('images/ecolePrimaire', ['missions', 'social']),
+
         ('images/egliseCameroun', ['missions', 'international']),
         ('images/missionKairos', ['missions', 'international']),
+        ('images/ecolePrimaire', ['missions', 'social']),
         ('images/egliseEst', ['missions', 'international']),
+        ('images/missionKairos', ['missions', 'communautaire']),
     ]
 
     image_counter = 1
