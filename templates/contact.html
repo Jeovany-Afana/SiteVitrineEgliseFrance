@@ -52,6 +52,7 @@
             color: var(--white);
             overflow: hidden;
             background: linear-gradient(135deg, rgba(3,42,178,0.9) 0%, rgba(13,13,13,0.95) 100%);
+            padding-top: 100px;
         }
 
         .hero-background {
@@ -132,9 +133,9 @@
             color: var(--white);
         }
 
-        /* Section Contact Principale */
+        /* Section Contact Principale - RESPONSIVE AMÉLIORÉ */
         .contact-main {
-            padding: 8rem 0;
+            padding: 5rem 0;
             background: var(--light-bg);
             position: relative;
         }
@@ -142,10 +143,10 @@
         .contact-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 3rem;
             align-items: start;
         }
 
@@ -153,7 +154,7 @@
         .contact-info-card {
             background: var(--card-bg);
             border-radius: 25px;
-            padding: 3rem;
+            padding: 2.5rem;
             box-shadow: 0 25px 50px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
@@ -180,7 +181,7 @@
 
         .info-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         .info-header h2 {
@@ -197,7 +198,7 @@
         .contact-methods {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .contact-method {
@@ -262,7 +263,7 @@
 
         /* Horaires - BLEU */
         .opening-hours {
-            margin-top: 3rem;
+            margin-top: 2.5rem;
             padding: 2rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 15px;
@@ -306,11 +307,11 @@
             font-weight: 600;
         }
 
-        /* Formulaire de Contact - BLANC */
+        /* Formulaire de Contact - BLANC - AMÉLIORÉ POUR MOBILE */
         .contact-form-card {
             background: var(--card-bg);
             border-radius: 25px;
-            padding: 3rem;
+            padding: 2.5rem;
             box-shadow: 0 25px 50px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
@@ -361,6 +362,7 @@
             transition: all 0.3s ease;
             background: var(--white);
             color: var(--text-dark);
+            -webkit-appearance: none;
         }
 
         .form-input:focus {
@@ -402,10 +404,10 @@
 
         select.form-input {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23D4AF37' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 1.5rem center;
-            background-size: 12px;
+            background-size: 16px;
         }
 
         .submit-btn {
@@ -423,6 +425,7 @@
             justify-content: center;
             gap: 0.8rem;
             margin-top: 1rem;
+            width: 100%;
         }
 
         .submit-btn:hover {
@@ -456,38 +459,217 @@
             color: #7c2a2a;
         }
 
-        /* Responsive */
+        /* ============================
+           RESPONSIVE DESIGN AMÉLIORÉ
+           ============================ */
+
+        /* Tablettes */
         @media (max-width: 968px) {
             .contact-container {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 2.5rem;
+                padding: 0 1.5rem;
             }
 
             .contact-info-card,
             .contact-form-card {
                 transform: translateY(50px);
+                padding: 2rem;
             }
 
             .contact-info-card.visible,
             .contact-form-card.visible {
                 transform: translateY(0);
             }
+
+            .hero-title {
+                font-size: 3rem;
+            }
         }
 
+        /* Mobiles - AMÉLIORATIONS IMPORTANTES */
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
+            .contact-main {
+                padding: 3rem 0;
+            }
+
+            .contact-container {
+                padding: 0 1rem;
+                gap: 2rem;
             }
 
             .contact-info-card,
             .contact-form-card {
-                padding: 2rem;
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .info-header h2,
+            .form-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .info-header p,
+            .form-header p {
+                font-size: 1rem;
+            }
+
+            /* Meilleure disposition des méthodes de contact */
+            .contact-method {
+                flex-direction: row;
+                text-align: left;
+                gap: 1rem;
+                padding: 1.2rem;
+            }
+
+            .method-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .method-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .method-content p {
+                font-size: 0.9rem;
+            }
+
+            /* Formulaire optimisé pour mobile */
+            .form-input {
+                padding: 1rem 1.2rem;
+                font-size: 16px; /* Évite le zoom automatique sur iOS */
+            }
+
+            .form-label {
+                top: 1rem;
+                left: 1.2rem;
+            }
+
+            .form-input:focus + .form-label,
+            .form-input:valid + .form-label {
+                top: -0.6rem;
+                left: 0.8rem;
+            }
+
+            /* Horaires optimisés */
+            .opening-hours {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .opening-hours h3 {
+                font-size: 1.2rem;
+            }
+
+            .hour-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+                padding: 0.6rem 0;
+            }
+
+            .time {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Petits mobiles */
+        @media (max-width: 480px) {
+            .contact-hero {
+                min-height: 70vh;
+                padding-top: 80px;
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .hero-badge {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .contact-info-card,
+            .contact-form-card {
+                padding: 1.2rem;
+                border-radius: 16px;
             }
 
             .contact-method {
                 flex-direction: column;
                 text-align: center;
-                gap: 1rem;
+                gap: 0.8rem;
+                padding: 1rem;
+            }
+
+            .method-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .submit-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .alert {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Très petits écrans */
+        @media (max-width: 360px) {
+            .contact-container {
+                padding: 0 0.8rem;
+            }
+
+            .contact-info-card,
+            .contact-form-card {
+                padding: 1rem;
+            }
+
+            .info-header h2,
+            .form-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .contact-method {
+                padding: 0.8rem;
+            }
+
+            .method-content h3 {
+                font-size: 1rem;
+            }
+        }
+
+        /* Amélioration de l'accessibilité pour les inputs */
+        @media (max-width: 768px) {
+            .form-input {
+                font-size: 16px; /* Évite le zoom automatique sur iOS */
+                min-height: 48px; /* Taille de touche recommandée pour mobile */
+            }
+
+            select.form-input {
+                padding-right: 3rem; /* Plus d'espace pour la flèche */
+            }
+
+            textarea.form-input {
+                min-height: 120px; /* Plus facile à utiliser sur mobile */
             }
         }
     </style>
@@ -533,7 +715,7 @@
                         <div class="method-content">
                             <h3>Téléphone</h3>
                             <p>Du lundi au vendredi, 9h-18h</p>
-                            <a href="tel:+33123456789" class="method-link">++33 06 52 75 59 87</a>
+                            <a href="tel:+33123456789" class="method-link">+33 06 52 75 59 87</a>
                         </div>
                     </div>
 
@@ -557,7 +739,7 @@
                         <div class="method-content">
                             <h3>Adresse</h3>
                             <p>Venez nous rencontrer</p>
-                            <span class="method-link">45 Route de Paris à Dieppe 95520 Osny</span>
+                            <span class="method-link">123 Avenue de la Foi, 75000 Paris</span>
                         </div>
                     </div>
 
