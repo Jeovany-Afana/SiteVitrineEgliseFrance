@@ -2,18 +2,37 @@
 
 <nav class="prop-nav" id="propNav">
   <div class="prop-nav__container">
-  <a class="prop-nav__brand" href="{% url 'index' %}">
-  <img
-    class="prop-nav__logo-img"
-    src="{% static 'images/LogoEglise.png' %}"
-    alt="Église Missionnaire Propulsion — logo"
-    width="36" height="36"
-    decoding="async" loading="eager"
-  />
-</a>
+    <!-- Logo et nom de l'église -->
+    <a class="prop-nav__brand" href="{% url 'index' %}">
+      <img
+        class="prop-nav__logo-img"
+        src="{% static 'images/LogoEglise.png' %}"
+        alt="Église Missionnaire Propulsion — logo"
+        width="40" height="40"
+        decoding="async" loading="eager"
+      />
+      <span class="prop-nav__brand-text">Église Missionnaire Propulsion</span>
+    </a>
 
+    <!-- Navigation principale -->
+    <ul class="prop-nav__links" id="propNavPanel">
+      <li><a href="{% url 'index' %}" class="prop-nav__link">Accueil</a></li>
+      <li><a href="{% url 'about' %}" class="prop-nav__link">À Propos</a></li>
+      <li><a href="{% url 'gallery' %}" class="prop-nav__link">Galerie</a></li>
+      <li><a href="{% url 'ministeres' %}" class="prop-nav__link">Ministères</a></li>
+      <li><a href="{% url 'evenements' %}" class="prop-nav__link">Événements</a></li>
+      <li><a href="{% url 'contact' %}" class="prop-nav__link">Contact</a></li>
+    </ul>
 
-    <!-- Bouton burger -->
+    <!-- Bouton d'action -->
+    <a href="https://www.leetchi.com/fr/c/mission-kairos-tour-237--cameroun-2025-1092322?utm_source=copylink&utm_medium=social_sharing" class="prop-btn prop-btn--don">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+      </svg>
+      Faire un don
+    </a>
+
+    <!-- Bouton menu mobile -->
     <button class="prop-nav__toggle" id="propNavToggle"
             aria-label="Ouvrir le menu"
             aria-controls="propNavPanel"
@@ -22,28 +41,21 @@
       <span class="prop-nav__bar"></span>
       <span class="prop-nav__bar"></span>
     </button>
+  </div>
 
-    <!-- Liens (desktop horizontal / mobile off-canvas) -->
-    <ul class="prop-nav__links" id="propNavPanel">
-      <li><a href="{% url 'index' %}">Accueil</a></li>
-      <li><a href="{% url 'about' %}">À Propos</a></li>
-      <li><a href="{% url 'gallery' %}">Galerie</a></li>
-      <li><a href="{% url 'ministeres' %}">Ministères</a></li>
-      <li><a href="{% url 'evenements' %}">Événements</a></li>
-      <li><a href="{% url 'contact' %}">Contact</a></li>
-    </ul>
-
-  <!-- Overlay -->
-  <div class="prop-nav__backdrop" id="propNavBackdrop" hidden></div>
+  <!-- Overlay pour mobile -->
+  <div class="prop-nav__backdrop" id="propNavBackdrop"></div>
 </nav>
 
 <style>
 /* ----- Variables modernes ----- */
 :root {
-  --prop-primary: #2563eb;
-  --prop-primary-light: #3b82f6;
-  --prop-secondary: #ec4899;
-  --prop-secondary-light: #f472b6;
+  --prop-primary: #1e40af;       /* Bleu profond */
+  --prop-primary-light: #3b82f6; /* Bleu plus clair */
+  --prop-secondary: #dc2626;     /* Rouge */
+  --prop-secondary-light: #ef4444; /* Rouge plus clair */
+  --prop-accent: #d97706;        /* Or */
+  --prop-accent-light: #f59e0b;  /* Or plus clair */
   --prop-text: #1e293b;
   --prop-text-light: #64748b;
   --prop-white: #ffffff;
@@ -56,9 +68,11 @@
   --prop-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --prop-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --prop-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --prop-radius: 12px;
-  --prop-radius-lg: 16px;
+  --prop-radius: 8px;
+  --prop-radius-lg: 12px;
   --prop-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --prop-nav-height: 80px;
+  --prop-nav-height-scrolled: 70px;
 }
 
 /* ----- Reset et base ----- */
@@ -81,18 +95,19 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.85);
+  height: var(--prop-nav-height);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1000;
   transition: var(--prop-transition);
-  padding: 1rem 0;
+  box-shadow: var(--prop-shadow-sm);
 }
 
 .prop-nav--scrolled {
-  padding: 0.75rem 0;
-  background: rgba(255, 255, 255, 0.95);
+  height: var(--prop-nav-height-scrolled);
+  background: rgba(255, 255, 255, 0.98);
   box-shadow: var(--prop-shadow-md);
   border-bottom: 1px solid var(--prop-gray-200);
 }
@@ -103,41 +118,89 @@ body {
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
   justify-content: space-between;
+  height: 100%;
 }
 
 /* ----- Brand ----- */
 .prop-nav__brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 800;
+  gap: 0.75rem;
   text-decoration: none;
-  font-size: 1.5rem;
-  letter-spacing: -0.025em;
-  color: var(--prop-text);
   transition: var(--prop-transition);
 }
 
-.prop-nav__logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.prop-nav__logo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: var(--prop-radius);
+  transition: var(--prop-transition);
+}
+
+.prop-nav--scrolled .prop-nav__logo-img {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, var(--prop-primary), var(--prop-secondary));
-  color: var(--prop-white);
-  border-radius: 10px;
+}
+
+.prop-nav__brand-text {
+  font-weight: 700;
   font-size: 1.25rem;
-  font-weight: 900;
+  color: var(--prop-text);
+  letter-spacing: -0.025em;
+  transition: var(--prop-transition);
+}
+
+.prop-nav--scrolled .prop-nav__brand-text {
+  font-size: 1.1rem;
 }
 
 .prop-nav__brand:hover {
   transform: translateY(-1px);
 }
 
-/* ----- CTA (desktop) ----- */
+/* ----- Navigation ----- */
+.prop-nav__links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.prop-nav__link {
+  text-decoration: none;
+  color: var(--prop-text);
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: var(--prop-transition);
+  font-size: 0.95rem;
+}
+
+.prop-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--prop-primary), var(--prop-accent));
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.prop-nav__link:hover {
+  color: var(--prop-primary);
+}
+
+.prop-nav__link:hover::after {
+  width: 100%;
+}
+
+/* ----- Bouton CTA ----- */
 .prop-btn {
   display: inline-flex;
   align-items: center;
@@ -149,6 +212,9 @@ body {
   transition: var(--prop-transition);
   position: relative;
   overflow: hidden;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
 }
 
 .prop-btn::before {
@@ -168,7 +234,7 @@ body {
 
 .prop-btn--don {
   color: var(--prop-white);
-  background: linear-gradient(135deg, var(--prop-primary), var(--prop-secondary));
+  background: linear-gradient(135deg, var(--prop-primary), var(--prop-accent));
   box-shadow: var(--prop-shadow-sm);
 }
 
@@ -177,44 +243,7 @@ body {
   box-shadow: var(--prop-shadow-lg);
 }
 
-/* ----- Liens desktop ----- */
-.prop-nav__links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.prop-nav__links a {
-  text-decoration: none;
-  color: var(--prop-text);
-  font-weight: 500;
-  position: relative;
-  padding: 0.5rem 0;
-  transition: var(--prop-transition);
-}
-
-.prop-nav__links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background: linear-gradient(90deg, var(--prop-primary), var(--prop-secondary));
-  transition: width 0.3s ease;
-  border-radius: 2px;
-}
-
-.prop-nav__links a:hover {
-  color: var(--prop-primary);
-}
-
-.prop-nav__links a:hover::after {
-  width: 100%;
-}
-
-/* ----- Burger (desktop hidden) ----- */
+/* ----- Bouton burger ----- */
 .prop-nav__toggle {
   display: none;
   width: 44px;
@@ -225,6 +254,7 @@ body {
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 4px;
   position: relative;
   z-index: 1002;
@@ -257,7 +287,7 @@ body {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-/* ----- Off-canvas mobile ----- */
+/* ----- Overlay mobile ----- */
 .prop-nav__backdrop {
   position: fixed;
   inset: 0;
@@ -267,7 +297,7 @@ body {
   opacity: 0;
   visibility: hidden;
   transition: var(--prop-transition);
-  z-index: 1000;
+  z-index: 999;
 }
 
 .prop-nav--open .prop-nav__backdrop {
@@ -275,14 +305,11 @@ body {
   visibility: visible;
 }
 
+/* ----- Responsive ----- */
 @media (max-width: 992px) {
   .prop-nav__toggle {
-    display: inline-flex;
+    display: flex;
   }
-
-  .prop-nav__cta {
-    display: none;
-  } /* CTA desktop cachée en mobile */
 
   .prop-nav__links {
     position: fixed;
@@ -316,22 +343,15 @@ body {
     width: 100%;
   }
 
-  .prop-nav__links a {
+  .prop-nav__link {
     display: block;
     padding: 0.5rem 0;
     font-size: 1.1rem;
     width: 100%;
   }
 
-  .prop-nav__links-cta {
-    border-bottom: 0;
-    padding-top: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .prop-nav__links-cta .prop-btn {
-    width: 100%;
-    justify-content: center;
+  .prop-nav__brand-text {
+    display: none;
   }
 }
 
@@ -354,8 +374,6 @@ body {
   .prop-nav--open .prop-nav__links li:nth-child(4) { transition-delay: 0.25s; }
   .prop-nav--open .prop-nav__links li:nth-child(5) { transition-delay: 0.3s; }
   .prop-nav--open .prop-nav__links li:nth-child(6) { transition-delay: 0.35s; }
-  .prop-nav--open .prop-nav__links li:nth-child(7) { transition-delay: 0.4s; }
-  .prop-nav--open .prop-nav__links li:nth-child(8) { transition-delay: 0.45s; }
 }
 
 /* Améliorations pour les écrans larges */
@@ -374,44 +392,17 @@ body {
   }
 }
 
-/* =========================
-   Logo brand – tailles fluides
-   ========================= */
-:root{
-  --prop-logo-size: 56px;          /* taille desktop */
-  --prop-logo-size-mobile: 48px;   /* taille mobile */
-  --prop-logo-size-scrolled: 44px; /* taille quand la nav est scrollée */
-}
+/* Mobile très petit */
+@media (max-width: 480px) {
+  .prop-nav__container {
+    padding: 0 1rem;
+  }
 
-.prop-nav__brand { gap: .75rem; }
-
-/* Image du logo */
-.prop-nav__logo-img{
-  width: var(--prop-logo-size);
-  height: var(--prop-logo-size);
-  display: block;
-  object-fit: contain;
-  /* retire l'arrondi si ton logo n'est pas carré */
-  border-radius: 0;
-  /* dé-snap la ligne de base pour un alignement nickel */
-  vertical-align: middle;
-}
-
-/* Réduction légère en mode scrolled */
-.prop-nav--scrolled .prop-nav__logo-img{
-  width: var(--prop-logo-size-scrolled);
-  height: var(--prop-logo-size-scrolled);
-}
-
-/* Mobile: un peu plus compact */
-@media (max-width: 480px){
-  .prop-nav__logo-img{
-    width: var(--prop-logo-size-mobile);
-    height: var(--prop-logo-size-mobile);
+  .prop-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
   }
 }
-
-
 </style>
 
 <script>
